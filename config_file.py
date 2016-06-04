@@ -11,7 +11,7 @@ class ConfigFile(object):
         self.radio_stations = []
         self.settings.append({'section': 'Hardware', 'key': 'display', 'value': 'adafruit2.8', 'first_time': False})
         self.settings.append({'section': 'MPD Settings', 'key': 'host', 'value': 'localhost', 'first_time': False})
-        self.settings.append({'section': 'MPD Settings', 'key': 'port', 'value': 6600, 'first_time': False})
+        self.settings.append({'section': 'MPD Settings', 'key': 'port', 'value': '6600', 'first_time': False})
         self.settings.append({'section': 'MPD Settings', 'key': 'music directory', 'value': None, 'first_time': True})
         self.initialize()
 
