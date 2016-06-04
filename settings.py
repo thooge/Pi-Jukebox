@@ -12,6 +12,8 @@ import sys, pygame
 from pygame.locals import *
 import time
 
+VERSION = (1, 0, 0)
+
 #: Switches between development/debugging on your desktop/laptop versus running on your Raspberry Pi
 RUN_ON_RASPBERRY_PI = os.uname()[4][:3] == 'arm'
 
