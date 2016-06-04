@@ -11,6 +11,7 @@ import os
 import sys, pygame
 from pygame.locals import *
 import time
+from config_file import config_file
 
 VERSION = (1, 1, 0)
 
@@ -26,7 +27,19 @@ if RUN_ON_RASPBERRY_PI:
 # Display settings
 pygame.init() 	# Pygame initialization
 #: The display dimensions, change this if you have a bigger touch screen.
-DISPLAY_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
+#: adafruit 2.8" -> 320x200
+#: adafruit 3.5" -> 480x320
+#: raspberry 7" -> 800x480
+DISPLAY = config_file.setting_get('Hardware', 'display')
+if DISPLAY == 'adafruit2.8':
+    DISPLAY_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
+elif DISPLAY == 'adafruit3.5':
+    DISPLAY_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 480, 320
+elif DISPLAY == 'raspberry7':
+    DISPLAY_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 800, 480
+else:
+    DISPLAY_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
+
 PYGAME_EVENT_DELAY = 25
 
 if RUN_ON_RASPBERRY_PI:  # If started on Raspberry Pi
