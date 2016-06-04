@@ -201,22 +201,22 @@ class ScreenSelected(ScreenModal):
         button_width = self.window_width - 2 * button_left
         button_top = 30
         if self.selected_type == 'directory':
-            label = "Browse directory " + self.selected_name
+            label = _("Browse directory {0}".format(self.selected_name))
             self.add_component(ButtonText('btn_browse', self.screen, button_left, button_top, button_width, 32, label))
             button_top += 42
-        label = "Add to playlist"
+        label = _("Add to playlist")
         self.add_component(ButtonText('btn_add', self.screen, button_left, button_top, button_width, 32, label))
         self.components['btn_add'].button_color = FIFTIES_TEAL
         button_top += 42
-        label = "Add to playlist and play"
+        label = _("Add to playlist and play")
         self.add_component(ButtonText('btn_add_play', self.screen, button_left, button_top, button_width, 32, label))
         self.components['btn_add_play'].button_color = FIFTIES_TEAL
         button_top += 42
-        label = "Replace playlist and play"
+        label = _("Replace playlist and play")
         self.add_component(ButtonText('btn_replace', self.screen, button_left, button_top, button_width, 32, label))
         self.components['btn_replace'].button_color = FIFTIES_TEAL
         button_top += 42
-        label = "Cancel"
+        label = _("Cancel")
         self.add_component(ButtonText('btn_cancel', self.screen, button_left, button_top, button_width, 32, label))
 
     def action(self, tag_name):

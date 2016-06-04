@@ -56,7 +56,7 @@ class WifiConnection(object):
 
 class ScreenWifi(ScreenModal):
     def __init__(self, screen_rect):
-        Screen.__init__(self, screen_rect, "Setup WiFi connection")
+        Screen.__init__(self, screen_rect, _("Setup WiFi connection"))
         self.add_components(ItemList('list_SSID', self.screen, 55, 40, 210, 165))
         self.add_component(ButtonText('btn_connect', self.__init__screen, 235, 205, 80, text='Connect'))
 

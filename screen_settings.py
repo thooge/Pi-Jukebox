@@ -26,18 +26,18 @@ class ScreenSettings(ScreenModal):
         :param screen_rect: The display's rectangle where the screen is drawn on.
     """
     def __init__(self, screen_rect):
-        ScreenModal.__init__(self, screen_rect, "Settings")
+        ScreenModal.__init__(self, screen_rect, _("Settings"))
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
-        label = "Quit Pi-Jukebox"
+        label = _("Quit Pi-Jukebox")
         self.add_component(ButtonText('btn_quit', self.screen, button_left, 30, button_width, 32, label))
-        label = "Playback options"
+        label = _("Playback options")
         self.add_component(ButtonText('btn_playback', self.screen, button_left, 72, button_width, 32, label))
-        label = "MPD related settings"
+        label = _("MPD related settings")
         self.add_component(ButtonText('btn_mpd', self.screen, button_left, 114, button_width, 32, label))
-        label = "System info"
+        label = _("System info")
         self.add_component(ButtonText('btn_system_info', self.screen, button_left, 156, button_width, 32, label))
-        label = "Back"
+        label = _("Back")
         self.add_component(ButtonText('btn_return', self.screen, button_left, 198, button_width, 32, label))
 
     def on_click(self, x, y):
@@ -68,25 +68,25 @@ class ScreenSettingsQuit(ScreenModal):
         :param screen_rect: The display's rectangle where the screen is drawn on.
     """
     def __init__(self, screen_rect):
-        ScreenModal.__init__(self, screen_rect, "Quit")
+        ScreenModal.__init__(self, screen_rect, _("Quit"))
         self.window_x = 70
         self.window_y = 25
         self.window_width -= 2 * self.window_x
         self.window_height -= 2 * self.window_y
         self.outline_shown = True
-        self.add_component(ButtonText('btn_quit', screen_rect, self.window_x + 10, self.window_y + 30, 160, 32, "Quit"))
+        self.add_component(ButtonText('btn_quit', screen_rect, self.window_x + 10, self.window_y + 30, 160, 32, _("Quit")))
         self.add_component(
-            ButtonText('btn_shutdown', screen_rect, self.window_x + 10, self.window_y + 70, 160, 32, "Shutdown Pi"))
+            ButtonText('btn_shutdown', screen_rect, self.window_x + 10, self.window_y + 70, 160, 32, _("Shutdown Pi")))
         self.add_component(
-            ButtonText('btn_reboot', screen_rect, self.window_x + 10, self.window_y + 110, 160, 32, "Reboot Pi"))
+            ButtonText('btn_reboot', screen_rect, self.window_x + 10, self.window_y + 110, 160, 32, _("Reboot Pi")))
         self.add_component(
-            ButtonText('btn_cancel', screen_rect, self.window_x + 10, self.window_y + 150, 160, 32, "Cancel"))
+            ButtonText('btn_cancel', screen_rect, self.window_x + 10, self.window_y + 150, 160, 32, _("Cancel")))
 
     def on_click(self, x, y):
         tag_name = super(ScreenModal, self).on_click(x, y)
         if tag_name == 'btn_quit':
             mpd.disconnect()
-            print ("Bye!")
+            print(_("Bye!"))
             sys.exit()
         elif tag_name == 'btn_shutdown':
             if RUN_ON_RASPBERRY_PI:
@@ -110,19 +110,19 @@ class ScreenSettingsPlayback(ScreenModal):
         :param screen_rect: The display's rectangle where the screen is drawn on.
     """
     def __init__(self, screen_rect):
-        ScreenModal.__init__(self, screen_rect, "Playback settings")
-        self.add_component(LabelText('lbl_shuffle', screen_rect, 10, 30, 40, 20, "Shuffle"))
+        ScreenModal.__init__(self, screen_rect, _("Playback settings"))
+        self.add_component(LabelText('lbl_shuffle', screen_rect, 10, 30, 40, 20, _("Shuffle")))
         self.add_component(Switch('switch_shuffle', screen_rect, 60, 23))
-        self.add_component(LabelText('lbl_repeat', screen_rect, 120, 30, 40, 20, "Repeat"))
+        self.add_component(LabelText('lbl_repeat', screen_rect, 120, 30, 40, 20, _("Repeat")))
         self.add_component(Switch('switch_repeat', screen_rect, 170, 23))
-        self.add_component(LabelText('lbl_single', screen_rect, 230, 30, 40, 20, "Single"))
+        self.add_component(LabelText('lbl_single', screen_rect, 230, 30, 40, 20, _("Single")))
         self.add_component(Switch('switch_single', screen_rect, 280, 23))
-        self.add_component(LabelText('lbl_consume', screen_rect, 10, 65, 110, 20, "Consume playlist"))
+        self.add_component(LabelText('lbl_consume', screen_rect, 10, 65, 110, 20, _("Consume playlist")))
         self.add_component(Switch('switch_consume', screen_rect, 125, 58))
         self.add_component(
-            ButtonText('btn_rescan', self.screen, 10, 108, self.window_width - 20, 32, "Re-scan library"))
-        self.add_component(ButtonText('btn_update', self.screen, 10, 150, self.window_width - 20, 32, "Update library"))
-        self.add_component(ButtonText('btn_return', screen_rect, 10, 192, self.window_width - 20, 32, "Back"))
+            ButtonText('btn_rescan', self.screen, 10, 108, self.window_width - 20, 32, _("Re-scan library")))
+        self.add_component(ButtonText('btn_update', self.screen, 10, 150, self.window_width - 20, 32, _("Update library")))
+        self.add_component(ButtonText('btn_return', screen_rect, 10, 192, self.window_width - 20, 32, _("Back")))
 
         self.__initialize()
 
@@ -163,16 +163,16 @@ class ScreenSettingsMPD(ScreenModal):
         :param screen_rect: The display's rectangle where the screen is drawn on.
     """
     def __init__(self, screen_rect):
-        ScreenModal.__init__(self, screen_rect, "MPD settings")
+        ScreenModal.__init__(self, screen_rect, _("MPD settings"))
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
-        label = "Change host: " + config_file.setting_get('MPD Settings', 'Host')
+        label = "Change host: " + config_file.setting_get('MPD Settings', 'host')
         self.add_component(ButtonText('btn_host', self.screen, button_left, 30, button_width, 32, label))
         label = "Change port: " + str(config_file.setting_get('MPD Settings', 'port'))
         self.add_component(ButtonText('btn_port', self.screen, button_left, 72, button_width, 32, label))
         self.add_component(
-            ButtonText('btn_music_dir', self.screen, button_left, 114, button_width, 32, "Change music directory"))
-        label = "Back"
+            ButtonText('btn_music_dir', self.screen, button_left, 114, button_width, 32, _("Change music directory")))
+        label = _("Back")
         self.add_component(ButtonText('btn_back', self.screen, button_left, 198, button_width, 32, label))
 
     def on_click(self, x, y):
@@ -183,19 +183,19 @@ class ScreenSettingsMPD(ScreenModal):
             self.close()
             return
         elif tag_name == 'btn_host':
-            setting_label = "Set mpd host"
-            self.keyboard_setting(setting_label, 'MPD Settings', 'Host')
+            setting_label = _("Set mpd host")
+            self.keyboard_setting(setting_label, 'MPD Settings', 'host')
             mpd.disconnect()
-            mpd.host = config_file.setting_get('MPD Settings', 'Host')
+            mpd.host = config_file.setting_get('MPD Settings', 'host')
             mpd.connect()
         elif tag_name == 'btn_port':
-            setting_label = "Set mpd server port"
+            setting_label = _("Set mpd server port")
             self.keyboard_setting(setting_label, 'MPD Settings', 'port')
             mpd.disconnect()
             mpd.host = int(config_file.setting_get('MPD Settings', 'port'))
             mpd.connect()
         elif tag_name == 'btn_music_dir':
-            setting_label = "Set music directory"
+            setting_label = _("Set music directory")
             self.keyboard_setting(setting_label, 'MPD Settings', 'music directory')
             mpd.music_directory = config_file.setting_get('MPD Settings', 'music directory')
         self.update()
@@ -213,7 +213,7 @@ class ScreenSettingsMPD(ScreenModal):
         config_file.setting_set(section, key, new_value)
 
     def update(self):
-        label = "Change host: " + config_file.setting_get('MPD Settings', 'Host')
+        label = "Change host: " + config_file.setting_get('MPD Settings', 'host')
         self.components['btn_host'].draw(label)
         label = "Change port: " + str(config_file.setting_get('MPD Settings', 'port'))
         self.components['btn_port'].draw(label)
@@ -226,33 +226,33 @@ class ScreenSystemInfo(ScreenModal):
     """
 
     def __init__(self, screen_rect):
-        ScreenModal.__init__(self, screen_rect, "System info")
+        ScreenModal.__init__(self, screen_rect, _("System info"))
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
-        label = "Back"
+        label = _("Back")
         self.add_component(ButtonText('btn_back', self.screen, button_left, 198, button_width, 32, label))
         info = mpd.mpd_client.stats()
-        self.add_component(LabelText('lbl_database', self.screen, button_left, 30, 100, 18, "Music database"))
+        self.add_component(LabelText('lbl_database', self.screen, button_left, 30, 100, 18, _("Music database")))
         self.components['lbl_database'].font_color = FIFTIES_TEAL
-        artist_count = "Artists: " + "{:,}".format(int(info['artists']))
+        artist_count = _("Artists: ") + "{:,}".format(int(info['artists']))
         self.add_component(LabelText('lbl_artist_count', self.screen, button_left, 48, 100, 18, artist_count))
-        album_count = "Albums: " + "{:,}".format(int(info['albums']))
+        album_count = _("Albums: ") + "{:,}".format(int(info['albums']))
         self.add_component(LabelText('lbl_album_count', self.screen, button_left + 100, 48, 100, 18, album_count))
-        song_count = "Songs: " + "{:,}".format(int(info['songs']))
+        song_count = _("Songs: ") + "{:,}".format(int(info['songs']))
         self.add_component(LabelText('lbl_song_count', self.screen, button_left + 210, 48, 100, 18, song_count))
-        play_time = "Total time: " + self.make_time_string(int(info['db_playtime']))
+        play_time = _("Total time: ") + self.make_time_string(int(info['db_playtime']))
         self.add_component(LabelText('lbl_play_time', self.screen, button_left, 66, 300, 18, play_time))
 
         self.add_component(LabelText('lbl_system', self.screen, button_left, 90, 100, 18, "Server"))
         self.components['lbl_system'].font_color = FIFTIES_TEAL
         self.add_component(
-            LabelText('lbl_host_name', self.screen, button_left, 108, 1500, 18, "Host name: " + socket.gethostname()))
+            LabelText('lbl_host_name', self.screen, button_left, 108, 1500, 18, _("Host name: {0}".format(socket.gethostname()))))
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('google.com', 0))
             ip_address = s.getsockname()[0]
             self.add_component(
-                LabelText('lbl_ip_address', self.screen, button_left, 126, 1500, 18, "IP address: " + ip_address))
+                LabelText('lbl_ip_address', self.screen, button_left, 126, 1500, 18, _("IP address: {0}".format(ip_address))))
         except Exception:
             pass
 
@@ -269,12 +269,12 @@ class ScreenSystemInfo(ScreenModal):
         seconds_left = int(round(seconds - (days * 86400) - (hours * 3600) - (minutes * 60), 0))
         time_string = ""
         if days > 0:
-            time_string += str(days) + " days "
+            time_string += str(days) + _(" days ")
         if hours > 0:
-            time_string += str(hours) + " hrs "
+            time_string += str(hours) + _(" hrs ")
         if minutes > 0:
-            time_string += str(minutes) + " mins "
+            time_string += str(minutes) + _(" mins ")
         if seconds_left > 0:
-            time_string += str(seconds_left) + " secs "
+            time_string += str(seconds_left) + _(" secs ")
 
         return time_string

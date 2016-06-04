@@ -8,6 +8,8 @@ import time
 import subprocess
 import os
 import glob
+import locale
+import gettext
 from gui_screens import *
 from config_file import *
 from settings import *
@@ -37,6 +39,12 @@ class PiJukeboxScreens(Screens):
         """ Updates a current screen if it shows mpd relevant content. """
         self.screen_list[self.current_index].update()
 
+def init_gettext(domain, localedir):
+    locale.setlocale(locale.LC_ALL, '')
+    gettext.bindtextdomain(domain, localedir)
+    gettext.bind_textdomain_codeset(domain, 'UTF-8')
+    gettext.textdomain(domain)
+    gettext.install(domain, localedir, unicode=True)
 
 def apply_settings():
     # Check for first time settings
@@ -57,6 +65,7 @@ def apply_settings():
 
 def main():
     """ The function where it all starts...."""
+    init_gettext('pi-jukebox', 'locale')
     pygame.display.set_caption("Pi Jukebox")
     apply_settings()  # Check for first time settings and applies settings
 

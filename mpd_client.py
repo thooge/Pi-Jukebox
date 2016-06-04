@@ -61,11 +61,11 @@ class MPDNowPlaying(object):
                 if 'artist' in now_playing:
                     self.artist = now_playing['artist']  # Artist of current song
                 else:
-                    self.artist = "Unknown"
+                    self.artist = _("Unknown")
                 if 'album' in now_playing:
                     self.album = now_playing['album']  # Album the current song is on
                 else:
-                    self.album = "Unknown"
+                    self.album = _("Unknown")
                 current_total = self.str_to_float(now_playing['time'])
                 self.__time_total_sec = current_total
                 self.time_total = self.make_time_string(current_total)  # Total time current
@@ -73,7 +73,7 @@ class MPDNowPlaying(object):
                 if 'name' in now_playing:
                     self.album = now_playing['name']  # The radio station name
                 else:
-                    self.album = "Unknown"
+                    self.album = _("Unknown")
                 self.artist = ""
         elif now_playing is None:  # Changed to no current song
             self.__now_playing = None

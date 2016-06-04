@@ -1,0 +1,241 @@
+# German translation for Pi-Jukebox.
+# Copyright (C) 2016 Thomas Hooge
+# This file is distributed under the same license as the Pi-Jukebox package.
+# Thomas Hooge <thomas@hoogi.de>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Pi-Jukebox 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-04 19:05+0200\n"
+"PO-Revision-Date: 2106-06-04 18:56+0200\n"
+"Last-Translator: Thomas Hooge <thomas@hoogi.de>\n"
+"Language-Team: de <thomas@hoogi.de>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: mpd_client.py:64 mpd_client.py:68 mpd_client.py:76
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: screen_directory.py:204
+#, python-brace-format
+msgid "Browse directory {0}"
+msgstr "Verzeichnis {0} durchsuchen"
+
+#: screen_directory.py:207 screen_library.py:343
+msgid "Add to playlist"
+msgstr "Füge zu Playlist hinzu"
+
+#: screen_directory.py:211 screen_library.py:346
+msgid "Add to playlist and play"
+msgstr "Füge zu Playlist hinzu und spiele ab"
+
+#: screen_directory.py:215 screen_library.py:349
+msgid "Replace playlist and play"
+msgstr "Ersetze Playlist und spiele ab"
+
+#: screen_directory.py:219 screen_library.py:295 screen_settings.py:83
+msgid "Cancel"
+msgstr "Abbruch"
+
+#: screen_library.py:279
+msgid "Search library for..."
+msgstr "Suche in Bibliothek nach ..."
+
+#: screen_library.py:289
+msgid "Artists"
+msgstr "Künstler"
+
+#: screen_library.py:291
+msgid "Albums"
+msgstr "Alben"
+
+#: screen_library.py:293
+msgid "Songs"
+msgstr "Lieder"
+
+#: screen_library.py:309
+msgid "Search artists"
+msgstr "Suche Künstler"
+
+#: screen_library.py:312
+msgid "Search albums"
+msgstr "Suche Alben"
+
+#: screen_library.py:315
+msgid "Search songs"
+msgstr "Suche Lieder"
+
+#: screen_library.py:353
+#, python-format
+msgid "Albums of %s"
+msgstr "Alben von %s"
+
+#: screen_library.py:356 screen_library.py:360
+#, python-format
+msgid "Songs of %s"
+msgstr "Lieder von %s "
+
+#: screen_player.py:289
+msgid "Volume"
+msgstr "Lautstärke"
+
+#: screen_settings.py:29
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: screen_settings.py:32
+msgid "Quit Pi-Jukebox"
+msgstr "Pi-Jukebox beenden"
+
+#: screen_settings.py:34
+msgid "Playback options"
+msgstr "Abspieloptionen"
+
+#: screen_settings.py:36
+msgid "MPD related settings"
+msgstr "MPD Einstellungen"
+
+#: screen_settings.py:38 screen_settings.py:229
+msgid "System info"
+msgstr "Systeminformationen"
+
+#: screen_settings.py:40 screen_settings.py:125 screen_settings.py:175
+#: screen_settings.py:232
+msgid "Back"
+msgstr "Zurück"
+
+#: screen_settings.py:71 screen_settings.py:77
+msgid "Quit"
+msgstr "Beenden"
+
+#: screen_settings.py:79
+msgid "Shutdown Pi"
+msgstr "Pi ausschalten"
+
+#: screen_settings.py:81
+msgid "Reboot Pi"
+msgstr "Pi neustarten"
+
+#: screen_settings.py:89
+msgid "Bye!"
+msgstr "Tschüß!"
+
+#: screen_settings.py:113
+msgid "Playback settings"
+msgstr "Abspieleinstellungen"
+
+#: screen_settings.py:114
+msgid "Shuffle"
+msgstr "Mische"
+
+#: screen_settings.py:116
+msgid "Repeat"
+msgstr "Widerhole"
+
+#: screen_settings.py:118
+msgid "Single"
+msgstr "Einzeln"
+
+#: screen_settings.py:120
+msgid "Consume playlist"
+msgstr "Verbrauche Playlist"
+
+#: screen_settings.py:123
+msgid "Re-scan library"
+msgstr "Bibliothek neu scannen"
+
+#: screen_settings.py:124
+msgid "Update library"
+msgstr "Aktualisiere Bibliothek"
+
+#: screen_settings.py:166
+msgid "MPD settings"
+msgstr "MPD Einstellungen"
+
+#: screen_settings.py:174
+msgid "Change music directory"
+msgstr "Musikverzeichnis wechseln"
+
+#: screen_settings.py:186
+msgid "Set mpd host"
+msgstr "MPD-Host einstellen"
+
+#: screen_settings.py:192
+msgid "Set mpd server port"
+msgstr "MPD-Port einstellen"
+
+#: screen_settings.py:198
+msgid "Set music directory"
+msgstr "Musikverzeichnis einstellen"
+
+#: screen_settings.py:235
+msgid "Music database"
+msgstr "Musik Datenbank"
+
+#: screen_settings.py:237
+msgid "Artists: "
+msgstr "Künstler: "
+
+#: screen_settings.py:239
+msgid "Albums: "
+msgstr "Alben: "
+
+#: screen_settings.py:241
+msgid "Songs: "
+msgstr "Lieder: "
+
+#: screen_settings.py:243
+msgid "Total time: "
+msgstr "Gesamtzeit: "
+
+#: screen_settings.py:249
+#, python-brace-format
+msgid "Host name: {0}"
+msgstr "Hostname: {0}"
+
+#: screen_settings.py:255
+#, python-brace-format
+msgid "IP address: {0}"
+msgstr "IP-Adresse: {0}"
+
+#: screen_settings.py:272
+msgid " days "
+msgstr " Tage "
+
+#: screen_settings.py:274
+msgid " hrs "
+msgstr " Std "
+
+#: screen_settings.py:276
+msgid " mins "
+msgstr " Min "
+
+#: screen_settings.py:278
+msgid " secs "
+msgstr " Sec "
+
+#: screen_wifi.py:59
+msgid "Setup WiFi connection"
+msgstr "Wifi-Verbindung einstellen"
+
+#, fuzzy
+#~ msgid "Couldn't connect to the mpd server {0} on port {1:d}!"
+#~ msgstr "Kann nicht zum MPD-Server %s auf Port %d verbinden!"
+
+#~ msgid ""
+#~ "Check settings in file pi-jukebox.conf or check is server is running "
+#~ "'sudo service mpd status'."
+#~ msgstr ""
+#~ "Einstellungen in pi-jukebox.conf pürfen oder ob der Server läuft mit "
+#~ "'sudo servce mpd status'."
+
+#~ msgid "Change host: %s"
+#~ msgstr "Ändere Host: %s"
+
+#~ msgid "Change port: %s"
+#~ msgstr "Ändere Port: %d"

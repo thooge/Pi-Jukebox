@@ -286,7 +286,7 @@ class ScreenVolume(ScreenModal):
     """
 
     def __init__(self, screen_rect):
-        ScreenModal.__init__(self, screen_rect, "Volume")
+        ScreenModal.__init__(self, screen_rect, _("Volume"))
         self.window_x = 15
         self.window_y = 52
         self.window_width -= 2 * self.window_x
