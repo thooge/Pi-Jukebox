@@ -45,7 +45,12 @@ class DirectoryBrowser(ItemList):
     """
 
     def __init__(self, screen_rect):
-        ItemList.__init__(self, 'list_directory', screen_rect, 55, 42, 210, 194)
+        if DISPLAY == 'raspberry7':
+            ItemList.__init__(self, 'list_directory', screen_rect, 55, 42, 690, 424)
+        elif DISPLAY == 'adafruit3.5':
+            ItemList.__init__(self, 'list_directory', screen_rect, 55, 42, 214, 194)
+        else:
+            ItemList.__init__(self, 'list_directory', screen_rect, 55, 42, 210, 194)
         self.outline_visible = False
         self.item_outline_visible = True
         self.font_color = FIFTIES_YELLOW

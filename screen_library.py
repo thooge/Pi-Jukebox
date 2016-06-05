@@ -350,14 +350,14 @@ class ScreenSelected(ScreenModal):
         self.add_component(ButtonText('btn_replace', self.screen, button_left, 114, button_width, 32, label))
         self.components['btn_replace'].button_color = FIFTIES_TEAL
         if self.type == 'artists':
-            label = _("Albums of %s") % self.title
+            label = _("Albums of {0}".format(self.title))
             self.add_component(
                 ButtonText('btn_artist_get_albums', self.screen, button_left, 156, button_width, 32, label))
-            label = _("Songs of %s") % self.title
+            label = _("Songs of {0}".format(self.title))
             self.add_component(
                 ButtonText('btn_artist_get_songs', self.screen, button_left, 198, button_width, 32, label))
         elif self.type == 'albums':
-            label = _("Songs of %s") % self.title
+            label = _("Songs of {0}".format(self.title))
             self.add_component(
                 ButtonText('btn_album_get_songs', self.screen, button_left, 156, button_width, 32, label))
         #label = "Cancel"

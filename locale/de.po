@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pi-Jukebox 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-04 19:05+0200\n"
-"PO-Revision-Date: 2106-06-04 18:56+0200\n"
+"POT-Creation-Date: 2016-06-05 10:07+0200\n"
+"PO-Revision-Date: 2106-06-05 10:10+0200\n"
 "Last-Translator: Thomas Hooge <thomas@hoogi.de>\n"
 "Language-Team: de <thomas@hoogi.de>\n"
 "Language: de_DE\n"
@@ -17,28 +17,49 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: gui_screens.py:393
+msgid "Yes"
+msgstr "Ja"
+
+#: gui_screens.py:396
+msgid "No"
+msgstr "Nein"
+
 #: mpd_client.py:64 mpd_client.py:68 mpd_client.py:76
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: screen_directory.py:204
+#: pi-jukebox.py:75
+#, python-brace-format
+msgid "Couldn't connect to the mpd server {0} on port {1:d}!"
+msgstr "Kann nicht zum MPD-Server {0} auf Port {1:d} verbinden!"
+
+#: pi-jukebox.py:76
+msgid ""
+"Check settings in file pi-jukebox.conf or check is server is running 'sudo "
+"service mpd status'."
+msgstr ""
+"Einstellungen in pi-jukebox.conf pürfen oder ob der Server läuft mit 'sudo "
+"servce mpd status'."
+
+#: screen_directory.py:209
 #, python-brace-format
 msgid "Browse directory {0}"
 msgstr "Verzeichnis {0} durchsuchen"
 
-#: screen_directory.py:207 screen_library.py:343
+#: screen_directory.py:212 screen_library.py:343
 msgid "Add to playlist"
 msgstr "Füge zu Playlist hinzu"
 
-#: screen_directory.py:211 screen_library.py:346
+#: screen_directory.py:216 screen_library.py:346
 msgid "Add to playlist and play"
 msgstr "Füge zu Playlist hinzu und spiele ab"
 
-#: screen_directory.py:215 screen_library.py:349
+#: screen_directory.py:220 screen_library.py:349
 msgid "Replace playlist and play"
 msgstr "Ersetze Playlist und spiele ab"
 
-#: screen_directory.py:219 screen_library.py:295 screen_settings.py:83
+#: screen_directory.py:224 screen_library.py:295 screen_settings.py:83
 msgid "Cancel"
 msgstr "Abbruch"
 
@@ -71,14 +92,14 @@ msgid "Search songs"
 msgstr "Suche Lieder"
 
 #: screen_library.py:353
-#, python-format
-msgid "Albums of %s"
-msgstr "Alben von %s"
+#, fuzzy, python-brace-format
+msgid "Albums of {0}"
+msgstr "Alben von {0}"
 
 #: screen_library.py:356 screen_library.py:360
-#, python-format
-msgid "Songs of %s"
-msgstr "Lieder von %s "
+#, fuzzy, python-brace-format
+msgid "Songs of {0}"
+msgstr "Lieder von {0}"
 
 #: screen_player.py:289
 msgid "Volume"
@@ -219,23 +240,16 @@ msgstr " Min "
 msgid " secs "
 msgstr " Sec "
 
+#: screen_settings.py:218 screen_settings.py:171
+#, python-brace-format
+msgid "Change port: {0}"
+msgstr "Ändere Port: {0}"
+
+#: screen_settings.py:216 screen_settings.py:169
+#, python-brace-format
+msgid "Change host: {0}"
+msgstr "Ändere Host: {0}"
+
 #: screen_wifi.py:59
 msgid "Setup WiFi connection"
 msgstr "Wifi-Verbindung einstellen"
-
-#, fuzzy
-#~ msgid "Couldn't connect to the mpd server {0} on port {1:d}!"
-#~ msgstr "Kann nicht zum MPD-Server %s auf Port %d verbinden!"
-
-#~ msgid ""
-#~ "Check settings in file pi-jukebox.conf or check is server is running "
-#~ "'sudo service mpd status'."
-#~ msgstr ""
-#~ "Einstellungen in pi-jukebox.conf pürfen oder ob der Server läuft mit "
-#~ "'sudo servce mpd status'."
-
-#~ msgid "Change host: %s"
-#~ msgstr "Ändere Host: %s"
-
-#~ msgid "Change port: %s"
-#~ msgstr "Ändere Port: %d"

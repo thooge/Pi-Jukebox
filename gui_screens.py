@@ -390,10 +390,10 @@ class ScreenYesNo(ScreenModal):
         height = self.window_height - self.window_y - 32
         self.add_component(Memo('memo_text', self.screen, self.window_x + 55, self.window_y + 32, width, height, text))
         self.add_component(ButtonText('btn_yes', self.screen, self.window_x + self.window_width - 60,
-                                      self.window_y + self.window_height - 37, 55, 32, "Yes"))
+                                      self.window_y + self.window_height - 37, 55, 32, _("Yes")))
         self.components['btn_yes'].button_color = FIFTIES_ORANGE
         self.add_component(
-            ButtonText('btn_no', self.screen, self.window_x + 5, self.window_y + self.window_height - 37, 55, 32, "No"))
+            ButtonText('btn_no', self.screen, self.window_x + 5, self.window_y + self.window_height - 37, 55, 32, _("No")))
         self.components['btn_no'].button_color = FIFTIES_ORANGE
 
     def on_click(self, x, y):

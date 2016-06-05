@@ -2,7 +2,8 @@
 **pi-jukebox.py**: Main file
 """
 __author__ = 'Mark Zwart'
-import sys, pygame
+import sys
+pygame
 from pygame.locals import *
 import time
 import subprocess
@@ -71,8 +72,8 @@ def main():
 
     # Check whether mpd is running and get it's status
     if not mpd.connect():
-        print("Couldn't connect to the mpd server " + mpd.host + " on port " + str(
-            mpd.port) + "! Check settings in file pi-jukebox.conf or check is server is running 'sudo service mpd status'.")
+        print(_("Couldn't connect to the mpd server {0} on port {1:d}!".format(mpd.host, mpd.port)))
+        print(_("Check settings in file pi-jukebox.conf or check is server is running 'sudo service mpd status'."))
         sys.exit()
     mpd.status_get()  # Get mpd status
     screens = PiJukeboxScreens()  # Screens
