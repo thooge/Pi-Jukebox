@@ -50,7 +50,7 @@ def apply_settings():
         screen_message = ScreenMessage(
             SCREEN, 
             _("No music directory"),
-            _("If you want to display cover art, Pi-Jukebox needs to know which directory your music collection is in. The location can also be found in your mpd.conf entry 'music directory'.",
+            _("If you want to display cover art, Pi-Jukebox needs to know which directory your music collection is in. The location can also be found in your mpd.conf entry 'music directory'."),
             'warning')
         screen_message.show()
         settings_mpd_screen = ScreenSettingsMPD(SCREEN)

@@ -7,6 +7,7 @@
 
 from gui_screens import *
 from pij_screen_navigation import ScreenNavigation
+from screen_settings import ScreenSettings
 from screen_keyboard import Keyboard
 from mpd_client import mpd
 
