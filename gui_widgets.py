@@ -4,14 +4,11 @@
 =======================================================
 """
 
-__author__ = 'Mark Zwart'
-
-import sys, pygame
-from pygame.locals import *
-import time
 import math
+import sys
 from settings import *
-# import Image
+
+__author__ = 'Mark Zwart'
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -178,7 +175,7 @@ class Slider2(Widget):
         if percentage == 0:
             width = 1
         else:
-            width = (self.width) * (float(percentage) / 100)
+            width = self.width * (float(percentage) / 100)
         self.progress_rect = Rect(self.x_pos, self.y_pos, width, self.height)
         self.progress_percentage = percentage
         self.draw()
@@ -260,7 +257,8 @@ class LabelText(Widget):
         """ Sets the label's horizontal and vertical alignment within the defined
             rectangle and/or the text horizontal/vertical indent.
 
-            :param horizontal: Horizontal alignment [
+            :param horizontal: Horizontal alignment
+            :param vertical: Vertical alignment
         """
         self.alignment_horizontal = horizontal
         self.alignment_vertical = vertical
@@ -287,11 +285,11 @@ class LabelText(Widget):
         SCREEN.blit(background, (self.x_pos, self.y_pos))
         # Draw outline
         if self.outline_show:
-            pygame.draw.rect(self.screen, self.outline_color, self.rect,1)
+            pygame.draw.rect(self.screen, self.outline_color, self.rect, 1)
         # Determining caption width and height
         i = 1
-        while self.font.size(self.caption[:i])[0] < self.rect.width and i < len(
-                self.caption):  # Determine maximum width of line
+        # Determine maximum width of line
+        while self.font.size(self.caption[:i])[0] < self.rect.width and i < len(self.caption):
             i += 1
         caption_width = self.font.size(self.caption[:i])[0]
         caption_height = self.font.size(self.caption[:i])[1]
@@ -375,7 +373,6 @@ class Memo(Widget):
         self.indent_horizontal = hor_indent
 
     def __truncate_line(self):
-        number_of_chars = len(self.__caption)
         split_text = self.__caption
         label_width = self.font.size(self.__caption)[0]
         cut = 0
@@ -390,7 +387,6 @@ class Memo(Widget):
             else:
                 split_text = n
             label_width = self.font.size(split_text)[0]
-            number_of_chars = len(split_text)
             done = False
         return done, split_text
 
@@ -475,7 +471,7 @@ class ButtonText(LabelText):
 
     def draw(self, text=None):
         self.screen.fill(self.button_color, self.button_rect)  # Background
-        super(ButtonText,self).draw()
+        super(ButtonText, self).draw()
         pygame.display.update(self.rect)
 
 
@@ -639,9 +635,9 @@ class ItemList(Widget):
         if x_pos < 0 or x_pos > self.width or y_pos < 0:  # Check whether the click was outside the control
             self.item_selected_index = -1
             return None
+        # Check whether no item was clicked
         if y_pos > self.height or (
-                self.page_showing_index * self.items_per_page + (y_pos + 2)) / self.item_height >= len(
-                self.list):  # Check whether no item was clicked
+                self.page_showing_index * self.items_per_page + (y_pos + 2)) / self.item_height >= len(self.list):
             self.item_selected_index = -1
             return None
         self.item_selected_index = (self.page_showing_index * self.items_per_page + (y_pos + 2) / self.item_height)
@@ -664,7 +660,7 @@ class ItemList(Widget):
 
     def item_selected_get(self):
         """ :return: selected item's text """
-        return self.list[self.item_selected_index]
+        return self.list[self.item_selected_index] if 0 <= self.item_selected_index < len(self.list) else None
 
     def on_click(self, x_pos, y_pos):
         """ Relays click action to a list item.

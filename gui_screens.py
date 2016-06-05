@@ -4,14 +4,10 @@
 ======================================================================
 """
 
-__author__ = 'Mark Zwart'
-
-import sys, pygame
-from pygame.locals import *
-import time
-import math
 from gui_widgets import *
 from settings import *
+
+__author__ = 'Mark Zwart'
 
 """ Mouse related variables """
 GESTURE_MOVE_MIN = 50  # Minimum movement in pixels to call it a move
@@ -58,7 +54,7 @@ class GestureDetector(object):
 
         gesture_ended = False
 
-        mouse_down_time = pygame.time.get_ticks()  # Start timer to detect long mouse clicks
+        # mouse_down_time = pygame.time.get_ticks()  # Start timer to detect long mouse clicks
         self.x_start, self.y_start = pygame.mouse.get_pos()  # Get click position (= start position for swipe)
         pygame.mouse.get_rel()  # Start tracking mouse movement
         mouse_down_time = pygame.time.get_ticks()
@@ -152,9 +148,9 @@ class Screen(object):
             :return: The tag_name of the clicked component.
         """
         for key, value in self.components.items():
-            if (isinstance(value, ButtonIcon) or isinstance(value, ButtonText) or \
-                        isinstance(value, Switch) or isinstance(value, Slider) or isinstance(value, Picture)) and \
-                    value.visible:
+            if ((isinstance(value, ButtonIcon) or isinstance(value, ButtonText) or
+                    isinstance(value, Switch) or isinstance(value, Slider) or isinstance(value, Picture)) and 
+                    value.visible):
                 if value.x_pos <= x <= value.x_pos + value.width and value.y_pos <= y <= value.y_pos + value.height:
                     value.on_click(x, y)
                     return key

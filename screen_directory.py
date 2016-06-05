@@ -2,23 +2,13 @@
 =======================================================
 **screen_directory.py**: MPD Directory browsing screen
 =======================================================
-
 """
+
+from gui_screens import *
+from pij_screen_navigation import ScreenNavigation
+from mpd_client import mpd
+
 __author__ = 'Mark Zwart'
-
-import sys, pygame
-from pygame.locals import *
-import time
-import subprocess
-import os
-import glob
-from gui_widgets import *
-from pij_screen_navigation import *
-from mpd_client import *
-from settings import *
-from screen_keyboard import *
-from screen_settings import *
-
 
 class LetterBrowser(ItemList):
     """ The graphical control for selecting artists/albums/songs starting with a letter.
@@ -97,8 +87,8 @@ class DirectoryBrowser(ItemList):
             :return: List of letters
         """
         output_set = set()
-        for item in self.list:
-            first_letter = item[:1].upper()
+        for elem in self.list:
+            first_letter = elem[:1].upper()
             output_set.add(first_letter)
         letter_list = list(output_set)
         letter_list.sort(key=lambda item: (

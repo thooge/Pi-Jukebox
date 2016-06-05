@@ -4,21 +4,13 @@
 =======================================================
 
 """
+
+from gui_screens import *
+from pij_screen_navigation import ScreenNavigation
+from screen_keyboard import Keyboard
+from mpd_client import mpd
+
 __author__ = 'Mark Zwart'
-
-import sys, pygame
-from pygame.locals import *
-import time
-import subprocess
-import os
-import glob
-from gui_widgets import *
-from pij_screen_navigation import *
-from mpd_client import *
-from settings import *
-from screen_keyboard import *
-from screen_settings import *
-
 
 class LetterBrowser(ItemList):
     """ The graphical control for selecting artists/albums/songs starting with a letter.
@@ -111,8 +103,8 @@ class LibraryBrowser(ItemList):
             first_letter = item[:1].upper()
             output_set.add(first_letter)
         letter_list = list(output_set)
-        letter_list.sort(key=lambda item: (
-        [str, int].index(type(item)), item))  # Sorting, making sure letters are put before numbers
+        # Sorting, making sure letters are put before numbers
+        letter_list.sort(key=lambda item: ([str, int].index(type(item)), item))
         return letter_list
 
 

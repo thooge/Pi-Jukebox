@@ -1,5 +1,4 @@
 import ConfigParser
-import subprocess
 
 class ConfigFile(object):
     def __init__(self):
@@ -32,26 +31,31 @@ class ConfigFile(object):
 
     def setting_set(self, section, key, value):
         """ Write a setting to the configuration file
+
+            :param section: Config section
+            :param key: Key
+            :param value: Value
+
         """
-        file = open("pi-jukebox.conf", 'w')
+        cfg_file = open("pi-jukebox.conf", 'w')
         try:
             self.parser.add_section(section)
-        except Exception:
+        except ConfigParser.DuplicateSectionError:
             pass
         self.parser.set(section, key, value)
-        self.parser.write(file)
-        file.close()
+        self.parser.write(cfg_file)
+        cfg_file.close()
 
     def setting_remove(self, section, key):
         """ Remove a setting to the configuration file
         """
-        file = open("pi-jukebox.conf", 'w')
+        cfg_file = open("pi-jukebox.conf", 'w')
         try:
             self.parser.remove_option(section, key)
-        except Exception:
+        except ConfigParser.NoSectionError:
             pass
-        self.parser.write(file)
-        file.close()
+        self.parser.write(cfg_file)
+        cfg_file.close()
 
     def section_exists(self, section):
         return self.parser.has_section(section)
@@ -77,7 +81,7 @@ class ConfigFile(object):
         dict1 = {}
         options = self.parser.options(section)
         for option in options:
-           setting = self.parser.getboolean(section, option)
+            dict1[option] = self.parser.getboolean(section, option)
         return dict1
 
 config_file = ConfigFile()

@@ -1,25 +1,22 @@
 """
 **pi-jukebox.py**: Main file
 """
-__author__ = 'Mark Zwart'
-import sys
-import pygame
-from pygame.locals import *
+
 import time
-import subprocess
-import os
-import glob
+import pygame
 import locale
 import gettext
-from gui_screens import *
-from config_file import *
+from config_file import config_file
 from settings import *
-from mpd_client import *
-from screen_player import *
-from screen_library import *
-from screen_directory import *
-from screen_radio import *
-from screen_settings import *
+from gui_screens import Screens
+from pij_screen_navigation import ScreenNavigation
+from screen_library import ScreenMessage, ScreenLibrary
+from screen_player import ScreenPlaying, ScreenPlaylist
+from screen_directory import ScreenDirectory
+from screen_radio import ScreenRadio
+from mpd_client import mpd
+
+__author__ = 'Mark Zwart'
 
 class PiJukeboxScreens(Screens):
     """ Manages Pi Jukebox's main screens.
@@ -50,9 +47,11 @@ def init_gettext(domain, localedir):
 def apply_settings():
     # Check for first time settings
     if not config_file.setting_exists('MPD Settings', 'music directory'):
-        screen_message = ScreenMessage(SCREEN, 'No music directory',
-                                       "If you want to display cover art, Pi-Jukebox needs to know which directory your music collection is in. The location can also be found in your mpd.conf entry 'music directory'.",
-                                       'warning')
+        screen_message = ScreenMessage(
+            SCREEN, 
+            _("No music directory"),
+            _("If you want to display cover art, Pi-Jukebox needs to know which directory your music collection is in. The location can also be found in your mpd.conf entry 'music directory'.",
+            'warning')
         screen_message.show()
         settings_mpd_screen = ScreenSettingsMPD(SCREEN)
         settings_mpd_screen.keyboard_setting("Set music directory", 'MPD Settings', 'music directory',

@@ -9,17 +9,6 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 
-import sys, pygame
-from pygame.locals import *
-import time
-import subprocess
-import os
-import glob
-from gui_widgets import *
-from settings import *
-from screen_keyboard import *
-
-
 class WifiConnection(object):
     def __init__(self):
         self.connected = False

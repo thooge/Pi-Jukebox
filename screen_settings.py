@@ -5,20 +5,11 @@
 """
 __author__ = 'Mark Zwart'
 
-import sys, pygame
-from pygame.locals import *
-import time
-import subprocess
-import os
-import glob
 import socket
-from gui_widgets import *
-from mpd_client import *
-from settings import *
-from screen_wifi import *
 from config_file import *
-from screen_keyboard import *
-
+from gui_screens import *
+from mpd_client import *
+from screen_keyboard import Keyboard
 
 class ScreenSettings(ScreenModal):
     """ Screen for settings or quitting/shutting down
