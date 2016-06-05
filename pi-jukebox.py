@@ -3,7 +3,7 @@
 """
 __author__ = 'Mark Zwart'
 import sys
-pygame
+import pygame
 from pygame.locals import *
 import time
 import subprocess

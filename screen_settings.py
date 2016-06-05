@@ -166,9 +166,9 @@ class ScreenSettingsMPD(ScreenModal):
         ScreenModal.__init__(self, screen_rect, _("MPD settings"))
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
-        label = _("Change host: {0}".format(config_file.setting_get('MPD Settings', 'host'))
+        label = _("Change host: {0}".format(config_file.setting_get('MPD Settings', 'host')))
         self.add_component(ButtonText('btn_host', self.screen, button_left, 30, button_width, 32, label))
-        label = _("Change port: {0}".format(config_file.setting_get('MPD Settings', 'port'))
+        label = _("Change port: {0}".format(config_file.setting_get('MPD Settings', 'port')))
         self.add_component(ButtonText('btn_port', self.screen, button_left, 72, button_width, 32, label))
         self.add_component(
             ButtonText('btn_music_dir', self.screen, button_left, 114, button_width, 32, _("Change music directory")))
@@ -213,9 +213,9 @@ class ScreenSettingsMPD(ScreenModal):
         config_file.setting_set(section, key, new_value)
 
     def update(self):
-        label = _("Change host: {0}".format(config_file.setting_get('MPD Settings', 'host'))
+        label = _("Change host: {0}".format(config_file.setting_get('MPD Settings', 'host')))
         self.components['btn_host'].draw(label)
-        label = _("Change port: {0}".format(config_file.setting_get('MPD Settings', 'port'))
+        label = _("Change port: {0}".format(config_file.setting_get('MPD Settings', 'port')))
         self.components['btn_port'].draw(label)
 
 

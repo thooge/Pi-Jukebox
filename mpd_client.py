@@ -4,15 +4,15 @@
 ==================================================================
 """
 
-import sys, pygame
+import os
+import sys
+import pygame
 import time
 import subprocess
-import os
 import glob
 import mpd
 from collections import deque
-from mutagen import File
-
+from tinytag import TinyTag
 
 MPD_TYPE_ARTIST = 'artist'
 MPD_TYPE_ALBUM = 'album'
@@ -101,15 +101,11 @@ class MPDNowPlaying(object):
         if self.file == "" or self.playing_type == 'radio':
             return DEFAULT_COVER
         try:
-            music_file = File(self.music_directory + self.file)
-        except IOError:
+            tag = TinyTag.get(os.path.join(self.music_directory, self.file), image=True)
+            cover_art = tag.get_image()
+        except:
             return DEFAULT_COVER
-        cover_art = None
-        if 'covr' in music_file:
-            cover_art = music_file.tags['covr'].data
-        elif 'APIC:' in music_file:
-            cover_art = music_file.tags['APIC:'].data
-        else:
+        if cover_art is None:
             return DEFAULT_COVER
 
         with open(dest_file_name, 'wb') as img:
@@ -120,7 +116,6 @@ class MPDNowPlaying(object):
         minutes = int(seconds / 60)
         seconds_left = int(round(seconds - (minutes * 60), 0))
         time_string = str(minutes) + ':'
-        seconds_string = ''
         if seconds_left < 10:
             seconds_string = '0' + str(seconds_left)
         else:
