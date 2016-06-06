@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pi-Jukebox 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-05 10:07+0200\n"
+"POT-Creation-Date: 2016-06-06 19:53+0200\n"
 "PO-Revision-Date: 2106-06-05 10:10+0200\n"
 "Last-Translator: Thomas Hooge <thomas@hoogi.de>\n"
 "Language-Team: de <thomas@hoogi.de>\n"
@@ -17,17 +17,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gui_screens.py:393
+#: gui_screens.py:389
 msgid "Yes"
 msgstr "Ja"
 
-#: gui_screens.py:396
+#: gui_screens.py:392
 msgid "No"
 msgstr "Nein"
 
-#: mpd_client.py:64 mpd_client.py:68 mpd_client.py:76
+#: mpd_client.py:61 mpd_client.py:65 mpd_client.py:73
 msgid "Unknown"
 msgstr "Unbekannt"
+
+#: pi-jukebox.py:53
+msgid "No music directory"
+msgstr "Kein Musikverzeichnis"
+
+#: pi-jukebox.py:54
+msgid ""
+"If you want to display cover art, Pi-Jukebox needs to know which directory "
+"your music collection is in. The location can also be found in your mpd.conf "
+"entry 'music directory'."
+msgstr ""
+"Wenn Cover-Art dargestellt werden soll, muß Pi-Jukebox wissen, in welchem "
+"Verzeichnis sich die Musiksammlung befindet. Der Ort kann auch in der mpd.conf "
+"in der Einstellung 'music directory' gefunden werden."
+
+#: pi-jukebox.py:58 screen_settings.py:189
+msgid "Set music directory"
+msgstr "Musikverzeichnis einstellen"
 
 #: pi-jukebox.py:75
 #, python-brace-format
@@ -42,214 +60,210 @@ msgstr ""
 "Einstellungen in pi-jukebox.conf pürfen oder ob der Server läuft mit 'sudo "
 "servce mpd status'."
 
-#: screen_directory.py:209
+#: screen_directory.py:199
 #, python-brace-format
 msgid "Browse directory {0}"
 msgstr "Verzeichnis {0} durchsuchen"
 
-#: screen_directory.py:212 screen_library.py:343
+#: screen_directory.py:202 screen_library.py:336
 msgid "Add to playlist"
 msgstr "Füge zu Playlist hinzu"
 
-#: screen_directory.py:216 screen_library.py:346
+#: screen_directory.py:206 screen_library.py:339
 msgid "Add to playlist and play"
 msgstr "Füge zu Playlist hinzu und spiele ab"
 
-#: screen_directory.py:220 screen_library.py:349
+#: screen_directory.py:210 screen_library.py:342
 msgid "Replace playlist and play"
 msgstr "Ersetze Playlist und spiele ab"
 
-#: screen_directory.py:224 screen_library.py:295 screen_settings.py:83
+#: screen_directory.py:214 screen_library.py:288 screen_settings.py:74
 msgid "Cancel"
 msgstr "Abbruch"
 
-#: screen_library.py:279
+#: screen_library.py:272
 msgid "Search library for..."
 msgstr "Suche in Bibliothek nach ..."
 
-#: screen_library.py:289
+#: screen_library.py:282
 msgid "Artists"
 msgstr "Künstler"
 
-#: screen_library.py:291
+#: screen_library.py:284
 msgid "Albums"
 msgstr "Alben"
 
-#: screen_library.py:293
+#: screen_library.py:286
 msgid "Songs"
 msgstr "Lieder"
 
-#: screen_library.py:309
+#: screen_library.py:302
 msgid "Search artists"
 msgstr "Suche Künstler"
 
-#: screen_library.py:312
+#: screen_library.py:305
 msgid "Search albums"
 msgstr "Suche Alben"
 
-#: screen_library.py:315
+#: screen_library.py:308
 msgid "Search songs"
 msgstr "Suche Lieder"
 
-#: screen_library.py:353
-#, fuzzy, python-brace-format
+#: screen_library.py:346
+#, python-brace-format
 msgid "Albums of {0}"
 msgstr "Alben von {0}"
 
-#: screen_library.py:356 screen_library.py:360
-#, fuzzy, python-brace-format
+#: screen_library.py:349 screen_library.py:353
+#, python-brace-format
 msgid "Songs of {0}"
 msgstr "Lieder von {0}"
 
-#: screen_player.py:289
+#: screen_player.py:281
 msgid "Volume"
 msgstr "Lautstärke"
 
-#: screen_settings.py:29
+#: screen_settings.py:20
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: screen_settings.py:32
+#: screen_settings.py:23
 msgid "Quit Pi-Jukebox"
 msgstr "Pi-Jukebox beenden"
 
-#: screen_settings.py:34
+#: screen_settings.py:25
 msgid "Playback options"
 msgstr "Abspieloptionen"
 
-#: screen_settings.py:36
+#: screen_settings.py:27
 msgid "MPD related settings"
 msgstr "MPD Einstellungen"
 
-#: screen_settings.py:38 screen_settings.py:229
+#: screen_settings.py:29 screen_settings.py:220
 msgid "System info"
 msgstr "Systeminformationen"
 
-#: screen_settings.py:40 screen_settings.py:125 screen_settings.py:175
-#: screen_settings.py:232
+#: screen_settings.py:31 screen_settings.py:116 screen_settings.py:166
+#: screen_settings.py:223
 msgid "Back"
 msgstr "Zurück"
 
-#: screen_settings.py:71 screen_settings.py:77
+#: screen_settings.py:62 screen_settings.py:68
 msgid "Quit"
 msgstr "Beenden"
 
-#: screen_settings.py:79
+#: screen_settings.py:70
 msgid "Shutdown Pi"
 msgstr "Pi ausschalten"
 
-#: screen_settings.py:81
+#: screen_settings.py:72
 msgid "Reboot Pi"
 msgstr "Pi neustarten"
 
-#: screen_settings.py:89
+#: screen_settings.py:80
 msgid "Bye!"
 msgstr "Tschüß!"
 
-#: screen_settings.py:113
+#: screen_settings.py:104
 msgid "Playback settings"
 msgstr "Abspieleinstellungen"
 
-#: screen_settings.py:114
+#: screen_settings.py:105
 msgid "Shuffle"
 msgstr "Mische"
 
-#: screen_settings.py:116
+#: screen_settings.py:107
 msgid "Repeat"
 msgstr "Widerhole"
 
-#: screen_settings.py:118
+#: screen_settings.py:109
 msgid "Single"
 msgstr "Einzeln"
 
-#: screen_settings.py:120
+#: screen_settings.py:111
 msgid "Consume playlist"
 msgstr "Verbrauche Playlist"
 
-#: screen_settings.py:123
+#: screen_settings.py:114
 msgid "Re-scan library"
 msgstr "Bibliothek neu scannen"
 
-#: screen_settings.py:124
+#: screen_settings.py:115
 msgid "Update library"
 msgstr "Aktualisiere Bibliothek"
 
-#: screen_settings.py:166
+#: screen_settings.py:157
 msgid "MPD settings"
 msgstr "MPD Einstellungen"
 
-#: screen_settings.py:174
-msgid "Change music directory"
-msgstr "Musikverzeichnis wechseln"
-
-#: screen_settings.py:186
-msgid "Set mpd host"
-msgstr "MPD-Host einstellen"
-
-#: screen_settings.py:192
-msgid "Set mpd server port"
-msgstr "MPD-Port einstellen"
-
-#: screen_settings.py:198
-msgid "Set music directory"
-msgstr "Musikverzeichnis einstellen"
-
-#: screen_settings.py:235
-msgid "Music database"
-msgstr "Musik Datenbank"
-
-#: screen_settings.py:237
-msgid "Artists: "
-msgstr "Künstler: "
-
-#: screen_settings.py:239
-msgid "Albums: "
-msgstr "Alben: "
-
-#: screen_settings.py:241
-msgid "Songs: "
-msgstr "Lieder: "
-
-#: screen_settings.py:243
-msgid "Total time: "
-msgstr "Gesamtzeit: "
-
-#: screen_settings.py:249
-#, python-brace-format
-msgid "Host name: {0}"
-msgstr "Hostname: {0}"
-
-#: screen_settings.py:255
-#, python-brace-format
-msgid "IP address: {0}"
-msgstr "IP-Adresse: {0}"
-
-#: screen_settings.py:272
-msgid " days "
-msgstr " Tage "
-
-#: screen_settings.py:274
-msgid " hrs "
-msgstr " Std "
-
-#: screen_settings.py:276
-msgid " mins "
-msgstr " Min "
-
-#: screen_settings.py:278
-msgid " secs "
-msgstr " Sec "
-
-#: screen_settings.py:218 screen_settings.py:171
-#, python-brace-format
-msgid "Change port: {0}"
-msgstr "Ändere Port: {0}"
-
-#: screen_settings.py:216 screen_settings.py:169
+#: screen_settings.py:160 screen_settings.py:207
 #, python-brace-format
 msgid "Change host: {0}"
 msgstr "Ändere Host: {0}"
 
-#: screen_wifi.py:59
+#: screen_settings.py:162 screen_settings.py:209
+#, python-brace-format
+msgid "Change port: {0}"
+msgstr "Ändere Port: {0}"
+
+#: screen_settings.py:165
+msgid "Change music directory"
+msgstr "Musikverzeichnis wechseln"
+
+#: screen_settings.py:177
+msgid "Set mpd host"
+msgstr "MPD-Host einstellen"
+
+#: screen_settings.py:183
+msgid "Set mpd server port"
+msgstr "MPD-Port einstellen"
+
+#: screen_settings.py:226
+msgid "Music database"
+msgstr "Musik Datenbank"
+
+#: screen_settings.py:228
+msgid "Artists: "
+msgstr "Künstler: "
+
+#: screen_settings.py:230
+msgid "Albums: "
+msgstr "Alben: "
+
+#: screen_settings.py:232
+msgid "Songs: "
+msgstr "Lieder: "
+
+#: screen_settings.py:234
+msgid "Total time: "
+msgstr "Gesamtzeit: "
+
+#: screen_settings.py:240
+#, python-brace-format
+msgid "Host name: {0}"
+msgstr "Hostname: {0}"
+
+#: screen_settings.py:246
+#, python-brace-format
+msgid "IP address: {0}"
+msgstr "IP-Adresse: {0}"
+
+#: screen_settings.py:263
+msgid " days "
+msgstr " Tage "
+
+#: screen_settings.py:265
+msgid " hrs "
+msgstr " Std "
+
+#: screen_settings.py:267
+msgid " mins "
+msgstr " Min "
+
+#: screen_settings.py:269
+msgid " secs "
+msgstr " Sec "
+
+#: screen_wifi.py:48
 msgid "Setup WiFi connection"
 msgstr "Wifi-Verbindung einstellen"

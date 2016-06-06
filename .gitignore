@@ -3,3 +3,4 @@
 /.idea
 pi-jukebox.conf
 cover_art.jpg
+locale/*.pot

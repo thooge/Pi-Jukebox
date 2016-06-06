@@ -14,6 +14,7 @@ from screen_library import ScreenMessage, ScreenLibrary
 from screen_player import ScreenPlaying, ScreenPlaylist
 from screen_directory import ScreenDirectory
 from screen_radio import ScreenRadio
+from screen_settings import ScreenSettingsMPD
 from mpd_client import mpd
 
 __author__ = 'Mark Zwart'
@@ -54,7 +55,7 @@ def apply_settings():
             'warning')
         screen_message.show()
         settings_mpd_screen = ScreenSettingsMPD(SCREEN)
-        settings_mpd_screen.keyboard_setting("Set music directory", 'MPD Settings', 'music directory',
+        settings_mpd_screen.keyboard_setting(_("Set music directory"), 'MPD Settings', 'music directory',
                                              '/var/lib/mpd/music/')
     mpd.host = config_file.setting_get('MPD Settings', 'host')
     mpd.port = int(config_file.setting_get('MPD Settings', 'port'))

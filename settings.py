@@ -15,17 +15,6 @@ from config_file import config_file
 
 VERSION = (1, 1, 0)
 
-#: Switches between development/debugging on your desktop/laptop versus running on your Raspberry Pi
-RUN_ON_RASPBERRY_PI = os.uname()[4][:3] == 'arm'
-
-# Setting up touch screen, set if statement to true on Raspberry Pi
-if RUN_ON_RASPBERRY_PI:
-    os.environ['SDL_FBDEV'] = '/dev/fb1'
-    os.environ['SDL_MOUSEDEV'] = '/dev/input/touchscreen'
-    os.environ['SDL_MOUSEDRV'] = 'TSLIB'
-
-# Display settings
-pygame.init() 	# Pygame initialization
 #: The display dimensions, change this if you have a bigger touch screen.
 #: adafruit 2.8" -> 320x200
 #: adafruit 3.5" -> 480x320
@@ -39,6 +28,22 @@ elif DISPLAY == 'raspberry7':
     DISPLAY_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 800, 480
 else:
     DISPLAY_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
+
+#: Switches between development/debugging on your desktop/laptop versus running on your Raspberry Pi
+RUN_ON_RASPBERRY_PI = os.uname()[4][:3] == 'arm'
+
+# Setting up touch screen, set if statement to true on Raspberry Pi
+if RUN_ON_RASPBERRY_PI:
+    os.environ['SDL_FBDEV'] = '/dev/fb1'
+    if DISPLAY == 'raspberry7':
+        os.environ['SDL_MOUSEDEV'] = '/dev/input/mouse1'
+        os.environ['SDL_MOUSEDRV'] = 'FT5406'
+    else:
+        os.environ['SDL_MOUSEDEV'] = '/dev/input/touchscreen'
+        os.environ['SDL_MOUSEDRV'] = 'TSLIB'
+
+# Display settings
+pygame.init() 	# Pygame initialization
 
 PYGAME_EVENT_DELAY = 25
 
