@@ -157,9 +157,9 @@ class ScreenSettingsMPD(ScreenModal):
         ScreenModal.__init__(self, screen_rect, _("MPD settings"))
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
-        label = _("Change host: {0}".format(config_file.setting_get('MPD Settings', 'host')))
+        label = _("Change host: {0}").format(config_file.setting_get('MPD Settings', 'host'))
         self.add_component(ButtonText('btn_host', self.screen, button_left, 30, button_width, 32, label))
-        label = _("Change port: {0}".format(config_file.setting_get('MPD Settings', 'port')))
+        label = _("Change port: {0}").format(config_file.setting_get('MPD Settings', 'port'))
         self.add_component(ButtonText('btn_port', self.screen, button_left, 72, button_width, 32, label))
         self.add_component(
             ButtonText('btn_music_dir', self.screen, button_left, 114, button_width, 32, _("Change music directory")))
@@ -237,13 +237,13 @@ class ScreenSystemInfo(ScreenModal):
         self.add_component(LabelText('lbl_system', self.screen, button_left, 90, 100, 18, "Server"))
         self.components['lbl_system'].font_color = FIFTIES_TEAL
         self.add_component(
-            LabelText('lbl_host_name', self.screen, button_left, 108, 1500, 18, _("Host name: {0}".format(socket.gethostname()))))
+            LabelText('lbl_host_name', self.screen, button_left, 108, 1500, 18, _("Host name: {0}").format(socket.gethostname())))
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('google.com', 0))
             ip_address = s.getsockname()[0]
             self.add_component(
-                LabelText('lbl_ip_address', self.screen, button_left, 126, 1500, 18, _("IP address: {0}".format(ip_address))))
+                LabelText('lbl_ip_address', self.screen, button_left, 126, 1500, 18, _("IP address: {0}").format(ip_address)))
         except Exception:
             pass
 
