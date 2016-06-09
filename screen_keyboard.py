@@ -211,6 +211,9 @@ class Keyboard():
                 self.text = self.keyboard_symbols.text
                 if value == 'letters':
                     self.selected = value
+            if value is None:
+                # ESC pressed
+                value = 'cancel'
         if value == 'enter':
             return self.text  # When the user pressed enter the entered text value is returned
         elif value == 'cancel':

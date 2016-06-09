@@ -193,12 +193,8 @@ class ScreenSettingsMPD(ScreenModal):
         self.show()
 
     def keyboard_setting(self, caption, section, key, value=""):
-        setting_value = config_file.setting_get(section, key)
-        keyboard = Keyboard(self.screen, caption)
-        if setting_value is None:
-            keyboard.text = value
-        else:
-            keyboard.text = setting_value
+        setting_value = config_file.setting_get(section, key, value)
+        keyboard = Keyboard(self.screen, caption, setting_value)
         keyboard.title_color = FIFTIES_ORANGE
         new_value = keyboard.show()  # Get entered search text
         config_file.setting_set(section, key, new_value)

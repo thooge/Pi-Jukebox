@@ -24,10 +24,11 @@ class ConfigFile(object):
                 if setting['section'] == 'Radio stations':
                     self.radio_stations.append((setting['key'], setting['value']))
 
-    def setting_get(self, section, key):
+    def setting_get(self, section, key, default=None):
         if self.setting_exists(section, key):
-            value = self.parser.get(section, key)
-            return value
+            return self.parser.get(section, key)
+        else:
+            return default
 
     def setting_set(self, section, key, value):
         """ Write a setting to the configuration file
