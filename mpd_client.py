@@ -365,7 +365,10 @@ class MPDController(object):
         except mpdlib.ConnectionError:
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.setvol(percentage)
+        except mpdlib.CommandError, e:
+            print "CommandEror", e
         self.volume = percentage
+        self.__muted = False
 
     def volume_set_relative(self, percentage):
         """ Sets volume relatively to current volume.
@@ -383,6 +386,9 @@ class MPDController(object):
         except mpdlib.ConnectionError:
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.setvol(self.volume)
+        except mpdlib.CommandError, e:
+            print "CommandError", e
+        self.__muted = False
 
     def volume_mute_switch(self):
         """ Switches volume muting on or off. """
@@ -392,6 +398,8 @@ class MPDController(object):
             except mpdlib.ConnectionError:
                 self.mpd_client.connect(self.host, self.port)
                 self.mpd_client.setvol(self.volume)
+            except mpdlib.CommandError, e:
+                print "CommandError", e
             self.__muted = False
         else:
             try:
@@ -399,6 +407,8 @@ class MPDController(object):
             except mpdlib.ConnectionError:
                 self.mpd_client.connect(self.host, self.port)
                 self.mpd_client.setvol(0)
+            except mpdlib.CommandError, e:
+                print "CommandError", e
             self.__muted = True
 
     def volume_mute_get(self):
