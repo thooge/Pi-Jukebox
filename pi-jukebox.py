@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 **pi-jukebox.py**: Main file
 """
