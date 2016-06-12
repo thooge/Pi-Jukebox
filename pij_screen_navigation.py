@@ -10,7 +10,8 @@ __author__ = 'Mark Zwart'
 
 class ScreenNavigation(WidgetContainer):
     def __init__(self, tag_name, screen_rect, button_active):
-        WidgetContainer.__init__(self, tag_name, screen_rect, 0, 0, 53, 240)
+        WidgetContainer.__init__(self, tag_name, screen_rect,
+            0, 0, 53, SCREEN_HEIGHT)
         self.__radio_mode = False
         self.add_component(ButtonIcon('btn_player', self.screen, ICO_PLAYER_FILE_ACTIVE, 3, 5))
         self.add_component(ButtonIcon('btn_playlist', self.screen, ICO_PLAYLIST, 3, 45))

@@ -17,7 +17,8 @@ class LetterBrowser(ItemList):
     """
 
     def __init__(self, screen_rect):
-        ItemList.__init__(self, 'list_letters', screen_rect, 268, 40, 52, 195)
+        ItemList.__init__(self, 'list_letters', screen_rect, 
+            268, 40, 52, 195)
         self.item_outline_visible = True
         self.outline_visible = False
         self.font_color = FIFTIES_GREEN
@@ -36,11 +37,14 @@ class DirectoryBrowser(ItemList):
 
     def __init__(self, screen_rect):
         if DISPLAY == 'raspberry7':
-            ItemList.__init__(self, 'list_directory', screen_rect, 55, 42, 690, 424)
+            ItemList.__init__(self, 'list_directory', screen_rect,
+                55, 42, 690, 424)
         elif DISPLAY == 'adafruit3.5':
-            ItemList.__init__(self, 'list_directory', screen_rect, 55, 42, 214, 194)
+            ItemList.__init__(self, 'list_directory', screen_rect,
+                55, 42, 214, 194)
         else:
-            ItemList.__init__(self, 'list_directory', screen_rect, 55, 42, 210, 194)
+            ItemList.__init__(self, 'list_directory', screen_rect,
+                55, 42, 210, 194)
         self.outline_visible = False
         self.item_outline_visible = True
         self.font_color = FIFTIES_YELLOW
@@ -194,25 +198,32 @@ class ScreenSelected(ScreenModal):
         """ Set-up screen controls. """
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
+        button_height = 32
+        button_offset = 42
         button_top = 30
         if self.selected_type == 'directory':
-            label = _("Browse directory {0}".format(self.selected_name))
-            self.add_component(ButtonText('btn_browse', self.screen, button_left, button_top, button_width, 32, label))
-            button_top += 42
+            label = _("Browse directory {0}").format(self.selected_name)
+            self.add_component(ButtonText('btn_browse', self.screen,
+                button_left, button_top, button_width, button_height, label))
+            button_top += button_offset
         label = _("Add to playlist")
-        self.add_component(ButtonText('btn_add', self.screen, button_left, button_top, button_width, 32, label))
+        self.add_component(ButtonText('btn_add', self.screen,
+            button_left, button_top, button_width, button_height, label))
         self.components['btn_add'].button_color = FIFTIES_TEAL
-        button_top += 42
+        button_top += button_offset
         label = _("Add to playlist and play")
-        self.add_component(ButtonText('btn_add_play', self.screen, button_left, button_top, button_width, 32, label))
+        self.add_component(ButtonText('btn_add_play', self.screen,
+            button_left, button_top, button_width, button_height, label))
         self.components['btn_add_play'].button_color = FIFTIES_TEAL
-        button_top += 42
+        button_top += button_offset
         label = _("Replace playlist and play")
-        self.add_component(ButtonText('btn_replace', self.screen, button_left, button_top, button_width, 32, label))
+        self.add_component(ButtonText('btn_replace', self.screen,
+            button_left, button_top, button_width, button_height, label))
         self.components['btn_replace'].button_color = FIFTIES_TEAL
-        button_top += 42
+        button_top += button_offset
         label = _("Cancel")
-        self.add_component(ButtonText('btn_cancel', self.screen, button_left, button_top, button_width, 32, label))
+        self.add_component(ButtonText('btn_cancel', self.screen,
+            button_left, button_top, button_width, button_height, label))
 
     def action(self, tag_name):
         """ Action that should be performed on a click. """

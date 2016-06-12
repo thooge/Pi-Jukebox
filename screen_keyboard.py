@@ -6,19 +6,7 @@
 __author__ = 'Mark Zwart'
 
 from settings import *
-#from gui_widgets import *
 from gui_screens import *
-
-
-""" Special button icons
-
-    :ivar
-"""
-ICO_SHIFT = RESOURCES + 'shift_48x32.png'
-ICO_BACKSPACE = RESOURCES + 'backspace_48x32.png'
-ICO_ENTER = RESOURCES + 'enter_48x32.png'
-ICO_LETTERS = RESOURCES + 'letters_48x32.png'
-ICO_SYMBOLS = RESOURCES + 'symbols_48x32.png'
 
 class KeyboardBase(ScreenModal):
     """ The base class of a keyboard, should not be instantiated.
@@ -39,12 +27,11 @@ class KeyboardBase(ScreenModal):
 
     def add_row_buttons(self, list_symbols, x, y):
         """ Adds a list of symbol keys starting at x on y. """
-        button_width = 32
         for letter in list_symbols:
             btn_name = 'btn_symbol_' + letter
-            btn = ButtonText(btn_name, self.screen, x, y, button_width, 32, letter)
+            btn = ButtonText(btn_name, self.screen, x, y, KEY_WIDTH_STD, KEY_HEIGHT, letter)
             self.add_component(btn)
-            x += button_width
+            x += KEY_WIDTH_STD + KEY_SPACE
 
     def set_text(self, text):
         """ Sets the edit box's text.

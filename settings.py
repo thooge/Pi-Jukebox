@@ -8,12 +8,35 @@
 __author__ = 'Mark Zwart'
 
 import os
-import sys, pygame
+import sys
+import pygame
 from pygame.locals import *
 import time
 from config_file import config_file
 
 VERSION = (1, 1, 0)
+
+# Default gui dimensions
+# WIP
+
+#BORDER_NAV = 5
+
+FONT_SIZE = 14
+TITLE_HEIGHT = 25
+SPACE = 2
+
+ICO_WIDTH= 48
+ICO_HEIGHT= 32
+
+# SWITCH_WIDTH
+# SWITCH_HEIGHT
+
+#LIST_WIDTH = 
+LIST_INDICATOR_WIDTH = 3
+
+KEY_SPACE = 0
+KEY_WIDTH_STD = 32
+KEY_HEIGHT = 32
 
 #: The display dimensions, change this if you have a bigger touch screen.
 #: adafruit 2.8" -> 320x200
@@ -59,7 +82,7 @@ else:
 RESOURCES = os.path.dirname(__file__) + '/resources/'
 
 #: Standard font type
-FONT = pygame.font.Font(RESOURCES + 'DroidSans.ttf', 14)
+FONT = pygame.font.Font(RESOURCES + 'DroidSans.ttf', FONT_SIZE)
 
 
 """ Color definitions """
@@ -128,6 +151,8 @@ ICO_STOP = RESOURCES + 'stop_48x32.png'
 ICO_NEXT = RESOURCES + 'next_48x32.png'
 ICO_PREVIOUS = RESOURCES + 'prev_48x32.png'
 ICO_VOLUME = RESOURCES + 'vol_48x32.png'
+
+# Volume icons
 ICO_VOLUME_UP = RESOURCES + 'vol_up_48x32.png'
 ICO_VOLUME_DOWN = RESOURCES + 'vol_down_48x32.png'
 ICO_VOLUME_MUTE = RESOURCES + 'vol_mute_48x32.png'
@@ -149,6 +174,18 @@ ICO_PLAYLISTS_ACTIVE = RESOURCES + 'playlists_active_48x32.png'
 ICO_FOLDER_ROOT = RESOURCES + 'folder_root_48x32.png'
 ICO_FOLDER_UP = RESOURCES + 'folder_up_48x32.png'
 
+# Standard info icons
+ICO_INFO = RESOURCES + 'icon_info.png'
+ICO_WARNING = RESOURCES + 'icon_warning.png'
+ICO_ERROR = RESOURCES + 'icon_warning.png'
+
 # Radio icons
 ICO_STATION_ADD = RESOURCES + 'station_add_48x32.png'
 COVER_ART_RADIO = RESOURCES + 'radio_cover_art.png'
+
+# Special keyboard icons
+ICO_SHIFT = RESOURCES + 'shift_48x32.png'
+ICO_BACKSPACE = RESOURCES + 'backspace_48x32.png'
+ICO_ENTER = RESOURCES + 'enter_48x32.png'
+ICO_LETTERS = RESOURCES + 'letters_48x32.png'
+ICO_SYMBOLS = RESOURCES + 'symbols_48x32.png'

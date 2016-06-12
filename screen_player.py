@@ -15,7 +15,15 @@ class Playlist(ItemList):
         :param screen_rect: The display's rect where the library browser is drawn on.
     """
     def __init__(self, screen_rect):
-        ItemList.__init__(self, 'list_playing', screen_rect, 52, 46, 216, 189)
+        if DISPLAY == 'raspberry7':
+            ItemList.__init__(self, 'list_playing', screen_rect,
+                52, 46, 696, 419)
+        elif DISPLAY == 'adafruit3.5':
+            ItemList.__init__(self, 'list_playing', screen_rect,
+                52, 46, 216, 189)
+        else:
+            ItemList.__init__(self, 'list_playing', screen_rect,
+                52, 46, 216, 189)
         self.item_height = 27
         self.item_active_color = FIFTIES_ORANGE
         self.outline_color = FIFTIES_CHARCOAL
@@ -299,7 +307,7 @@ class ScreenVolume(ScreenModal):
         self.components['slide_volume'].progress_percentage_set(mpd.volume)
         self.add_component(
             ButtonText('btn_back', self.screen, self.window_x + self.window_width / 2 - 23, self.window_y + 98, 46, 32,
-                       "Back"))
+                       _("Back")))
         self.components['btn_back'].button_color = FIFTIES_TEAL
 
     def on_click(self, x, y):

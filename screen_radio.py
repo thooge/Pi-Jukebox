@@ -17,7 +17,15 @@ class RadioBrowser(ItemList):
         :param screen_rect: The screen rect where the directory browser is drawn on.
     """
     def __init__(self, screen_rect):
-        ItemList.__init__(self, 'list_stations', screen_rect, 55, 42, 210, 194)
+        if DISPLAY == 'raspberry7':
+            ItemList.__init__(self, 'list_stations', screen_rect,
+            55, 42, 210, 194)
+        elif DISPLAY == 'adafruit3.5':
+            ItemList.__init__(self, 'list_stations', screen_rect,
+            55, 42, 210, 194)
+        else:
+            ItemList.__init__(self, 'list_stations', screen_rect,
+            55, 42, 210, 194)
         self.outline_visible = False
         self.item_outline_visible = True
         self.font_color = FIFTIES_YELLOW
@@ -135,15 +143,21 @@ class ScreenSelected(ScreenModal):
         """ Set-up screen controls. """
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
+        button_height = 32
+        button_offset = 42
         button_top = 30
-        self.add_component(ButtonText('btn_tune_in', self.screen, button_left, button_top, button_width, 32, "Tune in"))
+        self.add_component(ButtonText('btn_tune_in', self.screen, 
+            button_left, button_top, button_width, button_height, _("Tune in")))
         self.components['btn_tune_in'].button_color = FIFTIES_TEAL
-        button_top += 42
-        self.add_component(ButtonText('btn_edit', self.screen, button_left, button_top, button_width, 32, "Edit"))
-        button_top += 42
-        self.add_component(ButtonText('btn_remove', self.screen, button_left, button_top, button_width, 32, "Remove"))
-        button_top += 42
-        self.add_component(ButtonText('btn_cancel', self.screen, button_left, button_top, button_width, 32, "Cancel"))
+        button_top += button_offset
+        self.add_component(ButtonText('btn_edit', self.screen,
+            button_left, button_top, button_width, button_height, _("Edit")))
+        button_top += button_offset
+        self.add_component(ButtonText('btn_remove', self.screen,
+            button_left, button_top, button_width, button_height, _("Remove")))
+        button_top += button_offset
+        self.add_component(ButtonText('btn_cancel', self.screen, 
+            button_left, button_top, button_width, button_height, _("Cancel")))
 
     def action(self, tag_name):
         """ Action that should be performed on a click. """
@@ -154,8 +168,8 @@ class ScreenSelected(ScreenModal):
             screen_edit.show()
             self.close()
         elif tag_name == 'btn_remove':
-            screen_yes_no = ScreenYesNo(self.screen, "Remove " + self.station_name,
-                                        "Are you sure you want to remove " + self.station_name + "?")
+            screen_yes_no = ScreenYesNo(self.screen, _("Remove {0}").format(self.station_name),
+                                       _("Are you sure you want to remove {0}?").format(self.station_name))
             if screen_yes_no.show() == 'yes':
                 config_file.setting_remove('Radio stations', self.station_name)
             self.close()
@@ -183,15 +197,15 @@ class ScreenStation(ScreenModal):
         btn_name_label = ""
         btn_URL_label = ""
         if station_name == "":
-            ScreenModal.__init__(self, screen_rect, "Add a radio station")
+            ScreenModal.__init__(self, screen_rect, _("Add a radio station"))
             self.station_URL = ""
-            btn_name_label = "Set station name"
-            btn_URL_label = "Set station URL"
+            btn_name_label = _("Set station name")
+            btn_URL_label = _("Set station URL")
         else:
-            ScreenModal.__init__(self, screen_rect, "Edit radio station")
+            ScreenModal.__init__(self, screen_rect, _("Edit radio station"))
             self.station_URL = config_file.setting_get('Radio stations', self.station_name)
-            btn_name_label = "Change name " + self.station_name
-            btn_URL_label = "Change station URL"
+            btn_name_label = _("Change name {0}").format(self.station_name)
+            btn_URL_label = _("Change station URL")
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
         button_top = 30
@@ -209,26 +223,26 @@ class ScreenStation(ScreenModal):
     def update(self):
         """ Set-up screen controls. """
         if self.station_name == "":
-            self.components['btn_name'].draw("Set station name")
+            self.components['btn_name'].draw(_("Set station name"))
         else:
-            self.components['btn_name'].draw("Change name " + self.station_name)
+            self.components['btn_name'].draw(_("Change name {0}").format(self.station_name))
         if self.station_URL == "":
-            self.components['btn_URL'].draw("Set station URL")
+            self.components['btn_URL'].draw(_("Set station URL"))
         else:
-            self.components['btn_URL'].draw("Change station URL")
+            self.components['btn_URL'].draw(_("Change station URL"))
         self.show()
 
     def action(self, tag_name):
         """ Action that should be performed on a click. """
         if tag_name == 'btn_name':
-            keyboard = Keyboard(self.screen, "Set station name")
+            keyboard = Keyboard(self.screen, _("Set station name"))
             keyboard.title_color = FIFTIES_YELLOW
             keyboard.text = self.station_name
             self.station_name = keyboard.show()
             self.update()
             self.show()
         elif tag_name == 'btn_URL':
-            keyboard = Keyboard(self.screen, "Set station URL")
+            keyboard = Keyboard(self.screen, _("Set station URL"))
             keyboard.title_color = FIFTIES_YELLOW
             keyboard.text = self.station_URL
             self.station_URL = keyboard.show()

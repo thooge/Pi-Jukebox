@@ -19,7 +19,15 @@ class LetterBrowser(ItemList):
         :param screen_rect: The screen rect where the library browser is drawn on.
     """
     def __init__(self, screen_rect):
-        ItemList.__init__(self, 'list_letters', screen_rect, 268, 40, 52, 195)
+        if DISPLAY == 'raspberry7':
+            ItemList.__init__(self, 'list_letters', screen_rect,
+                748, 40, 52, 425)
+        elif DISPLAY == 'adafruit3.5':
+            ItemList.__init__(self, 'list_letters', screen_rect,
+                268, 40, 52, 195)
+        else:
+            ItemList.__init__(self, 'list_letters', screen_rect,
+                268, 40, 52, 195)
         self.item_outline_visible = True
         self.outline_visible = False
         self.font_color = FIFTIES_GREEN
@@ -33,7 +41,15 @@ class LibraryBrowser(ItemList):
         :param screen_rect: The screen rect where the library browser is drawn on.
     """
     def __init__(self, screen_rect):
-        ItemList.__init__(self, 'list_library', screen_rect, 55, 42, 210, 194)
+        if DISPLAY == 'raspberry7':
+            ItemList.__init__(self, 'list_library', screen_rect, 
+                55, 42, 690, 424)
+        elif DISPLAY == 'adafruit3.5':
+            ItemList.__init__(self, 'list_library', screen_rect, 
+                55, 42, 210, 194)
+        else:
+            ItemList.__init__(self, 'list_library', screen_rect, 
+                55, 42, 210, 194)
         self.outline_visible = False
         self.item_outline_visible = True
         self.font_color = FIFTIES_YELLOW
@@ -343,14 +359,14 @@ class ScreenSelected(ScreenModal):
         self.add_component(ButtonText('btn_replace', self.screen, button_left, 114, button_width, 32, label))
         self.components['btn_replace'].button_color = FIFTIES_TEAL
         if self.type == 'artists':
-            label = _("Albums of {0}".format(self.title))
+            label = _("Albums of {0}").format(self.title)
             self.add_component(
                 ButtonText('btn_artist_get_albums', self.screen, button_left, 156, button_width, 32, label))
-            label = _("Songs of {0}".format(self.title))
+            label = _("Songs of {0}").format(self.title)
             self.add_component(
                 ButtonText('btn_artist_get_songs', self.screen, button_left, 198, button_width, 32, label))
         elif self.type == 'albums':
-            label = _("Songs of {0}".format(self.title))
+            label = _("Songs of {0}").format(self.title)
             self.add_component(
                 ButtonText('btn_album_get_songs', self.screen, button_left, 156, button_width, 32, label))
         #label = "Cancel"
