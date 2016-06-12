@@ -6,6 +6,7 @@
 
 from gui_screens import *
 from pij_screen_navigation import ScreenNavigation
+from screen_settings import ScreenSettings
 from mpd_client import mpd
 
 __author__ = 'Mark Zwart'
