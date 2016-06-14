@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 """
 =======================================================
 **screen_keyboard.py**: On-screen keyboard
@@ -25,13 +27,13 @@ class KeyboardBase(ScreenModal):
         edit_box.set_alignment(HOR_LEFT, VERT_MID, 5)
         self.add_component(edit_box)
 
-    def add_row_buttons(self, list_symbols, x, y):
-        """ Adds a list of symbol keys starting at x on y. """
+    def add_row_buttons(self, list_symbols, x, y, w, h):
+        """ Adds a list of symbol keys starting at x on y with width w and height h. """
         for letter in list_symbols:
             btn_name = 'btn_symbol_' + letter
-            btn = ButtonText(btn_name, self.screen, x, y, KEY_WIDTH_STD, KEY_HEIGHT, letter)
+            btn = ButtonText(btn_name, self.screen, x, y, w, h, letter)
             self.add_component(btn)
-            x += KEY_WIDTH_STD + KEY_SPACE
+            x += w + KEY_SPACE
 
     def set_text(self, text):
         """ Sets the edit box's text.
@@ -52,14 +54,25 @@ class KeyboardLetters(KeyboardBase):
 
         y_row = 65
         y_row_increment = 45
-        first_row = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
-        self.add_row_buttons(first_row, 0, y_row)
-        second_row = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
+        if KEYBOARD_LAYOUT == 'de':
+            first_row = ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü']
+            first_x = 1
+            second_row = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä']
+            second_x = 1
+            third_row = ['y', 'x', 'c', 'v', 'b', 'n', 'm']
+            third_x = 60
+        else:
+            first_row = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
+            first_x = 0
+            second_row = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
+            second_x = 17
+            third_row = ['z', 'x', 'c', 'v', 'b', 'n', 'm']
+            third_x = 49
+        self.add_row_buttons(first_row, first_x, y_row, KEY_LTR_WIDTH_STD, KEY_HEIGHT)
         y_row += y_row_increment
-        self.add_row_buttons(second_row, 17, y_row)
-        third_row = ['z', 'x', 'c', 'v', 'b', 'n', 'm']
+        self.add_row_buttons(second_row, second_x, y_row, KEY_LTR_WIDTH_STD, KEY_HEIGHT)
         y_row += y_row_increment
-        self.add_row_buttons(third_row, 49, y_row)
+        self.add_row_buttons(third_row, third_x, y_row, KEY_LTR_WIDTH_STD, KEY_HEIGHT)
         self.add_component(ButtonIcon('btn_shift', screen_rect, ICO_SHIFT, 3, y_row))
         self.add_component(ButtonIcon('btn_backspace', screen_rect, ICO_BACKSPACE, 271, y_row))
 
@@ -120,15 +133,15 @@ class KeyboardSymbols(KeyboardBase):
         y_row = 65
         y_row_increment = 45
         first_row = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-        self.add_row_buttons(first_row, 0, y_row)
+        self.add_row_buttons(first_row, 0, y_row, KEY_WIDTH_STD, KEY_HEIGHT)
 
         y_row += y_row_increment
         second_row = ['-', '+', '=', '/', '(', ')', '%', '$', '#', '_']
-        self.add_row_buttons(second_row, 0, y_row)
+        self.add_row_buttons(second_row, 0, y_row, KEY_WIDTH_STD, KEY_HEIGHT)
 
         y_row += y_row_increment
         third_row = [':', ';', '.', ',', '?', '!', '\'', '*']
-        self.add_row_buttons(third_row, 5, y_row)
+        self.add_row_buttons(third_row, 5, y_row, KEY_WIDTH_STD, KEY_HEIGHT)
         self.add_component(ButtonIcon('btn_backspace', screen_rect, ICO_BACKSPACE, 271, y_row))
 
         y_row += y_row_increment

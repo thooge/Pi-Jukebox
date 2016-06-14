@@ -34,9 +34,18 @@ ICO_HEIGHT= 32
 #LIST_WIDTH = 
 LIST_INDICATOR_WIDTH = 3
 
+# Support for international keyboard layouts
+# Possible values: en, de
+# TODO Get this value from configfile
+KEYBOARD_LAYOUT = 'de'
+
 KEY_SPACE = 0
 KEY_WIDTH_STD = 32
 KEY_HEIGHT = 32
+if KEYBOARD_LAYOUT == 'de':
+    KEY_LTR_WIDTH_STD = 29
+else:
+    KEY_LTR_WIDTH_STD = 32
 
 #: The display dimensions, change this if you have a bigger touch screen.
 #: adafruit 2.8" -> 320x200
@@ -69,6 +78,7 @@ if RUN_ON_RASPBERRY_PI:
 pygame.init() 	# Pygame initialization
 
 PYGAME_EVENT_DELAY = 25
+
 
 if RUN_ON_RASPBERRY_PI:  # If started on Raspberry Pi
     display_flags = FULLSCREEN | DOUBLEBUF | ANYFORMAT  # Turn on video acceleration
