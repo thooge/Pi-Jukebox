@@ -20,6 +20,10 @@ class KeyboardBase(ScreenModal):
     def __init__(self, screen_rect, caption, text=""):
         ScreenModal.__init__(self, screen_rect, caption)
         self.text = text
+        # Dialog close button
+        btn = ButtonText('btn_cancel', self.screen,
+            SCREEN_WIDTH - TITLE_HEIGHT, 0, TITLE_HEIGHT, TITLE_HEIGHT, 'X')
+        self.add_component(btn)
         # Edit box
         edit_box = LabelText('lbl_edit_box', screen_rect, 5, 30, 310, 25, text)
         edit_box.background_color = WHITE
@@ -101,6 +105,11 @@ class KeyboardLetters(KeyboardBase):
         if tag_name is None:
             return
 
+        if tag_name == 'btn_cancel':
+            self.return_object = 'cancel'
+            self.close()
+            return
+
         if tag_name == 'btn_shift':
             self.__letters_shift()
         elif tag_name[:11] == 'btn_symbol_':  # If keyboard symbol is pressed add it to the text
@@ -155,6 +164,11 @@ class KeyboardSymbols(KeyboardBase):
         tag_name = super(KeyboardSymbols, self).on_click(x, y)
 
         if tag_name is None:
+            return
+
+        if tag_name == 'btn_cancel':
+            self.return_object = 'cancel'
+            self.close()
             return
 
         if tag_name[:11] == 'btn_symbol_':  # If keyboard symbol is pressed add it to the text

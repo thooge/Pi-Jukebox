@@ -227,6 +227,7 @@ class ScreenModal(Screen):
         self.return_object = None
         self.close_screen = False
         self.title_color = FIFTIES_ORANGE
+        self.title_font_color = BLACK
         self.outline_shown = False
         self.outline_color = FIFTIES_ORANGE
         self.gesture_detect = GestureDetector()
@@ -268,11 +269,11 @@ class ScreenModal(Screen):
         if self.outline_shown:
             pygame.draw.rect(self.screen, self.outline_color, window_rect, 1)
         # Window title bar
-        title_rect = Rect(self.window_x, self.window_y, self.window_width, 20)
+        title_rect = Rect(self.window_x, self.window_y, self.window_width, TITLE_HEIGHT)
         pygame.draw.rect(self.screen, self.title_color, title_rect)
         font_height = FONT.size("Tg")[1]
         font_width = FONT.size(self.title)[0]
-        image = FONT.render(self.title, True, BLACK)
+        image = FONT.render(self.title, True, self.title_font_color)
         self.screen.blit(image, (title_rect.centerx - font_width / 2, title_rect.centery - font_height / 2))
 
     def event_loop(self):
