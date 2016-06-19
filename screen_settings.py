@@ -18,18 +18,24 @@ class ScreenSettings(ScreenModal):
     """
     def __init__(self, screen_rect):
         ScreenModal.__init__(self, screen_rect, _("Settings"))
+        button_top = 30
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
-        label = _("Quit Pi-Jukebox")
-        self.add_component(ButtonText('btn_quit', self.screen, button_left, 30, button_width, 32, label))
-        label = _("Playback options")
-        self.add_component(ButtonText('btn_playback', self.screen, button_left, 72, button_width, 32, label))
-        label = _("MPD related settings")
-        self.add_component(ButtonText('btn_mpd', self.screen, button_left, 114, button_width, 32, label))
-        label = _("System info")
-        self.add_component(ButtonText('btn_system_info', self.screen, button_left, 156, button_width, 32, label))
-        label = _("Back")
-        self.add_component(ButtonText('btn_return', self.screen, button_left, 198, button_width, 32, label))
+        button_height = ICO_HEIGHT
+        button_offset = ICO_HEIGHT + 10
+        buttons = (
+                ('btn_quit', _("Quit Pi-Jukebox")),
+                ('btn_playback', _("Playback options")),
+                ('btn_mpd', _("MPD related settings")),
+                ('btn_system_info', _("System info")),
+                ('btn_return', _("Back"))
+            )
+        for button in buttons:
+            btn = ButtonText(button[0], self.screen,
+                             button_left, button_top, button_width, button_height,
+                             button[1])
+            self.add_component(btn)
+            button_top += button_offset
 
     def on_click(self, x, y):
         tag_name = super(ScreenSettings, self).on_click(x, y)
@@ -59,19 +65,33 @@ class ScreenSettingsQuit(ScreenModal):
         :param screen_rect: The display's rectangle where the screen is drawn on.
     """
     def __init__(self, screen_rect):
-        ScreenModal.__init__(self, screen_rect, _("Quit"))
-        self.window_x = 70
-        self.window_y = 25
+        ScreenModal.__init__(self, screen_rect, _("Quit Pi-Jukebox"))
+        if DISPLAY == 'raspberry7':
+            self.window_x = 120
+        else:
+            self.window_x = 70
+        self.window_y = TITLE_HEIGHT
         self.window_width -= 2 * self.window_x
         self.window_height -= 2 * self.window_y
         self.outline_shown = True
-        self.add_component(ButtonText('btn_quit', screen_rect, self.window_x + 10, self.window_y + 30, 160, 32, _("Quit")))
-        self.add_component(
-            ButtonText('btn_shutdown', screen_rect, self.window_x + 10, self.window_y + 70, 160, 32, _("Shutdown Pi")))
-        self.add_component(
-            ButtonText('btn_reboot', screen_rect, self.window_x + 10, self.window_y + 110, 160, 32, _("Reboot Pi")))
-        self.add_component(
-            ButtonText('btn_cancel', screen_rect, self.window_x + 10, self.window_y + 150, 160, 32, _("Cancel")))
+
+        button_top = self.window_y + TITLE_HEIGHT + 5
+        button_left = self.window_x + 10
+        button_width = self.window_width - 2 * 10
+        button_height = ICO_HEIGHT
+        button_offset = ICO_HEIGHT + 8
+        buttons = (
+                ('btn_quit', _("Quit")),
+                ('btn_shutdown', _("Shutdown Pi")),
+                ('btn_reboot', _("Reboot Pi")),
+                ('btn_cancel', _("Cancel"))
+            )
+        for button in buttons:
+            btn = ButtonText(button[0], screen_rect,
+                            button_left, button_top, button_width, button_height,
+                            button[1])
+            self.add_component(btn)
+            button_top += button_offset
 
     def on_click(self, x, y):
         tag_name = super(ScreenModal, self).on_click(x, y)
@@ -219,32 +239,49 @@ class ScreenSystemInfo(ScreenModal):
         label = _("Back")
         self.add_component(ButtonText('btn_back', self.screen, button_left, 198, button_width, 32, label))
         info = mpd.mpd_client.stats()
-        self.add_component(LabelText('lbl_database', self.screen, button_left, 30, 100, 18, _("Music database")))
+        self.add_component(LabelText('lbl_database', self.screen, 
+                                     button_left, 30, 200, 18,
+                                     _("Music database")))
         self.components['lbl_database'].font_color = FIFTIES_TEAL
-        artist_count = _("Artists: ") + "{:,}".format(int(info['artists']))
-        self.add_component(LabelText('lbl_artist_count', self.screen, button_left, 48, 100, 18, artist_count))
-        album_count = _("Albums: ") + "{:,}".format(int(info['albums']))
-        self.add_component(LabelText('lbl_album_count', self.screen, button_left + 100, 48, 100, 18, album_count))
-        song_count = _("Songs: ") + "{:,}".format(int(info['songs']))
-        self.add_component(LabelText('lbl_song_count', self.screen, button_left + 210, 48, 100, 18, song_count))
-        play_time = _("Total time: ") + self.make_time_string(int(info['db_playtime']))
-        self.add_component(LabelText('lbl_play_time', self.screen, button_left, 66, 300, 18, play_time))
 
-        self.add_component(LabelText('lbl_system', self.screen, button_left, 90, 100, 18, "Server"))
+        artist_count = _("Artists: {:,}").format(int(info['artists']))
+        self.add_component(LabelText('lbl_artist_count', self.screen, 
+                                     button_left, 48, 200, 18, 
+                                     artist_count))
+
+        album_count = _("Albums: {:,}").format(int(info['albums']))
+        self.add_component(LabelText('lbl_album_count', self.screen,
+                           button_left + 100, 48, 100, 18,
+                           album_count))
+
+        song_count = _("Songs: {:,}").format(int(info['songs']))
+        self.add_component(LabelText('lbl_song_count', self.screen,
+                           button_left + 210, 48, 100, 18,
+                           song_count))
+
+        play_time = _("Total time: ") + self.make_time_string(int(info['db_playtime']))
+        self.add_component(LabelText('lbl_play_time', self.screen,
+                                     button_left, 66, 300, 18,
+                                     play_time))
+
+        self.add_component(LabelText('lbl_system', self.screen,
+                                     button_left, 90, 100, 18,
+                                     _("Server")))
         self.components['lbl_system'].font_color = FIFTIES_TEAL
-        self.add_component(
-            LabelText('lbl_host_name', self.screen,
-                button_left, 108, 1500, 18,
-                _("Host name: {0}").format(socket.gethostname())))
+
+        self.add_component(LabelText('lbl_host_name', self.screen,
+                                     button_left, 108, 1500, 18,
+                                     _("Host name: {0}").format(socket.gethostname())))
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(('google.com', 0))
+            s.connect(('localhost', 0))
             ip_address = s.getsockname()[0]
-            self.add_component(
-                LabelText('lbl_ip_address', self.screen,
+            self.add_component(LabelText('lbl_ip_address', self.screen,
                     button_left, 126, 1500, 18,
                     _("IP address: {0}").format(ip_address)))
-        except Exception:
+
+        except Exception, e:
+            print e
             pass
 
     def on_click(self, x, y):

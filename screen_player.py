@@ -15,15 +15,11 @@ class Playlist(ItemList):
         :param screen_rect: The display's rect where the library browser is drawn on.
     """
     def __init__(self, screen_rect):
-        if DISPLAY == 'raspberry7':
-            ItemList.__init__(self, 'list_playing', screen_rect,
-                52, 46, 696, 419)
-        elif DISPLAY == 'adafruit3.5':
-            ItemList.__init__(self, 'list_playing', screen_rect,
-                52, 46, 216, 189)
-        else:
-            ItemList.__init__(self, 'list_playing', screen_rect,
-                52, 46, 216, 189)
+        ItemList.__init__(self, 'list_playing', screen_rect,
+            ICO_WIDTH + 4, 
+            46,
+            SCREEN_WIDTH - 2 * (ICO_WIDTH + 4) - LIST_WIDTH,
+            SCREEN_HEIGHT - TITLE_HEIGHT - 36)
         self.item_height = 27
         self.item_active_color = FIFTIES_ORANGE
         self.outline_color = FIFTIES_CHARCOAL
@@ -49,21 +45,40 @@ class ScreenPlaylist(Screen):
     """
     def __init__(self, screen_rect):
         Screen.__init__(self, screen_rect)
+
         # Screen navigation buttons
         self.add_component(ScreenNavigation('screen_nav', self.screen, 'btn_playlist'))
-        # Player specific buttons
-        self.add_component(ButtonIcon('btn_play', self.screen, ICO_PLAY, SCREEN_WIDTH - 51, 45))
-        self.add_component(ButtonIcon('btn_stop', self.screen, ICO_STOP, SCREEN_WIDTH - 51, 85))
-        self.add_component(ButtonIcon('btn_prev', self.screen, ICO_PREVIOUS, SCREEN_WIDTH - 51, 125))
-        self.add_component(ButtonIcon('btn_next', self.screen, ICO_NEXT, SCREEN_WIDTH - 51, 165))
-        self.add_component(ButtonIcon('btn_volume', self.screen, ICO_VOLUME, SCREEN_WIDTH - 51, 205))
-        # Player specific labels
-        self.add_component(LabelText('lbl_track_title', self.screen, 55, 5, SCREEN_WIDTH - 130, 18))
-        self.add_component(LabelText('lbl_track_artist', self.screen, 55, 23, SCREEN_WIDTH - 130, 18))
-        self.add_component(LabelText('lbl_time', self.screen, SCREEN_WIDTH - 67, 5, 67, 18))
-        self.add_component(LabelText('lbl_volume', self.screen, SCREEN_WIDTH - 70, 23, 70, 18))
+
+        # Playlist specific buttons
+        button_x = SCREEN_WIDTH - 51
+        button_y = 45
+        button_offset = ICO_HEIGHT + 8
+        buttons = (
+                ('btn_play', ICO_PLAY),
+                ('btn_stop', ICO_STOP),
+                ('btn_prev', ICO_PREVIOUS),
+                ('btn_next', ICO_NEXT),
+                ('btn_volume', ICO_VOLUME)
+            )
+        for button in buttons:
+            self.add_component(ButtonIcon(button[0], self.screen, button[1], button_x, button_y))
+            button_y += button_offset
+
+        # Playerlist specific labels
+        LBL_H = 18
+        labels = (
+            ('lbl_track_title', 55, 5, SCREEN_WIDTH - 130, LBL_H),
+            ('lbl_track_artist', 55, 23, SCREEN_WIDTH - 130, LBL_H),
+            ('lbl_time', SCREEN_WIDTH - 67, 5, 67, LBL_H),
+            ('lbl_volume', SCREEN_WIDTH - 70, 23, 70, LBL_H)
+        )
+        for label in labels:
+            self.add_component(LabelText(label[0], self.screen, label[1], label[2], label[3], label[4]))
+
         # Splits labels from playlist
-        self.add_component(Rectangle('rct_split', self.screen, 55, 43, 208, 1))
+        separator = Rectangle('rct_split', self.screen, 55, 43, SCREEN_WIDTH - 2 * (ICO_WIDTH + 8), 1)
+        self.add_component(separator)
+
         # Playlist
         self.add_component(Playlist(self.screen))
         self.components['list_playing'].active_item_index = mpd.playlist_current_playing_index_get()
@@ -73,7 +88,7 @@ class ScreenPlaylist(Screen):
         self.components['screen_nav'].radio_mode_set(mpd.radio_mode_get())
         now_playing = mpd.now_playing
         self.components['lbl_time'].text_set(now_playing.time_current + '/' + now_playing.time_total)
-        self.components['lbl_volume'].text_set('Vol: ' + str(mpd.volume) + '%')
+        self.components['lbl_volume'].text_set(_('Vol: {0}%').format(mpd.volume))
         if mpd.player_control_get() == 'play':
             self.components['btn_play'].set_image_file(ICO_PAUSE)
         else:
@@ -92,11 +107,11 @@ class ScreenPlaylist(Screen):
             try:
                 event = mpd.events.popleft()
                 if event == 'volume':
-                    self.components['lbl_volume'].text_set('Vol: ' + str(mpd.volume) + '%')
+                    self.components['lbl_volume'].text_set(_('Vol: {0}%').format(mpd.volume))
                 elif event == 'playing_index':
                     self.components['list_playing'].show_playlist()
                 elif event == 'time_elapsed' or event == 'playing_time_total':
-                    self.components['lbl_time'].text_set(now_playing.time_current + '/' + now_playing.time_total)
+                    self.components['lbl_time'].text_set('{0}/{1}'.format(now_playing.time_current, now_playing.time_total))
                 elif event == 'playing_file':
                     self.components['lbl_track_title'].text_set(now_playing.title)
                     self.components['lbl_track_artist'].text_set(now_playing.artist)
@@ -165,28 +180,77 @@ class ScreenPlaying(Screen):
     """
     def __init__(self, screen_rect):
         Screen.__init__(self, screen_rect)
+
         # Screen navigation buttons
         self.add_component(ScreenNavigation('screen_nav', self.screen, 'btn_player'))
+
         # Player specific buttons
-        self.add_component(ButtonIcon('btn_play', self.screen, ICO_PLAY, SCREEN_WIDTH - 51, 5))
-        self.add_component(ButtonIcon('btn_stop', self.screen, ICO_STOP, SCREEN_WIDTH - 51, 45))
-        self.add_component(ButtonIcon('btn_prev', self.screen, ICO_PREVIOUS, SCREEN_WIDTH - 51, 85))
-        self.add_component(ButtonIcon('btn_next', self.screen, ICO_NEXT, SCREEN_WIDTH - 51, 125))
-        self.add_component(ButtonIcon('btn_volume', self.screen, ICO_VOLUME, SCREEN_WIDTH - 51, 165))
-        # Cover art
-        self.add_component(Picture('pic_cover_art', self.screen, 79, 40, 162, 162, mpd.get_cover_art()))
+        button_x = SCREEN_WIDTH - ICO_WIDTH - 3
+        button_y = 5
+        button_offset = 40
+        buttons = (
+                 ('btn_play', ICO_PLAY),
+                 ('btn_stop', ICO_STOP),
+                 ('btn_prev', ICO_PREVIOUS),
+                 ('btn_next', ICO_NEXT),
+                 ('btn_volume', ICO_VOLUME)
+            )
+        for button in buttons:
+            self.add_component(ButtonIcon(button[0], self.screen, button[1], button_x, button_y))
+            button_y += button_offset
+
         # Player specific labels
-        self.add_component(LabelText('lbl_track_artist', self.screen, 54, 3, 215, 18))
-        self.components['lbl_track_artist'].set_alignment(HOR_MID, VERT_MID)
-        self.add_component(LabelText('lbl_track_album', self.screen, 54, 19, 215, 18))
-        self.components['lbl_track_album'].set_alignment(HOR_MID, VERT_MID)
-        self.add_component(LabelText('lbl_track_title', self.screen, 55, SCREEN_HEIGHT - 27, 212, 18))
-        self.components['lbl_track_title'].set_alignment(HOR_MID, VERT_MID)
-        self.add_component(LabelText('lbl_time_current', self.screen, SCREEN_WIDTH - 51, 205, 48, 18))
-        self.components['lbl_time_current'].set_alignment(HOR_MID, VERT_MID)
-        self.add_component(LabelText('lbl_time_total', self.screen, SCREEN_WIDTH - 51, 221, 48, 18))
-        self.components['lbl_time_total'].set_alignment(HOR_MID, VERT_MID)
-        self.add_component(Slider2('slide_time', self.screen, 55, SCREEN_HEIGHT - 35, 212, 3))
+        LBL_H = 18
+        labels = (
+				('lbl_track_artist', HOR_MID, VERT_MID, 
+                    ICO_WIDTH + 6, 
+                    3,
+                    SCREEN_WIDTH - 105,
+                    LBL_H),
+				('lbl_track_album', HOR_MID, VERT_MID,
+                    ICO_WIDTH + 6,
+                    19,
+                    SCREEN_WIDTH - 105,
+                    LBL_H),
+				('lbl_track_title', HOR_MID, VERT_MID,
+                    ICO_WIDTH + 6,
+                    SCREEN_HEIGHT - 27,
+                    SCREEN_WIDTH - 108,
+                    LBL_H),
+				('lbl_time_current', HOR_MID, VERT_MID,
+                    SCREEN_WIDTH - 51,
+                    SCREEN_HEIGHT - ICO_HEIGHT - 3,
+                    ICO_WIDTH,
+                    LBL_H),
+				('lbl_time_total', HOR_MID, VERT_MID,
+                    SCREEN_WIDTH - 51,
+                    SCREEN_HEIGHT - ICO_HEIGHT - 3 + FONT_SIZE,
+                    ICO_WIDTH,
+                    LBL_H),
+			)
+        for label in labels:
+            lbl = LabelText(label[0], self.screen,
+                            label[3], label[4], label[5], label[6])
+            lbl.set_alignment(label[1], label[2])
+            self.add_component(lbl)
+
+        # TODO Document function of this object
+        self.add_component(Slider2('slide_time', self.screen,
+                                   ICO_WIDTH + 6,
+                                   SCREEN_HEIGHT - 35,
+                                   SCREEN_WIDTH - 108, 
+                                   3))
+
+        # Cover art
+        if mpd.radio_mode_get():
+            cover_file = COVER_ART_RADIO
+        else:
+            cover_file = mpd.get_cover_art()
+        pic = Picture('pic_cover_art', self.screen,
+                      79, 40, 162, 162,
+                      cover_file)
+        self.add_component(pic)
+
 
     def show(self):
         """ Displays the screen. """
@@ -203,12 +267,12 @@ class ScreenPlaying(Screen):
         self.components['lbl_track_album'].text_set(mpd.now_playing.album)
         if mpd.radio_mode_get():
             self.components['lbl_track_artist'].visible = False
-            self.components['lbl_track_album'].position_set(54, 3, 215, 39)
+            self.components['lbl_track_album'].position_set(ICO_WIDTH + 6, 3, SCREEN_WIDTH - 105, 39)
             self.components['pic_cover_art'].picture_set(COVER_ART_RADIO)
         else:
             self.components['lbl_track_artist'].visible = True
             self.components['lbl_track_artist'].text_set(mpd.now_playing.artist)
-            self.components['lbl_track_album'].position_set(54, 19, 215, 18)
+            self.components['lbl_track_album'].position_set(ICO_WIDTH + 6, 19, SCREEN_WIDTH - 105, 18)
             self.components['pic_cover_art'].picture_set(mpd.now_playing.cover_art_get())
         super(ScreenPlaying, self).show()  # Draw screen
 
@@ -225,12 +289,12 @@ class ScreenPlaying(Screen):
                     self.components['lbl_track_title'].text_set(playing.title)
                     if mpd.radio_mode_get():
                         self.components['lbl_track_artist'].visible = False
-                        self.components['lbl_track_album'].position_set(54, 3, 215, 39)
+                        self.components['lbl_track_album'].position_set(ICO_WIDTH + 6, 3, SCREEN_WIDTH - 105, 39)
                         self.components['pic_cover_art'].picture_set(COVER_ART_RADIO)
                     else:
                         self.components['lbl_track_artist'].visible = True
                         self.components['lbl_track_artist'].text_set(playing.artist)
-                        self.components['lbl_track_album'].position_set(54, 19, 215, 18)
+                        self.components['lbl_track_album'].position_set(ICO_WIDTH + 6, 19, SCREEN_WIDTH - 105, 18)
                         self.components['pic_cover_art'].picture_set(mpd.now_playing.cover_art_get())
                     self.components['lbl_track_album'].text_set(playing.album)
                     self.components['lbl_time_total'].text_set(playing.time_total)
@@ -259,6 +323,7 @@ class ScreenPlaying(Screen):
             setting_screen.show()
             self.show()
         elif tag_name == 'btn_play':
+            print "Play pressed"
             if mpd.player_control_get() == 'play':
                 mpd.player_control_set('pause')
                 self.components['btn_play'].set_image_file(ICO_PLAY)
@@ -296,17 +361,21 @@ class ScreenVolume(ScreenModal):
         self.outline_color = FIFTIES_GREEN
 
         self.add_component(ButtonIcon('btn_mute', screen_rect, ICO_VOLUME_MUTE, self.window_x + 5, self.window_y + 25))
-        self.components['btn_mute'].x_pos = self.window_x + self.window_width / 2 - self.components[
-                                                                                        'btn_mute'].width / 2
+        self.components['btn_mute'].x_pos = (self.window_x + self.window_width / 2
+                                             - self.components['btn_mute'].width / 2)
         self.add_component(
-            ButtonIcon('btn_volume_down', self.screen, ICO_VOLUME_DOWN, self.window_x + 5, self.window_y + 25))
+            ButtonIcon('btn_volume_down', self.screen, ICO_VOLUME_DOWN, 
+                       self.window_x + 5, self.window_y + 25))
         self.add_component(
-            ButtonIcon('btn_volume_up', self.screen, ICO_VOLUME_UP, self.window_width - 40, self.window_y + 25))
+            ButtonIcon('btn_volume_up', self.screen, ICO_VOLUME_UP,
+                       self.window_width - 40, self.window_y + 25))
         self.add_component(
-            Slider('slide_volume', self.screen, self.window_x + 8, self.window_y + 63, self.window_width - 18, 30))
+            Slider('slide_volume', self.screen,
+                   self.window_x + 8, self.window_y + 63, self.window_width - 18, 30))
         self.components['slide_volume'].progress_percentage_set(mpd.volume)
         self.add_component(
-            ButtonText('btn_back', self.screen, self.window_x + self.window_width / 2 - 23, self.window_y + 98, 46, 32,
+            ButtonText('btn_back', self.screen,
+                       self.window_x + self.window_width / 2 - 23, self.window_y + 98, 46, 32,
                        _("Back")))
         self.components['btn_back'].button_color = FIFTIES_TEAL
 

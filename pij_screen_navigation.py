@@ -1,6 +1,6 @@
 """
 =======================================================
-**screen_directory.py**: MPD Directory browsing screen
+**pij_screen_navigation.py**: Main navigation elements
 =======================================================
 """
 
@@ -9,16 +9,25 @@ from gui_widgets import *
 __author__ = 'Mark Zwart'
 
 class ScreenNavigation(WidgetContainer):
+    
     def __init__(self, tag_name, screen_rect, button_active):
         WidgetContainer.__init__(self, tag_name, screen_rect,
-            0, 0, 53, SCREEN_HEIGHT)
+            0, 0, ICO_WIDTH + 5, SCREEN_HEIGHT)
+        self.__button_active = button_active
         self.__radio_mode = False
-        self.add_component(ButtonIcon('btn_player', self.screen, ICO_PLAYER_FILE_ACTIVE, 3, 5))
-        self.add_component(ButtonIcon('btn_playlist', self.screen, ICO_PLAYLIST, 3, 45))
-        self.add_component(ButtonIcon('btn_library', self.screen, ICO_LIBRARY, 3, 85))
-        self.add_component(ButtonIcon('btn_directory', self.screen, ICO_DIRECTORY, 3, 125))
-        self.add_component(ButtonIcon('btn_radio', self.screen, ICO_RADIO, 3, 165))
-        self.add_component(ButtonIcon('btn_settings', self.screen, ICO_SETTINGS, 3, 205))
+        button_offset = ICO_HEIGHT + 8
+        button_top = 5
+        buttons = (
+            ('btn_player',  ICO_PLAYER_FILE_ACTIVE),
+            ('btn_playlist', ICO_PLAYLIST),
+            ('btn_library', ICO_LIBRARY),
+            ('btn_directory', ICO_DIRECTORY),
+            ('btn_radio', ICO_RADIO),
+            ('btn_settings', ICO_SETTINGS) 
+        )
+        for button in buttons:
+            self.add_component(ButtonIcon(button[0], self.screen, button[1], 3, button_top))
+            button_top += button_offset
         self.button_active_set(button_active)
 
     def on_click(self, x, y):

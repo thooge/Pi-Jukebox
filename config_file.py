@@ -20,9 +20,9 @@ class ConfigFile(object):
                 setting['value'] = self.setting_get(setting['section'], setting['key'])
             elif not setting['first_time']:
                 self.setting_set(setting['section'], setting['key'], setting['value'])
-            for setting in self.settings:
-                if setting['section'] == 'Radio stations':
-                    self.radio_stations.append((setting['key'], setting['value']))
+        for setting in self.settings:
+            if setting['section'] == 'Radio stations':
+                self.radio_stations.append((setting['key'], setting['value']))
 
     def setting_get(self, section, key, default=None):
         if self.setting_exists(section, key):

@@ -20,20 +20,25 @@ class LetterBrowser(ItemList):
     """
     def __init__(self, screen_rect):
         if DISPLAY == 'raspberry7':
+            #ItemList.__init__(self, 'list_letters', screen_rect,
+            #    748, 40, 52, 425)
             ItemList.__init__(self, 'list_letters', screen_rect,
-                748, 40, 52, 425)
+                SCREEN_WIDTH - LIST_WIDTH, 
+                40,
+                LIST_WIDTH, 
+                SCREEN_HEIGHT - 55)
         elif DISPLAY == 'adafruit3.5':
             ItemList.__init__(self, 'list_letters', screen_rect,
                 268, 40, 52, 195)
         else:
             ItemList.__init__(self, 'list_letters', screen_rect,
                 268, 40, 52, 195)
+        self.background_color = (40, 80, 40)
         self.item_outline_visible = True
         self.outline_visible = False
         self.font_color = FIFTIES_GREEN
         self.set_item_alignment(HOR_MID, VERT_MID)
         self.list = []
-
 
 class LibraryBrowser(ItemList):
     """ The component that displays mpd library entries.
@@ -43,7 +48,7 @@ class LibraryBrowser(ItemList):
     def __init__(self, screen_rect):
         if DISPLAY == 'raspberry7':
             ItemList.__init__(self, 'list_library', screen_rect, 
-                55, 42, 690, 424)
+                55, 42, SCREEN_WIDTH - 110, SCREEN_HEIGHT - 56)
         elif DISPLAY == 'adafruit3.5':
             ItemList.__init__(self, 'list_library', screen_rect, 
                 55, 42, 210, 194)
@@ -59,7 +64,8 @@ class LibraryBrowser(ItemList):
         """ Displays all artists or based on the first letter or partial string match.
 
             :param search: Search string, default = None
-            :param only_start: Boolean indicating whether the search string only matches the first letters, default = True
+            :param only_start: Boolean indicating whether the search string only matches the first letters,
+                               default = True
         """
         updated = False
         if self.list != mpd.artists_get(search, only_start):
@@ -73,7 +79,8 @@ class LibraryBrowser(ItemList):
         """ Displays all albums or based on the first letter or partial string match.
 
             :param search: Search string, default = None
-            :param only_start: Boolean indicating whether the search string only matches the first letters, default = True
+            :param only_start: Boolean indicating whether the search string only matches the first letters,
+                               default = True
         """
         updated = False
         if self.list != mpd.albums_get(search, only_start):
@@ -87,7 +94,8 @@ class LibraryBrowser(ItemList):
         """ Displays all songs or based on the first letter or partial string match.
 
             :param search: Search string, default = None
-            :param only_start: Boolean indicating whether the search string only matches the first letters, default = True
+            :param only_start: Boolean indicating whether the search string only matches the first letters,
+                               default = True
         """
         updated = False
         if self.list != mpd.songs_get(search, only_start):
@@ -132,15 +140,27 @@ class ScreenLibrary(Screen):
     """
     def __init__(self, screen_rect):
         Screen.__init__(self, screen_rect)
+        self.color = (40, 40, 40)
         self.first_time_showing = True
+
         # Screen navigation buttons
         self.add_component(ScreenNavigation('screen_nav', self.screen, 'btn_library'))
+
         # Library buttons
-        self.add_component(ButtonIcon('btn_artists', self.screen, ICO_SEARCH_ARTIST, 55, 5))
-        self.add_component(ButtonIcon('btn_albums', self.screen, ICO_SEARCH_ALBUM, 107, 5))
-        self.add_component(ButtonIcon('btn_songs', self.screen, ICO_SEARCH_SONG, 159, 5))
-        self.add_component(ButtonIcon('btn_playlists', self.screen, ICO_PLAYLISTS, 211, 5))
-        self.add_component(ButtonIcon('btn_search', self.screen, ICO_SEARCH, 263, 5))
+        button_offset = 52
+        button_left = 55
+        button_top = 5
+        buttons = (
+                ('btn_artists', ICO_SEARCH_ARTIST),
+                ('btn_albums', ICO_SEARCH_ALBUM),
+                ('btn_songs', ICO_SEARCH_SONG),
+                ('btn_playlists', ICO_PLAYLISTS),
+                ('btn_search', ICO_SEARCH)
+            )
+        for button in buttons:
+            self.add_component(ButtonIcon(button[0], self.screen, button[1], button_left, button_top))
+            button_left += button_offset
+
         # Lists
         self.add_component(LibraryBrowser(self.screen))
         self.add_component(LetterBrowser(self.screen))
@@ -226,12 +246,13 @@ class ScreenLibrary(Screen):
     def playlist_action(self):
         """ Displays screen for follow-up actions when an item was selected from the library. """
         selected = self.components['list_library'].item_selected_get()
-        select_screen = ScreenSelected(self.screen, self.currently_showing, selected)
-        select_screen.show()
-        if isinstance(select_screen.return_object, list):
-            self.components['list_library'].list = select_screen.return_object
-            self.components['list_library'].draw()
-            self.set_currently_showing(select_screen.return_type)
+        if selected:
+            select_screen = ScreenSelected(self.screen, self.currently_showing, selected)
+            select_screen.show()
+            if isinstance(select_screen.return_object, list):
+                self.components['list_library'].list = select_screen.return_object
+                self.components['list_library'].draw()
+                self.set_currently_showing(select_screen.return_type)
         self.letter_list_update()
         self.show()
 
@@ -287,22 +308,31 @@ class ScreenSearch(ScreenModal):
     def __init__(self, screen_rect):
         ScreenModal.__init__(self, screen_rect, _("Search library for..."))
         self.title_color = FIFTIES_YELLOW
+        self.font_color = GREEN
         self.search_type = ""
         self.search_text = ""
         self.initialize()
 
     def initialize(self):
         """ Set-up screen controls. """
+        button_top = 50
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
-        label = _("Artists")
-        self.add_component(ButtonText('btn_artists', self.screen, button_left, 50, button_width, 32, label))
-        label = _("Albums")
-        self.add_component(ButtonText('btn_albums', self.screen, button_left, 92, button_width, 32, label))
-        label = _("Songs")
-        self.add_component(ButtonText('btn_songs', self.screen, button_left, 134, button_width, 32, label))
-        label = _("Cancel")
-        self.add_component(ButtonText('btn_cancel', self.screen, button_left, 176, button_width, 32, label))
+        button_height = 32
+        button_offset = 42
+
+        buttons = (
+           ('btn_artists', _("Artists")),
+           ('btn_albums', _("Albums")),
+           ('btn_songs', _("Songs")),
+           ('btn_cancel', _("Cancel"))
+        )
+        for button in buttons:
+            btn = ButtonText(button[0], self.screen,
+                             button_left, button_top, button_width, button_height,
+                             button[1])
+            self.add_component(btn)
+            button_top += button_offset
 
     def action(self, tag_name):
         """ Action that should be performed on a click.
@@ -348,28 +378,41 @@ class ScreenSelected(ScreenModal):
         """ Set-up screen controls. """
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
+        button_height = 32
 
         label = _("Add to playlist")
-        self.add_component(ButtonText('btn_add', self.screen, button_left, 30, button_width, 32, label))
+        self.add_component(ButtonText('btn_add', self.screen, 
+                           button_left, 30, button_width, button_height,
+                           label))
         self.components['btn_add'].button_color = FIFTIES_TEAL
         label = _("Add to playlist and play")
-        self.add_component(ButtonText('btn_add_play', self.screen, button_left, 72, button_width, 32, label))
+        self.add_component(ButtonText('btn_add_play', self.screen,
+                                      button_left, 72, button_width, button_height,
+                                      label))
         self.components['btn_add_play'].button_color = FIFTIES_TEAL
         label = _("Replace playlist and play")
-        self.add_component(ButtonText('btn_replace', self.screen, button_left, 114, button_width, 32, label))
+        self.add_component(ButtonText('btn_replace', self.screen,
+                           button_left, 114, button_width, button_height,
+                           label))
         self.components['btn_replace'].button_color = FIFTIES_TEAL
         if self.type == 'artists':
             label = _("Albums of {0}").format(self.title)
             self.add_component(
-                ButtonText('btn_artist_get_albums', self.screen, button_left, 156, button_width, 32, label))
+                ButtonText('btn_artist_get_albums', self.screen,
+                           button_left, 156, button_width, 32,
+                           label))
             label = _("Songs of {0}").format(self.title)
             self.add_component(
-                ButtonText('btn_artist_get_songs', self.screen, button_left, 198, button_width, 32, label))
+                ButtonText('btn_artist_get_songs', self.screen,
+                           button_left, 198, button_width, 32,
+                           label))
         elif self.type == 'albums':
             label = _("Songs of {0}").format(self.title)
             self.add_component(
-                ButtonText('btn_album_get_songs', self.screen, button_left, 156, button_width, 32, label))
-        #label = "Cancel"
+                ButtonText('btn_album_get_songs', self.screen,
+                           button_left, 156, button_width, 32,
+                           label))
+        #label = _("Cancel")
         #self.add_component(ButtonText("btn_cancel", self.screen, button_left, 134, button_width, label))
 
     def action(self, tag_name):

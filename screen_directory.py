@@ -18,8 +18,18 @@ class LetterBrowser(ItemList):
     """
 
     def __init__(self, screen_rect):
-        ItemList.__init__(self, 'list_letters', screen_rect, 
-            268, 40, 52, 195)
+        if DISPLAY == 'raspberry7':
+            ItemList.__init__(self, 'list_letters', screen_rect, 
+                SCREEN_WIDTH - LIST_WIDTH,
+                40,
+                LIST_WIDTH,
+                SCREEN_HEIGHT - TITLE_HEIGHT)
+        else:
+            ItemList.__init__(self, 'list_letters', screen_rect, 
+                SCREEN_WIDTH - LIST_WIDTH,
+                40,
+                LIST_WIDTH,
+                SCREEN_HEIGHT - TITLE_HEIGHT)
         self.item_outline_visible = True
         self.outline_visible = False
         self.font_color = FIFTIES_GREEN
@@ -39,13 +49,18 @@ class DirectoryBrowser(ItemList):
     def __init__(self, screen_rect):
         if DISPLAY == 'raspberry7':
             ItemList.__init__(self, 'list_directory', screen_rect,
-                55, 42, 690, 424)
+                55, 
+                42,
+                SCREEN_WIDTH - ICO_WIDTH - LIST_WIDTH - LIST_INDICATOR_WIDTH,
+                424)
         elif DISPLAY == 'adafruit3.5':
             ItemList.__init__(self, 'list_directory', screen_rect,
                 55, 42, 214, 194)
         else:
             ItemList.__init__(self, 'list_directory', screen_rect,
                 55, 42, 210, 194)
+        if DEBUG:
+            self.background_color = (60, 40, 40)
         self.outline_visible = False
         self.item_outline_visible = True
         self.font_color = FIFTIES_YELLOW
@@ -60,7 +75,8 @@ class DirectoryBrowser(ItemList):
         """ Displays all songs or based on the first letter or partial string match.
 
             :param search: Search string, default = None
-            :param only_start: Boolean indicating whether the search string only matches the first letters, default = True
+            :param only_start: Boolean indicating whether the search string only matches the first letters,
+                               default = True
         """
         self.list = []
         self.directory_current = path
@@ -108,12 +124,17 @@ class ScreenDirectory(Screen):
     """
     def __init__(self, screen_rect):
         Screen.__init__(self, screen_rect)
+        self.color = (40, 40, 40)
         self.first_time_showing = True
         # Screen navigation buttons
         self.add_component(ScreenNavigation('screen_nav', self.screen, 'btn_directory'))
         # Directory buttons
-        self.add_component(ButtonIcon('btn_root', self.screen, ICO_FOLDER_ROOT, 55, 5))
-        self.add_component(ButtonIcon('btn_up', self.screen, ICO_FOLDER_UP, 107, 5))
+        button_top = 5
+        button_left = 55
+        button_offset = 52
+        self.add_component(ButtonIcon('btn_root', self.screen, ICO_FOLDER_ROOT, button_left, button_top))
+        button_left += button_offset
+        self.add_component(ButtonIcon('btn_up', self.screen, ICO_FOLDER_UP, button_left, button_top))
         # Lists
         self.add_component(DirectoryBrowser(self.screen))
         self.add_component(LetterBrowser(self.screen))
@@ -162,8 +183,10 @@ class ScreenDirectory(Screen):
             self.list_item_action()
         elif tag_name == 'btn_root':
             self.components['list_directory'].show_directory("")
+            self.letter_list_update()
         elif tag_name == 'btn_up':
             self.components['list_directory'].show_directory_up()
+            self.letter_list_update()
 
     def list_item_action(self):
         """ Displays screen for follow-up actions when an item was selected from the library. """
@@ -192,6 +215,7 @@ class ScreenSelected(ScreenModal):
         self.selected_type = selected_type
         self.selected_name = selected_item
         self.title_color = FIFTIES_YELLOW
+        self.font_color = BLACK
         self.initialize()
         self.return_type = ""
 
@@ -205,26 +229,33 @@ class ScreenSelected(ScreenModal):
         if self.selected_type == 'directory':
             label = _("Browse directory {0}").format(self.selected_name)
             self.add_component(ButtonText('btn_browse', self.screen,
-                button_left, button_top, button_width, button_height, label))
+                                          button_left, button_top, button_width, button_height, label))
             button_top += button_offset
         label = _("Add to playlist")
         self.add_component(ButtonText('btn_add', self.screen,
-            button_left, button_top, button_width, button_height, label))
+                                      button_left, button_top, button_width, button_height,
+                                      label))
         self.components['btn_add'].button_color = FIFTIES_TEAL
         button_top += button_offset
         label = _("Add to playlist and play")
         self.add_component(ButtonText('btn_add_play', self.screen,
-            button_left, button_top, button_width, button_height, label))
+                                      button_left, button_top, button_width, button_height,
+                                      label))
         self.components['btn_add_play'].button_color = FIFTIES_TEAL
         button_top += button_offset
         label = _("Replace playlist and play")
         self.add_component(ButtonText('btn_replace', self.screen,
-            button_left, button_top, button_width, button_height, label))
+                                      button_left, button_top, button_width, button_height,
+                                      label))
         self.components['btn_replace'].button_color = FIFTIES_TEAL
         button_top += button_offset
-        label = _("Cancel")
-        self.add_component(ButtonText('btn_cancel', self.screen,
-            button_left, button_top, button_width, button_height, label))
+
+        btn = ButtonText('btn_cancel', self.screen,
+                         button_left, button_top, button_width, button_height,
+                         _("Cancel"))
+        btn.font_color = RED
+        btn.outline_color = RED
+        self.add_component(btn)
 
     def action(self, tag_name):
         """ Action that should be performed on a click. """

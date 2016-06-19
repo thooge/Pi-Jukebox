@@ -16,6 +16,9 @@ from config_file import config_file
 
 VERSION = (1, 1, 0)
 
+# TODO move this to configuration file
+DEBUG = False # In production set to false
+
 # Default gui dimensions
 # WIP
 
@@ -31,7 +34,7 @@ ICO_HEIGHT= 32
 # SWITCH_WIDTH
 # SWITCH_HEIGHT
 
-#LIST_WIDTH = 
+LIST_WIDTH = 52
 LIST_INDICATOR_WIDTH = 3
 
 # Support for international keyboard layouts

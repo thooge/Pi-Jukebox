@@ -52,7 +52,8 @@ class GestureDetector(object):
     def __determine_gesture_type(self):
         """ Determines the kind of gesture.
 
-            :return: The type of gesture [:py:const:GESTURE_CLICK, :py:const:GESTURE_SWIPE_DOWN, :py:const:GESTURE_SWIPE_UP, :py:const:GESTURE_SWIPE_LEFT, :py:const:GESTURE_SWIPE_RIGHT]
+            :return: The type of gesture [:py:const:GESTURE_CLICK, :py:const:GESTURE_SWIPE_DOWN,
+                     :py:const:GESTURE_SWIPE_UP, :py:const:GESTURE_SWIPE_LEFT, :py:const:GESTURE_SWIPE_RIGHT]
         """
         x = self.x_moved
         y = self.y_moved
@@ -168,7 +169,7 @@ class Screens(object):
     """
 
     def __init__(self):
-        self.screen_list = []  #
+        self.screen_list = []
         self.current_index = 0
         self.gesture_detect = GestureDetector()
 
@@ -191,7 +192,7 @@ class Screens(object):
         if gesture == GESTURE_CLICK:  # Fire click function
             ret_value = self.screen_list[self.current_index].on_click(x, y)  # Relay tap/click to active screen
             # If the screen requests a screen switch
-            if ret_value >= 0 and ret_value < len(self.screen_list):
+            if 0 <= ret_value < len(self.screen_list):
                 self.current_index = ret_value
                 self.show()
         # Switch screens with horizontal swiping
@@ -219,7 +220,7 @@ class ScreenModal(Screen):
 
     def __init__(self, screen_rect, title):
         Screen.__init__(self, screen_rect)
-        self.title = title
+        self.title = title.decode('utf-8')
         self.window_x = 0
         self.window_y = 0
         self.window_width = SCREEN_WIDTH
@@ -364,12 +365,13 @@ class ScreenYesNo(ScreenModal):
         self.title_color = FIFTIES_ORANGE
         width = self.window_width - 58
         height = self.window_height - self.window_y - 32
-        self.add_component(Memo('memo_text', self.screen, self.window_x + 55, self.window_y + 32, width, height, text))
+        self.add_component(Memo('memo_text', self.screen,
+                                self.window_x + 55, self.window_y + 32, width, height, text))
         self.add_component(ButtonText('btn_yes', self.screen, self.window_x + self.window_width - 60,
                                       self.window_y + self.window_height - 37, 55, 32, _("Yes")))
         self.components['btn_yes'].button_color = FIFTIES_ORANGE
-        self.add_component(
-            ButtonText('btn_no', self.screen, self.window_x + 5, self.window_y + self.window_height - 37, 55, 32, _("No")))
+        self.add_component(ButtonText('btn_no', self.screen,
+                                      self.window_x + 5, self.window_y + self.window_height - 37, 55, 32, _("No")))
         self.components['btn_no'].button_color = FIFTIES_ORANGE
 
     def on_click(self, x, y):

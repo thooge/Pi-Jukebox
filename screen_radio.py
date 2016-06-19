@@ -8,6 +8,7 @@ __author__ = 'Mark Zwart'
 
 from gui_screens import *
 from pij_screen_navigation import ScreenNavigation
+from screen_keyboard import Keyboard
 from screen_settings import ScreenSettings 
 from mpd_client import mpd
 
@@ -19,7 +20,7 @@ class RadioBrowser(ItemList):
     def __init__(self, screen_rect):
         if DISPLAY == 'raspberry7':
             ItemList.__init__(self, 'list_stations', screen_rect,
-            55, 42, 210, 194)
+            55, 42, SCREEN_WIDTH - 110, SCREEN_HEIGHT - 46)
         elif DISPLAY == 'adafruit3.5':
             ItemList.__init__(self, 'list_stations', screen_rect,
             55, 42, 210, 194)
@@ -40,7 +41,7 @@ class RadioBrowser(ItemList):
         if mpd.radio_mode_get():
             i = 0
             for station in self.radio_stations:
-                if station[1] == mpd.now_playing.file:
+                if station[1] == mpd.now_playing.filepath:
                     break
                 i += 1
             self.active_item_index = i
@@ -206,6 +207,8 @@ class ScreenStation(ScreenModal):
             self.station_URL = config_file.setting_get('Radio stations', self.station_name)
             btn_name_label = _("Change name {0}").format(self.station_name)
             btn_URL_label = _("Change station URL")
+
+        # Buttons
         button_left = self.window_x + 10
         button_width = self.window_width - 2 * button_left
         button_top = 30
@@ -216,9 +219,9 @@ class ScreenStation(ScreenModal):
         button_top += 42
         self.add_component(
             ButtonText('btn_cancel', self.screen, self.window_x + 5, self.window_y + self.window_height - 37, 55, 32,
-                       "Cancel"))
+                       _("Cancel")))
         self.add_component(ButtonText('btn_ok', self.screen, self.window_x + self.window_width - 60,
-                                      self.window_y + self.window_height - 37, 55, 32, "Ok"))
+                                      self.window_y + self.window_height - 37, 55, 32, _("Ok")))
 
     def update(self):
         """ Set-up screen controls. """

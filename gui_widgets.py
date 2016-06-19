@@ -77,6 +77,8 @@ class Rectangle(Widget):
     def __init__(self, tag_name, screen_rect, x, y, width, height):
         Widget.__init__(self, tag_name, screen_rect, x, y, width, height)
         self.background_color = FIFTIES_CHARCOAL
+        self.font_color = FIFTIES_YELLOW
+        self.outline_color = WHITE
 
     def draw(self):
         """ Draws the label. """
@@ -468,6 +470,8 @@ class ButtonText(LabelText):
         self.font_color = BLACK
         self.alignment_vertical = VERT_MID
         self.alignment_horizontal = HOR_MID
+        self.outline_show = False
+        self.outline_color = WHITE
 
     def draw(self, text=None):
         self.screen.fill(self.button_color, self.button_rect)  # Background
@@ -539,7 +543,8 @@ class ItemList(Widget):
         :ivar item_alignment_vertical: Vertical alignment of an item's text, default = :py:const:VERT_MID.
         :ivar item_outline_visible: Boolean for displaying the rectangle of an item, default = False.
 
-        :ivar active_item_index: The index of the currently active list item. It differs from selected in that it is set by the program and not by the user, default = -1.
+        :ivar active_item_index: The index of the currently active list item. It differs from selected in that it is set
+                                 by the program and not by the user, default = -1.
         :ivar item_active_color: The active list item for color, default = :py:const:BLUE.
         :ivar item_active_background_color: The active list item background color, default = :py:const:WHITE.
         :ivar item_selected_index: The index of the selected list item, default = -1.
@@ -551,7 +556,7 @@ class ItemList(Widget):
         self.list = []
         self.outline_visible = True
 
-        self.item_height = 25
+        self.item_height = TITLE_HEIGHT
         self.item_indent = 2
         self.item_alignment_horizontal = HOR_LEFT
         self.item_alignment_vertical = VERT_MID
@@ -585,7 +590,6 @@ class ItemList(Widget):
 
     def draw_page_indicator(self):
         """ Draws a 'progress' indicator on the list. """
-        no_pages = self.pages_count()
         if self.pages_count() > 1:
             indicator_width = LIST_INDICATOR_WIDTH
             indicator_height = self.height / self.pages_count()
@@ -609,6 +613,8 @@ class ItemList(Widget):
         item_start = self.page_showing_index * self.items_per_page
         while item_nr + item_start < len(self.list) and item_nr < self.items_per_page:
             item_text = self.list[item_nr + item_start]  # Get item text from list
+            if not item_text:
+                 item_text = _('-- empty --')
             item_x_pos = self.x_pos + self.item_indent                                  # x position of item
             item_width = self.width - 2 * self.item_indent - 10  # Maximum item width
             item_y_pos = self.y_pos + self.item_indent + (self.item_height * item_nr)   # y position of item
@@ -654,7 +660,7 @@ class ItemList(Widget):
         return self.list[self.active_item_index]
 
     def item_active_index_set(self, index):
-        if index >= 0 and index < len(list):
+        if 0 <= index < len(list):
             self.active_item_index = index
             self.draw()
 

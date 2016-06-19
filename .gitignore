@@ -1,6 +1,6 @@
 *~
 *.pyc
-/.idea
+PIJ.geany
 pi-jukebox.conf
 cover_art.jpg
 locale/*.pot

@@ -52,7 +52,10 @@ def apply_settings():
         screen_message = ScreenMessage(
             SCREEN, 
             _("No music directory"),
-            _("If you want to display cover art, Pi-Jukebox needs to know which directory your music collection is in. The location can also be found in your mpd.conf entry 'music directory'."),
+            _("If you want to display cover art, Pi-Jukebox needs to "
+              "know which directory your music collection is in. "
+	          "The location can also be found in your mpd.conf entry "
+	          "'music directory'."),
             'warning')
         screen_message.show()
         settings_mpd_screen = ScreenSettingsMPD(SCREEN)
@@ -73,9 +76,15 @@ def main():
 
     # Check whether mpd is running and get it's status
     if not mpd.connect():
-        print(_("Couldn't connect to the mpd server {0} on port {1:d}!".format(mpd.host, mpd.port)))
-        print(_("Check settings in file pi-jukebox.conf or check is server is running 'sudo service mpd status'."))
+        screen_message = ScreenMessage(
+            SCREEN,
+            _("Couldn't connect to the mpd server!"),
+            _("Couldn't connect to the mpd server {0} on port {1:d}!".format(mpd.host, mpd.port)) +
+            _("Check settings in file pi-jukebox.conf or check is server is running 'sudo service mpd status'."),
+            'error')
+        screen_message.show()
         sys.exit()
+
     mpd.status_get()  # Get mpd status
     screens = PiJukeboxScreens()  # Screens
     screens.show()  # Display the screen

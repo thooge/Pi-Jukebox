@@ -31,7 +31,7 @@ class MPDNowPlaying(object):
         self.title = ""  # Currently playing song name
         self.artist = ""  # Currently playing artist
         self.album = ""  # Album the currently playing song is on
-        self.file = ""  # File with path relative to MPD music directory
+        self.filepath = ""  # File with path relative to MPD music directory
         self.__time_current_sec = 0  # Currently playing song time (seconds)
         self.time_current = ""  # Currently playing song time (string format)
         self.__time_total_sec = 0  # Currently playing song duration (seconds)
@@ -42,10 +42,10 @@ class MPDNowPlaying(object):
     def now_playing_set(self, now_playing=None):
         if now_playing is not None:
             try:
-                self.file = now_playing['file']
+                self.filepath = now_playing['file']
             except KeyError:
                 return
-            if self.file[:7] == "http://":
+            if self.filepath[:7] == "http://":
                 self.playing_type = 'radio'
             else:
                 self.playing_type = 'file'
@@ -77,7 +77,7 @@ class MPDNowPlaying(object):
             self.title = ""
             self.artist = ""
             self.album = ""
-            self.file = ""
+            self.filepath = ""
             self.time_percentage = 0
             self.__time_total_sec = 0
             self.time_total = self.make_time_string(0)  # Total time current
@@ -95,7 +95,9 @@ class MPDNowPlaying(object):
             return False
 
     def cover_art_get(self, dest_file_name="covert_art.jpg"):
-        if self.file == "" or self.playing_type == 'radio':
+        if self.playing_type == 'radio':
+            return COVER_ART_RADIO
+        if self.filepath == "":
             return DEFAULT_COVER
         try:
             tag = TinyTag.get(os.path.join(self.music_directory, self.file), image=True)
@@ -170,15 +172,16 @@ class MPDController(object):
         """
         try:
             self.mpd_client.connect(self.host, self.port)
-        except Exception:
+        except Exception, e:
+            print e
             return False
         # Retrieve lists
         self.artists_get()
         self.albums_get()
         try:
             self.songs_get()
-        except Exception:
-            pass
+        except Exception, e:
+            print e
         self.__starts_with_radio()
         # See if currently playing is radio station
         return True
@@ -187,21 +190,22 @@ class MPDController(object):
         was_playing = False  # Indicates whether mpd was playing on start
         now_playing = MPDNowPlaying()
         try:
-            now_playing.now_playing_set(self.mpd_client.currentsong())  # Get currenly plating info
-        except mpd.ConnectionError:
+            now_playing.now_playing_set(self.mpd_client.currentsong())  # Get currenly playing info
+        except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             now_playing.now_playing_set(self.mpd_client.currentsong())
         if self.player_control_get() == 'play':
             was_playing = True
         if now_playing.playing_type == 'radio':
-            station_URL = now_playing.file  # If now playing is radio station temporarily store
+            station_URL = now_playing.filepath  # If now playing is radio station temporarily store
             self.playlist_current_clear()  # Clear playlist
             try:
                 self.__radio_mode = False
                 self.mpd_client.load(TEMP_PLAYLIST_NAME)  # Try to load previously temporarily stored playlist
                 self.playlist_current_get()  # Set playlist
-            except Exception:
-                pass
+            except Exception, e:
+                print e
             self.__radio_mode = True  # Turn on radio mode
             self.mpd_client.clear()  # Clear playlist
             self.mpd_client.addid(station_URL)  # Reload station
@@ -227,9 +231,11 @@ class MPDController(object):
         try:
             now_playing = self.mpd_client.currentsong()
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             now_playing = self.mpd_client.currentsong()
-        except Exception:
+        except Exception, e:
+            print e
             return False
 
         if self.__now_playing != now_playing and len(now_playing) > 0:  # Changed to a new song
@@ -245,7 +251,8 @@ class MPDController(object):
 
         try:
             status = self.mpd_client.status()
-        except Exception:
+        except Exception, e:
+            print e
             return False
         if self.__status == status:
             return False
@@ -321,11 +328,13 @@ class MPDController(object):
 
             :param play_status: Playback action ['play', 'pause', 'stop', 'next', 'previous'].
         """
+
         if play_status == 'play':
             if self.__player_control == 'pause':
                 self.mpd_client.pause(0)
             else:
                 self.mpd_client.play()
+
         elif play_status == 'pause':
             self.mpd_client.pause(1)
         elif play_status == 'stop':
@@ -350,6 +359,7 @@ class MPDController(object):
         try:
             self.mpd_client.play(index - 1)
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.play(index - 1)
 
@@ -363,10 +373,11 @@ class MPDController(object):
         try:
             self.mpd_client.setvol(percentage)
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.setvol(percentage)
         except mpdlib.CommandError, e:
-            print "CommandEror", e
+            print "MPD CommandError", e
         self.volume = percentage
         self.__muted = False
 
@@ -384,10 +395,11 @@ class MPDController(object):
         try:
             self.mpd_client.setvol(self.volume)
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.setvol(self.volume)
         except mpdlib.CommandError, e:
-            print "CommandError", e
+            print "MPD CommandError", e
         self.__muted = False
 
     def volume_mute_switch(self):
@@ -396,19 +408,21 @@ class MPDController(object):
             try:
                 self.mpd_client.setvol(self.volume)
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 self.mpd_client.setvol(self.volume)
             except mpdlib.CommandError, e:
-                print "CommandError", e
+                print "MPD CommandError", e
             self.__muted = False
         else:
             try:
                 self.mpd_client.setvol(0)
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 self.mpd_client.setvol(0)
             except mpdlib.CommandError, e:
-                print "CommandError", e
+                print "MPD CommandError", e
             self.__muted = True
 
     def volume_mute_get(self):
@@ -448,11 +462,11 @@ class MPDController(object):
     def playlist_current_get(self):
         if not self.__radio_mode:
             self.playlist_current = []
-            playlist_info = []
             track_no = 0
             try:
                 playlist_info = self.mpd_client.playlistinfo()
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 playlist_info = self.mpd_client.playlistinfo()
             for i in playlist_info:
@@ -485,6 +499,7 @@ class MPDController(object):
             try:
                 self.mpd_client.playid(index)
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 self.mpd_client.playid(index)
             self.__playlist_current_playing_index = index
@@ -501,6 +516,7 @@ class MPDController(object):
         try:
             self.mpd_client.clear()
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.clear()
         if not self.__radio_mode:
@@ -511,6 +527,7 @@ class MPDController(object):
         try:
             self.mpd_client.update()
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.update()
 
@@ -530,7 +547,8 @@ class MPDController(object):
         """
         try:
             self.list_query_results = self.mpd_client.list(tag_type)
-        except:
+        except Exception, e:
+            print e
             self.mpd_client.connect(self.host, self.port)
             self.list_query_results = self.mpd_client.list(tag_type)
         self.list_query_results.sort()
@@ -560,6 +578,7 @@ class MPDController(object):
         try:
             all_results = self.mpd_client.list(tag_type)
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             all_results = self.mpd_client.list(tag_type)
         self.list_query_results = []
@@ -582,6 +601,7 @@ class MPDController(object):
             try:
                 self.list_query_results = self.mpd_client.list(type_result, type_filter, name_filter)
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 self.list_query_results = self.mpd_client.list(type_result, type_filter, name_filter)
         elif self.searching_artist != "" and self.searching_album == "":
@@ -590,6 +610,7 @@ class MPDController(object):
                                                                type_filter,
                                                                name_filter)
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 self.list_query_results = self.mpd_client.list(type_result, 'artist', self.searching_artist,
                                                                type_filter,
@@ -599,6 +620,7 @@ class MPDController(object):
                 self.list_query_results = self.mpd_client.list(type_result, 'album', self.searching_album, type_filter,
                                                                name_filter)
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 self.list_query_results = self.mpd_client.list(type_result, 'album', self.searching_album, type_filter,
                                                                name_filter)
@@ -607,6 +629,7 @@ class MPDController(object):
                 self.list_query_results = self.mpd_client.list(type_result, 'artist', self.searching_artist, 'album',
                                                                self.searching_album, type_filter, name_filter)
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 self.list_query_results = self.mpd_client.list(type_result, 'artist', self.searching_artist, 'album',
                                                                self.searching_album, type_filter, name_filter)
@@ -708,8 +731,12 @@ class MPDController(object):
         try:
             all_playlists = self.mpd_client.listplaylists()
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             all_playlists = self.mpd_client.listplaylists()
+        except mpdlib.CommandError, e:
+            print "MPD Command Error", e
+
         if first_letter is None:
             for playlist in all_playlists:
                 result_list.append(playlist['playlist'])
@@ -730,6 +757,7 @@ class MPDController(object):
         try:
             path_entries = self.mpd_client.lsinfo(path)
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             path_entries = self.mpd_client.lsinfo(path)
         for entry in path_entries:
@@ -770,6 +798,7 @@ class MPDController(object):
         try:
             content_list = self.mpd_client.lsinfo(path)
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             content_list = self.mpd_client.lsinfo(path)
         for entry in content_list:
@@ -845,6 +874,7 @@ class MPDController(object):
         try:
             self.mpd_client.load(playlist_name)
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.load(playlist_name)
         if play:
@@ -864,6 +894,7 @@ class MPDController(object):
         try:
             self.mpd_client.addid(uri)
         except mpdlib.ConnectionError:
+            print "MPD Connection Error: Reconnecting"
             self.mpd_client.connect(self.host, self.port)
             self.mpd_client.addid(uri)
         if play:
@@ -885,6 +916,7 @@ class MPDController(object):
             try:
                 self.mpd_client.addid(song['file'])
             except mpdlib.ConnectionError:
+                print "MPD Connection Error: Reconnecting"
                 self.mpd_client.connect(self.host, self.port)
                 self.mpd_client.addid(song['file'])
         if play:
@@ -895,8 +927,8 @@ class MPDController(object):
         self.__radio_mode = True
         try:
             self.mpd_client.rm(TEMP_PLAYLIST_NAME)
-        except:
-            pass
+        except Exception, e:
+            print e
         self.mpd_client.save(TEMP_PLAYLIST_NAME)
         self.playlist_current_clear()
         self.mpd_client.addid(station_URL)
@@ -911,8 +943,8 @@ class MPDController(object):
                 self.playlist_current_clear()
                 self.mpd_client.load(TEMP_PLAYLIST_NAME)
                 self.mpd_client.rm(TEMP_PLAYLIST_NAME)
-            except Exception:
-                pass
+            except Exception, e:
+                print e
         self.__radio_mode = radio_mode
 
 mpd = MPDController()
