@@ -18,8 +18,8 @@ class Playlist(ItemList):
         ItemList.__init__(self, 'list_playing', screen_rect,
             ICO_WIDTH + 4, 
             46,
-            SCREEN_WIDTH - 2 * (ICO_WIDTH + 4) - LIST_WIDTH,
-            SCREEN_HEIGHT - TITLE_HEIGHT - 36)
+            SCREEN_WIDTH - (ICO_WIDTH + 4) - LIST_WIDTH,
+            SCREEN_HEIGHT - TITLE_HEIGHT - 3)
         self.item_height = 27
         self.item_active_color = FIFTIES_ORANGE
         self.outline_color = FIFTIES_CHARCOAL

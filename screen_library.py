@@ -307,8 +307,8 @@ class ScreenSearch(ScreenModal):
     """
     def __init__(self, screen_rect):
         ScreenModal.__init__(self, screen_rect, _("Search library for..."))
-        self.title_color = FIFTIES_YELLOW
-        self.font_color = GREEN
+        self.title_color = theme.color.search_title
+        self.font_color = theme.color.search_font
         self.search_type = ""
         self.search_text = ""
         self.initialize()
@@ -370,7 +370,8 @@ class ScreenSelected(ScreenModal):
         ScreenModal.__init__(self, screen_rect, selected_title)
         self.type = selected_type
         self.selected = selected_title
-        self.title_color = FIFTIES_YELLOW
+        self.title_color = theme.color.selected_title
+        self.font_color = theme.color.selected_font
         self.initialize()
         self.return_type = ""
 

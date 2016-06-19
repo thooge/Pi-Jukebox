@@ -122,18 +122,44 @@ class ScreenSettingsPlayback(ScreenModal):
     """
     def __init__(self, screen_rect):
         ScreenModal.__init__(self, screen_rect, _("Playback settings"))
-        self.add_component(LabelText('lbl_shuffle', screen_rect, 10, 30, 40, 20, _("Shuffle")))
+
+        self.add_component(LabelText('lbl_shuffle', screen_rect,
+                                     10, 30, 40, 20,
+                                     _("Shuffle")))
         self.add_component(Switch('switch_shuffle', screen_rect, 60, 23))
-        self.add_component(LabelText('lbl_repeat', screen_rect, 120, 30, 40, 20, _("Repeat")))
+
+        self.add_component(LabelText('lbl_repeat', screen_rect,
+                                     120, 30, 40, 20,
+                                     _("Repeat")))
         self.add_component(Switch('switch_repeat', screen_rect, 170, 23))
-        self.add_component(LabelText('lbl_single', screen_rect, 230, 30, 40, 20, _("Single")))
+
+        self.add_component(LabelText('lbl_single', screen_rect,
+                                     230, 30, 40, 20,
+                                     _("Single")))
         self.add_component(Switch('switch_single', screen_rect, 280, 23))
-        self.add_component(LabelText('lbl_consume', screen_rect, 10, 65, 110, 20, _("Consume playlist")))
+
+        self.add_component(LabelText('lbl_consume', screen_rect,
+                                     10, 65, 110, 20,
+                                     _("Consume playlist")))
         self.add_component(Switch('switch_consume', screen_rect, 125, 58))
-        self.add_component(
-            ButtonText('btn_rescan', self.screen, 10, 108, self.window_width - 20, 32, _("Re-scan library")))
-        self.add_component(ButtonText('btn_update', self.screen, 10, 150, self.window_width - 20, 32, _("Update library")))
-        self.add_component(ButtonText('btn_return', screen_rect, 10, 192, self.window_width - 20, 32, _("Back")))
+
+        button_top = 108
+        button_left = 10
+        button_height = ICO_HEIGHT
+        button_width = self.window_width - 20
+        button_offset = ICO_HEIGHT + 10
+
+        self.add_component(ButtonText('btn_rescan', self.screen, 
+                           button_left, button_top, button_width, button_height,
+                           _("Re-scan library")))
+        button_top += button_offset
+        self.add_component(ButtonText('btn_update', self.screen,
+                           button_left, button_top, button_width, button_height,
+                           _("Update library")))
+        button_top += button_offset
+        self.add_component(ButtonText('btn_return', screen_rect,
+                           button_left, button_top, button_width, button_height,
+                           _("Back")))
 
         self.__initialize()
 
@@ -282,7 +308,6 @@ class ScreenSystemInfo(ScreenModal):
 
         except Exception, e:
             print e
-            pass
 
     def on_click(self, x, y):
         tag_name = super(ScreenModal, self).on_click(x, y)

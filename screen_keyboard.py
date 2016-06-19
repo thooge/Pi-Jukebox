@@ -23,6 +23,7 @@ class KeyboardBase(ScreenModal):
         # Dialog close button
         btn = ButtonText('btn_cancel', self.screen,
             SCREEN_WIDTH - TITLE_HEIGHT, 0, TITLE_HEIGHT, TITLE_HEIGHT, 'X')
+        btn.button_color = theme.color.button_title
         self.add_component(btn)
         # Edit box
         edit_box = LabelText('lbl_edit_box', screen_rect, 5, 30, 310, 25, text)

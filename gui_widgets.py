@@ -42,10 +42,10 @@ class Widget(object):
         self.height = height
         self.rect = Rect(x, y, width, height)
         self.outline_visible = False
-        self.outline_color = WHITE
-        self.background_color = BLACK
+        self.outline_color = theme.color.widget_outline
+        self.background_color = theme.color.widget_background
         self.font = FONT
-        self.font_color = FIFTIES_YELLOW
+        self.font_color = theme.color.widget_font
         self.font_height = self.font.size('Tg')[1]
 
     def on_click(self, x, y):
@@ -76,9 +76,9 @@ class Rectangle(Widget):
     """
     def __init__(self, tag_name, screen_rect, x, y, width, height):
         Widget.__init__(self, tag_name, screen_rect, x, y, width, height)
-        self.background_color = FIFTIES_CHARCOAL
-        self.font_color = FIFTIES_YELLOW
-        self.outline_color = WHITE
+        self.background_color = theme.color.rect
+        self.font_color = theme.color.rect_font
+        self.outline_color = theme.color.rect_outline
 
     def draw(self):
         """ Draws the label. """
@@ -98,7 +98,7 @@ class Slider(Rectangle):
     """
     def __init__(self, tag_name, screen_rect, x, y, width, height):
         Rectangle.__init__(self, tag_name, screen_rect, x, y, width, height)
-        self.progress_color = FIFTIES_GREEN
+        self.progress_color = theme.color.slider_progress
         self.progress_percentage = 0
         self.progress_rect = Rect(x + 1, y + 1, 1, height - 2)
         self.caption_visible = True
@@ -138,7 +138,7 @@ class Slider(Rectangle):
 
 
 class Slider2(Widget):
-    """ A slider control with a different lay-out.
+    """ A slider control with a different layout.
 
         :param tag_name: Text identifying the slider.
         :param screen_rect: The screen's rectangle where the slider is drawn on.
@@ -149,9 +149,9 @@ class Slider2(Widget):
     """
     def __init__(self, tag_name, screen_rect, x, y, width, height):
         Widget.__init__(self, tag_name, screen_rect, x, y, width, height)
-        self.bottom_color = FIFTIES_CHARCOAL
+        self.bottom_color = theme.color.slider_bottom
         self.bottom_rect = (x, y + height, width, 1)
-        self.progress_color = FIFTIES_ORANGE
+        self.progress_color = theme.color.slider_progress2
         self.progress_percentage = 0
         self.progress_rect = Rect(x, y, 1, height)
         self.caption_visible = False
@@ -462,16 +462,16 @@ class ButtonText(LabelText):
         LabelText.__init__(self, tag_name, screen_rect, x, y, width, height, text)
         self.transparent_set(True)
         self.button_rect = (x + 1, y + 1, width - 2, height - 2)
-        self.button_color = FIFTIES_YELLOW
+        self.button_color = theme.color.button
         self.__background_left = None
         self.__background_middle = None
         self.__background_right = None
         self.transparent = True
-        self.font_color = BLACK
+        self.font_color = theme.color.button_font
         self.alignment_vertical = VERT_MID
         self.alignment_horizontal = HOR_MID
         self.outline_show = False
-        self.outline_color = WHITE
+        self.outline_color = theme.color.button_outline
 
     def draw(self, text=None):
         self.screen.fill(self.button_color, self.button_rect)  # Background

@@ -59,8 +59,6 @@ class DirectoryBrowser(ItemList):
         else:
             ItemList.__init__(self, 'list_directory', screen_rect,
                 55, 42, 210, 194)
-        if DEBUG:
-            self.background_color = (60, 40, 40)
         self.outline_visible = False
         self.item_outline_visible = True
         self.font_color = FIFTIES_YELLOW
@@ -214,8 +212,8 @@ class ScreenSelected(ScreenModal):
         self.directory_current = directory
         self.selected_type = selected_type
         self.selected_name = selected_item
-        self.title_color = FIFTIES_YELLOW
-        self.font_color = BLACK
+        self.title_color = theme.color.selected_title
+        self.font_color = theme.color.selected_font
         self.initialize()
         self.return_type = ""
 

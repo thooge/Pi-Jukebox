@@ -4,6 +4,7 @@
 ======================================================================
 """
 
+from gui_themes import *
 from gui_widgets import *
 from settings import *
 
@@ -102,7 +103,7 @@ class Screen(object):
     def __init__(self, screen_rect):
         self.screen = screen_rect
         self.components = {}  # Interface dictionary
-        self.color = BLACK
+        self.color = theme.color.screen_background
 
     def add_component(self, widget):
         """ Adds components to component list, thus ensuring a component is found on a mouse event.
@@ -183,7 +184,7 @@ class Screens(object):
 
     def process_mouse_event(self, event):
         """ Processes mouse events. """
-        if event.type != pygame.MOUSEBUTTONDOWN and event.type != pygame.MOUSEBUTTONDOWN:
+        if event.type != pygame.MOUSEBUTTONDOWN and event.type != pygame.MOUSEBUTTONUP:
             return None
         gesture = self.gesture_detect.capture_gesture(event)
         x = self.gesture_detect.x_start
@@ -227,10 +228,10 @@ class ScreenModal(Screen):
         self.window_height = SCREEN_HEIGHT
         self.return_object = None
         self.close_screen = False
-        self.title_color = FIFTIES_ORANGE
-        self.title_font_color = BLACK
+        self.title_color = theme.color.modal_title
+        self.title_font_color = theme.color.modal_title_font
         self.outline_shown = False
-        self.outline_color = FIFTIES_ORANGE
+        self.outline_color = theme.color.modal_outline
         self.gesture_detect = GestureDetector()
 
     def show(self):
@@ -261,11 +262,11 @@ class ScreenModal(Screen):
         if self.window_width < SCREEN_WIDTH or self.window_height < SCREEN_HEIGHT:
             backdrop = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
             backdrop.set_alpha(128)
-            backdrop.fill(BLACK)
+            backdrop.fill(theme.color.backdrop)
             SCREEN.blit(backdrop, (0, 0))
         # Drawing window
         window_rect = Rect(self.window_x, self.window_y, self.window_width, self.window_height)
-        pygame.draw.rect(self.screen, BLACK, window_rect)
+        pygame.draw.rect(self.screen, theme.color.modal_background, window_rect)
         # Draw outline
         if self.outline_shown:
             pygame.draw.rect(self.screen, self.outline_color, window_rect, 1)
@@ -320,25 +321,29 @@ class ScreenMessage(ScreenModal):
         if message_type == 'information':
             self.add_component(
                 Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, ICO_INFO))
-            self.title_color = FIFTIES_GREEN
+            self.title_color = theme.color.message_title_info
         elif message_type == 'warning':
             self.add_component(
                 Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, ICO_WARNING))
-            self.title_color = FIFTIES_YELLOW
+            self.title_color = theme.color.message_title_warn
         elif message_type == 'error':
             self.add_component(
                 Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, ICO_ERROR))
-            self.title_color = FIFTIES_ORANGE
+            self.title_color = theme.color.message_title_error
         else:
-            self.title_color = FIFTIES_TEAL
+            self.title_color = theme.color.message_title
         x = self.window_x + 55
         y = self.window_y + 30
         width = self.window_width - x - 5
         height = self.window_height - y - 32
         self.add_component(Memo('memo_text', self.screen, x, y, width, height, text))
-        self.add_component(ButtonText('btn_ok', self.screen, self.window_x + self.window_width - 60,
-                                      self.window_y + self.window_height - 37, 55, 32, "OK"))
-        self.components['btn_ok'].button_color = FIFTIES_YELLOW
+        self.add_component(ButtonText('btn_ok', self.screen,
+                                      self.window_x + self.window_width - 60,
+                                      self.window_y + self.window_height - 37,
+                                      55,
+                                      ICO_HEIGHT,
+                                      _("Ok")))
+        self.components['btn_ok'].button_color = theme.color.button_ok
 
     def on_click(self, x, y):
         tag_name = super(ScreenModal, self).on_click(x, y)

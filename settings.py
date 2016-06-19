@@ -13,6 +13,7 @@ import pygame
 from pygame.locals import *
 import time
 from config_file import config_file
+from gui_themes import Theme
 
 VERSION = (1, 1, 0)
 
@@ -31,16 +32,15 @@ SPACE = 2
 ICO_WIDTH= 48
 ICO_HEIGHT= 32
 
-# SWITCH_WIDTH
-# SWITCH_HEIGHT
+SWITCH_WIDTH = 48
+SWITCH_HEIGHT = 32
 
 LIST_WIDTH = 52
 LIST_INDICATOR_WIDTH = 3
 
 # Support for international keyboard layouts
 # Possible values: en, de
-# TODO Get this value from configfile
-KEYBOARD_LAYOUT = 'de'
+KEYBOARD_LAYOUT = config_file.setting_get('Global', 'keyboard')
 
 KEY_SPACE = 0
 KEY_WIDTH_STD = 32
@@ -91,8 +91,13 @@ if RUN_ON_RASPBERRY_PI:  # If started on Raspberry Pi
 else:
     SCREEN = pygame.display.set_mode(DISPLAY_SIZE)
 
-#: The directory where resources like button icons or the font file is stored.
+#: The directory where resources like button icons or font files are stored.
 RESOURCES = os.path.dirname(__file__) + '/resources/'
+
+THEMEBASE = config_file.setting_get('Global', 'theme')
+THEME = RESOURCES + 'themes/' + THEMEBASE + '/'
+theme = Theme(THEME)
+
 
 #: Standard font type
 FONT = pygame.font.Font(RESOURCES + 'DroidSans.ttf', FONT_SIZE)
@@ -136,69 +141,69 @@ GESTURE_DRAG_HORIZONTAL = 7
 
 """ Used icons """
 # Switch icons
-ICO_SWITCH_ON = RESOURCES + 'switch_on_48x32.png'
-ICO_SWITCH_OFF = RESOURCES + 'switch_off_48x32.png'
-ICO_MODAL_CANCEL = RESOURCES + 'back_22x18.png'
+ICO_SWITCH_ON = THEME + 'switch_on_48x32.png'
+ICO_SWITCH_OFF = THEME + 'switch_off_48x32.png'
+ICO_MODAL_CANCEL = THEME + 'back_22x18.png'
 
 # General icons
-ICO_PLAYER_FILE = RESOURCES + 'playing_file_48x32.png'
-ICO_PLAYER_FILE_ACTIVE = RESOURCES + 'playing_file_active_48x32.png'
-ICO_PLAYER_RADIO = RESOURCES + 'playing_radio_48x32.png'
-ICO_PLAYER_RADIO_ACTIVE = RESOURCES + 'playing_radio_active_48x32.png'
-ICO_PLAYLIST = RESOURCES + 'playlist_48x32.png'
-ICO_PLAYLIST_ACTIVE = RESOURCES + 'playlist_active_48x32.png'
-ICO_LIBRARY = RESOURCES + 'library_48x32.png'
-ICO_LIBRARY_ACTIVE = RESOURCES + 'library_active_48x32.png'
-ICO_DIRECTORY = RESOURCES + 'directory_48x32.png'
-ICO_DIRECTORY_ACTIVE = RESOURCES + 'directory_active_48x32.png'
-ICO_RADIO = RESOURCES + 'radio_48x32.png'
-ICO_RADIO_ACTIVE = RESOURCES + 'radio_active_48x32.png'
-ICO_SETTINGS = RESOURCES + 'settings_48x32.png'
-ICO_SETTINGS_ACTIVE = RESOURCES + 'settings_active_48x32.png'
-ICO_BACK = RESOURCES + 'back_48x32.png'
+ICO_PLAYER_FILE = THEME + 'playing_file_48x32.png'
+ICO_PLAYER_FILE_ACTIVE = THEME + 'playing_file_active_48x32.png'
+ICO_PLAYER_RADIO = THEME + 'playing_radio_48x32.png'
+ICO_PLAYER_RADIO_ACTIVE = THEME + 'playing_radio_active_48x32.png'
+ICO_PLAYLIST = THEME + 'playlist_48x32.png'
+ICO_PLAYLIST_ACTIVE = THEME + 'playlist_active_48x32.png'
+ICO_LIBRARY = THEME + 'library_48x32.png'
+ICO_LIBRARY_ACTIVE = THEME + 'library_active_48x32.png'
+ICO_DIRECTORY = THEME + 'directory_48x32.png'
+ICO_DIRECTORY_ACTIVE = THEME + 'directory_active_48x32.png'
+ICO_RADIO = THEME + 'radio_48x32.png'
+ICO_RADIO_ACTIVE = THEME + 'radio_active_48x32.png'
+ICO_SETTINGS = THEME + 'settings_48x32.png'
+ICO_SETTINGS_ACTIVE = THEME + 'settings_active_48x32.png'
+ICO_BACK = THEME + 'back_48x32.png'
 
 # Player icons
-ICO_PLAY = RESOURCES + 'play_48x32.png'
-ICO_PAUSE = RESOURCES + 'pause_48x32.png'
-ICO_STOP = RESOURCES + 'stop_48x32.png'
-ICO_NEXT = RESOURCES + 'next_48x32.png'
-ICO_PREVIOUS = RESOURCES + 'prev_48x32.png'
-ICO_VOLUME = RESOURCES + 'vol_48x32.png'
+ICO_PLAY = THEME + 'play_48x32.png'
+ICO_PAUSE = THEME + 'pause_48x32.png'
+ICO_STOP = THEME + 'stop_48x32.png'
+ICO_NEXT = THEME + 'next_48x32.png'
+ICO_PREVIOUS = THEME + 'prev_48x32.png'
+ICO_VOLUME = THEME + 'vol_48x32.png'
 
 # Volume icons
-ICO_VOLUME_UP = RESOURCES + 'vol_up_48x32.png'
-ICO_VOLUME_DOWN = RESOURCES + 'vol_down_48x32.png'
-ICO_VOLUME_MUTE = RESOURCES + 'vol_mute_48x32.png'
-ICO_VOLUME_MUTE_ACTIVE = RESOURCES + 'vol_mute_active_48x32.png'
+ICO_VOLUME_UP = THEME + 'vol_up_48x32.png'
+ICO_VOLUME_DOWN = THEME + 'vol_down_48x32.png'
+ICO_VOLUME_MUTE = THEME + 'vol_mute_48x32.png'
+ICO_VOLUME_MUTE_ACTIVE = THEME + 'vol_mute_active_48x32.png'
 
 # Library icons
-ICO_SEARCH = RESOURCES + 'search_48x32.png'
-ICO_SEARCH_ACTIVE = RESOURCES + 'search_active_48x32.png'
-ICO_SEARCH_ARTIST = RESOURCES + 'artists_48x32.png'
-ICO_SEARCH_ARTIST_ACTIVE = RESOURCES + 'artists_active_48x32.png'
-ICO_SEARCH_ALBUM = RESOURCES + 'albums_48x32.png'
-ICO_SEARCH_ALBUM_ACTIVE = RESOURCES + 'albums_active_48x32.png'
-ICO_SEARCH_SONG = RESOURCES + 'songs_48x32.png'
-ICO_SEARCH_SONG_ACTIVE = RESOURCES + 'songs_active_48x32.png'
-ICO_PLAYLISTS = RESOURCES + 'playlists_48x32.png'
-ICO_PLAYLISTS_ACTIVE = RESOURCES + 'playlists_active_48x32.png'
+ICO_SEARCH = THEME + 'search_48x32.png'
+ICO_SEARCH_ACTIVE = THEME + 'search_active_48x32.png'
+ICO_SEARCH_ARTIST = THEME + 'artists_48x32.png'
+ICO_SEARCH_ARTIST_ACTIVE = THEME + 'artists_active_48x32.png'
+ICO_SEARCH_ALBUM = THEME + 'albums_48x32.png'
+ICO_SEARCH_ALBUM_ACTIVE = THEME + 'albums_active_48x32.png'
+ICO_SEARCH_SONG = THEME + 'songs_48x32.png'
+ICO_SEARCH_SONG_ACTIVE = THEME + 'songs_active_48x32.png'
+ICO_PLAYLISTS = THEME + 'playlists_48x32.png'
+ICO_PLAYLISTS_ACTIVE = THEME + 'playlists_active_48x32.png'
 
 # Directory icons
-ICO_FOLDER_ROOT = RESOURCES + 'folder_root_48x32.png'
-ICO_FOLDER_UP = RESOURCES + 'folder_up_48x32.png'
+ICO_FOLDER_ROOT = THEME + 'folder_root_48x32.png'
+ICO_FOLDER_UP = THEME + 'folder_up_48x32.png'
 
 # Standard info icons
-ICO_INFO = RESOURCES + 'icon_info.png'
-ICO_WARNING = RESOURCES + 'icon_warning.png'
-ICO_ERROR = RESOURCES + 'icon_warning.png'
+ICO_INFO = THEME + 'icon_info.png'
+ICO_WARNING = THEME + 'icon_warning.png'
+ICO_ERROR = THEME + 'icon_warning.png'
 
 # Radio icons
-ICO_STATION_ADD = RESOURCES + 'station_add_48x32.png'
-COVER_ART_RADIO = RESOURCES + 'radio_cover_art.png'
+ICO_STATION_ADD = THEME + 'station_add_48x32.png'
+COVER_ART_RADIO = THEME + 'radio_cover_art.png'
 
 # Special keyboard icons
-ICO_SHIFT = RESOURCES + 'shift_48x32.png'
-ICO_BACKSPACE = RESOURCES + 'backspace_48x32.png'
-ICO_ENTER = RESOURCES + 'enter_48x32.png'
-ICO_LETTERS = RESOURCES + 'letters_48x32.png'
-ICO_SYMBOLS = RESOURCES + 'symbols_48x32.png'
+ICO_SHIFT = THEME + 'shift_48x32.png'
+ICO_BACKSPACE = THEME + 'backspace_48x32.png'
+ICO_ENTER = THEME + 'enter_48x32.png'
+ICO_LETTERS = THEME + 'letters_48x32.png'
+ICO_SYMBOLS = THEME + 'symbols_48x32.png'
