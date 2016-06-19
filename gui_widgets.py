@@ -52,9 +52,10 @@ class Widget(object):
         """ The function called when a widget is clicked """
         return self.tag_name
 
-    def set_font(self, font_name, font_size, font_color=FIFTIES_YELLOW):
+    def set_font(self, font_name, font_size, font_color=None):
         self.font = pygame.font.Font(font_name, font_size)
-        self.font_color = font_color
+        if font_color:
+            self.font_color = font_color
 
     def position_set(self, x, y, width, height):
         self.x_pos = x
@@ -245,7 +246,7 @@ class LabelText(Widget):
         self.indent_horizontal = 0
         self.indent_vertical = 0
         self.outline_show = False
-        self.outline_color = FIFTIES_CHARCOAL
+        self.outline_color = theme.color.label_outline
         self.background_alpha = 255
 
     def transparent_set(self, value):
@@ -563,12 +564,12 @@ class ItemList(Widget):
         self.item_outline_visible = False
 
         self.active_item_index = -1
-        self.item_active_color = BLUE
-        self.item_active_background_color = WHITE
+        self.item_active_color = theme.color.item_active_font
+        self.item_active_background_color = theme.color.item_active
 
         self.item_selected_index = -1
-        self.item_selected_color = BLUE
-        self.item_selected_background_color = WHITE
+        self.item_selected_color = theme.color.item_selected_font
+        self.item_selected_background_color = theme.color.item_selected
 
         self.items_per_page = (self.height - 2 * self.item_indent) / self.item_height  # Maximum number
         self.page_showing_index = 0  # Index of page currently showing

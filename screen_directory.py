@@ -32,7 +32,7 @@ class LetterBrowser(ItemList):
                 SCREEN_HEIGHT - TITLE_HEIGHT)
         self.item_outline_visible = True
         self.outline_visible = False
-        self.font_color = FIFTIES_GREEN
+        self.font_color = theme.color.item_letter_font
         self.set_item_alignment(HOR_MID, VERT_MID)
         self.list = []
         # self.list = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"\
@@ -61,7 +61,7 @@ class DirectoryBrowser(ItemList):
                 55, 42, 210, 194)
         self.outline_visible = False
         self.item_outline_visible = True
-        self.font_color = FIFTIES_YELLOW
+        self.font_color = theme.color.item_font
         self.set_item_alignment(HOR_LEFT, VERT_MID)
         self.directory_current = "/"
         self.directory_content = []

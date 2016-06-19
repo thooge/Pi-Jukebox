@@ -21,9 +21,9 @@ class Playlist(ItemList):
             SCREEN_WIDTH - (ICO_WIDTH + 4) - LIST_WIDTH,
             SCREEN_HEIGHT - TITLE_HEIGHT - 3)
         self.item_height = 27
-        self.item_active_color = FIFTIES_ORANGE
-        self.outline_color = FIFTIES_CHARCOAL
-        self.font_color = FIFTIES_YELLOW
+        self.item_active_color = theme.color.item_active
+        self.outline_color = theme.color.item_outline
+        self.font_color = theme.color.item_font
         self.outline_visible = False
 
     def show_playlist(self):

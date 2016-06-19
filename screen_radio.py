@@ -29,8 +29,8 @@ class RadioBrowser(ItemList):
             55, 42, 210, 194)
         self.outline_visible = False
         self.item_outline_visible = True
-        self.font_color = FIFTIES_YELLOW
-        self.item_active_color = FIFTIES_ORANGE
+        self.font_color = theme.color.item_font
+        self.item_active_color = theme.color.item_active
         self.set_item_alignment(HOR_LEFT, VERT_MID)
         self.radio_stations = []
 
@@ -188,7 +188,7 @@ class ScreenStation(ScreenModal):
     """
     def __init__(self, screen_rect, station_name=""):
         ScreenModal.__init__(self, screen_rect, station_name)
-        self.title_color = FIFTIES_YELLOW
+        self.title_color = theme.color.station_title
         self.window_x = 20
         self.window_y = 60
         self.window_width -= 2 * self.window_x

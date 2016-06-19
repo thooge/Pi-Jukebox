@@ -36,7 +36,7 @@ class LetterBrowser(ItemList):
         self.background_color = (40, 80, 40)
         self.item_outline_visible = True
         self.outline_visible = False
-        self.font_color = FIFTIES_GREEN
+        self.font_color = theme.color.item_letter_font
         self.set_item_alignment(HOR_MID, VERT_MID)
         self.list = []
 
@@ -57,7 +57,7 @@ class LibraryBrowser(ItemList):
                 55, 42, 210, 194)
         self.outline_visible = False
         self.item_outline_visible = True
-        self.font_color = FIFTIES_YELLOW
+        self.font_color = theme.color.item_font
         self.set_item_alignment(HOR_LEFT, VERT_MID)
 
     def show_artists(self, search=None, only_start=True):

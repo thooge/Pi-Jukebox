@@ -51,6 +51,9 @@ class Theme(object):
             self.search_title = (255, 245, 195)
             self.search_font = (0, 255, 0)
 
+            # Stations
+            self.stations_title = (255, 245, 195)
+
             # Selected
             self.selected_title = (255, 245, 195)
             self.selected_font = (0, 255, 0)
@@ -82,6 +85,16 @@ class Theme(object):
             self.slider_progress2 = (235, 110, 68)
 
             self.label_outline = (124, 120, 106)
+
+            self.item = (0, 0, 0)
+            self.item_font = (255, 245, 195)
+            self.item_outline = (124, 120, 106)
+            self.item_active = (0, 0, 0)
+            self.item_active_font = (235, 110, 68)
+            self.item_selected = (0, 0, 0)
+            self.item_selected_font = (0, 0, 255)
+
+            self.item_letter_font = (211, 227, 151)
 
     class Icon(object):
         def __init__(self):
