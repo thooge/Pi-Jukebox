@@ -136,7 +136,8 @@ class ScreenSelected(ScreenModal):
         ScreenModal.__init__(self, screen_rect, station_name)
         self.station_name = station_name
         self.station_URL = station_URL
-        self.title_color = FIFTIES_YELLOW
+        self.title_color = theme.color.selected_title
+        self.font_color = theme.color.selected_font
         self.initialize()
         self.return_type = ""
 
@@ -147,18 +148,20 @@ class ScreenSelected(ScreenModal):
         button_height = 32
         button_offset = 42
         button_top = 30
-        self.add_component(ButtonText('btn_tune_in', self.screen, 
-            button_left, button_top, button_width, button_height, _("Tune in")))
-        self.components['btn_tune_in'].button_color = FIFTIES_TEAL
-        button_top += button_offset
-        self.add_component(ButtonText('btn_edit', self.screen,
-            button_left, button_top, button_width, button_height, _("Edit")))
-        button_top += button_offset
-        self.add_component(ButtonText('btn_remove', self.screen,
-            button_left, button_top, button_width, button_height, _("Remove")))
-        button_top += button_offset
-        self.add_component(ButtonText('btn_cancel', self.screen, 
-            button_left, button_top, button_width, button_height, _("Cancel")))
+        buttons = (
+                ('btn_tune_in', _("Tune in"), theme.color.button_selected),
+                ('btn_edit', _("Edit"), None),
+                ('btn_remove', _("Remove"), None),
+                ('btn_cancel', _("Cancel"), None)
+            )
+        for button in buttons:
+            btn = ButtonText(button[0], self.screen, 
+                             button_left, button_top, button_width, button_height,
+                             button[1])
+            if button[2]:
+                btn.button_color = button[2]
+            self.add_component(btn)
+            button_top += button_offset
 
     def action(self, tag_name):
         """ Action that should be performed on a click. """
@@ -188,7 +191,7 @@ class ScreenStation(ScreenModal):
     """
     def __init__(self, screen_rect, station_name=""):
         ScreenModal.__init__(self, screen_rect, station_name)
-        self.title_color = theme.color.station_title
+        self.title_color = theme.color.stations_title
         self.window_x = 20
         self.window_y = 60
         self.window_width -= 2 * self.window_x

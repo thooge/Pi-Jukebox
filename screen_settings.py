@@ -268,32 +268,35 @@ class ScreenSystemInfo(ScreenModal):
         self.add_component(LabelText('lbl_database', self.screen, 
                                      button_left, 30, 200, 18,
                                      _("Music database")))
-        self.components['lbl_database'].font_color = FIFTIES_TEAL
+        self.components['lbl_database'].font_color = self.screen_caption_font
 
         artist_count = _("Artists: {:,}").format(int(info['artists']))
         self.add_component(LabelText('lbl_artist_count', self.screen, 
-                                     button_left, 48, 200, 18, 
+                                     button_left, 48, 100, 18, 
                                      artist_count))
 
         album_count = _("Albums: {:,}").format(int(info['albums']))
         self.add_component(LabelText('lbl_album_count', self.screen,
-                           button_left + 100, 48, 100, 18,
-                           album_count))
+                                    button_left + 100, 48, 100, 18,
+                                    album_count))
 
         song_count = _("Songs: {:,}").format(int(info['songs']))
         self.add_component(LabelText('lbl_song_count', self.screen,
-                           button_left + 210, 48, 100, 18,
-                           song_count))
+                                     button_left + 210, 48, 100, 18,
+                                     song_count))
 
         play_time = _("Total time: ") + self.make_time_string(int(info['db_playtime']))
         self.add_component(LabelText('lbl_play_time', self.screen,
                                      button_left, 66, 300, 18,
                                      play_time))
 
+        # TODO: Was ist hier gemeint? Welcher Server?
+        # Was interessiert mich die IP-Adresse meines eigenen PCs?
+
         self.add_component(LabelText('lbl_system', self.screen,
                                      button_left, 90, 100, 18,
                                      _("Server")))
-        self.components['lbl_system'].font_color = FIFTIES_TEAL
+        self.components['lbl_system'].font_color = self.screen_caption_font
 
         self.add_component(LabelText('lbl_host_name', self.screen,
                                      button_left, 108, 1500, 18,
@@ -303,8 +306,8 @@ class ScreenSystemInfo(ScreenModal):
             s.connect(('localhost', 0))
             ip_address = s.getsockname()[0]
             self.add_component(LabelText('lbl_ip_address', self.screen,
-                    button_left, 126, 1500, 18,
-                    _("IP address: {0}").format(ip_address)))
+                                         button_left, 126, 1500, 18,
+                                         _("IP address: {0}").format(ip_address)))
 
         except Exception, e:
             print e

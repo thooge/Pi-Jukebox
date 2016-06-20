@@ -26,7 +26,7 @@ DEBUG = False # In production set to false
 #BORDER_NAV = 5
 
 FONT_SIZE = 14
-TITLE_HEIGHT = 25
+TITLE_HEIGHT = 20
 SPACE = 2
 
 ICO_WIDTH= 48
@@ -103,27 +103,6 @@ theme = Theme(THEME)
 FONT = pygame.font.Font(RESOURCES + 'DroidSans.ttf', FONT_SIZE)
 
 
-""" Color definitions """
-BLUE = 0, 148, 255
-CREAM = 206, 206, 206
-BLACK = 0, 0, 0
-WHITE = 255, 255, 255
-YELLOW = 255, 255, 0
-RED = 255, 0, 0
-GREEN = 0, 255, 0
-# Scheme aqua (currently not in use)
-AQUA_TEAL = 18, 151, 147
-AQUA_CHARCOAL = 80, 80, 80
-AQUA_YELLOW = 255, 245, 195
-AQUA_BLUE = 155, 215, 213
-AQUA_PINK = 255, 114, 96
-# Scheme FIFTIES
-FIFTIES_CHARCOAL = 124, 120, 106
-FIFTIES_TEAL = 141, 205, 193
-FIFTIES_GREEN = 211, 227, 151
-FIFTIES_YELLOW = 255, 245, 195
-FIFTIES_ORANGE = 235, 110, 68
-
 """ Mouse related variables """
 GESTURE_MOVE_MIN = 50  # Minimum movement in pixels to call it a move
 GESTURE_CLICK_MAX = 15  # Maximum movement in pixels to call it a click
@@ -195,7 +174,8 @@ ICO_FOLDER_UP = THEME + 'folder_up_48x32.png'
 # Standard info icons
 ICO_INFO = THEME + 'icon_info.png'
 ICO_WARNING = THEME + 'icon_warning.png'
-ICO_ERROR = THEME + 'icon_warning.png'
+ICO_ERROR = THEME + 'icon_error.png'
+ICO_QUESTION = THEME + 'icon_warning.png'
 
 # Radio icons
 ICO_STATION_ADD = THEME + 'station_add_48x32.png'

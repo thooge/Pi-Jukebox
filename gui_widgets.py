@@ -336,7 +336,7 @@ class Memo(Widget):
         self.alignment_horizontal = HOR_LEFT
         self.indent_horizontal = 0
         self.outline_show = False
-        self.outline_color = FIFTIES_CHARCOAL
+        self.outline_color = theme.color.memo_outline
         self.background_alpha = 255
 
     def draw(self, text=None):
@@ -602,7 +602,7 @@ class ItemList(Widget):
             #SCREEN.blit(indicator, (indicator_x, indicator_y))
             indicator = Rect(indicator_x, indicator_y, indicator_width, indicator_height)
             #            indicator.set_alpha(128)
-            pygame.draw.rect(self.screen, FIFTIES_ORANGE, indicator)
+            pygame.draw.rect(self.screen, theme.color.page_indicator, indicator)
 
     def draw_items(self):
         """ Draws the list items. """

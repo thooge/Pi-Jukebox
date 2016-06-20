@@ -1,100 +1,131 @@
 """
 ======================================================================
-**gui_themes.py**: Styling for the appliaction
+**gui_themes.py**: Styling for the application
 ======================================================================
 """
 
 import os
 from ConfigParser import ConfigParser
 
+BLUE = 0, 148, 255
+CREAM = 206, 206, 206
+BLACK = 0, 0, 0
+WHITE = 255, 255, 255
+YELLOW = 255, 255, 0
+RED = 255, 0, 0
+GREEN = 0, 255, 0
+
+# Theme fifties (default)
+FIFTIES_CHARCOAL = 124, 120, 106
+FIFTIES_TEAL = 141, 205, 193
+FIFTIES_GREEN = 211, 227, 151
+FIFTIES_YELLOW = 255, 245, 195
+FIFTIES_ORANGE = 235, 110, 68
+
+# Theme aqua (currently not in use)
+# TODO Create theme folder in filesystem
+#AQUA_TEAL = 18, 151, 147
+#AQUA_CHARCOAL = 80, 80, 80
+#AQUA_YELLOW = 255, 245, 195
+#AQUA_BLUE = 155, 215, 213
+#AQUA_PINK = 255, 114, 96
+
 class Theme(object):
-
-#FIFTIES_CHARCOAL = 124, 120, 106
-#FIFTIES_TEAL = 141, 205, 193
-#FIFTIES_GREEN = 211, 227, 151
-#FIFTIES_YELLOW = 255, 245, 195
-#FIFTIES_ORANGE = 235, 110, 68
-
 
     class Color(object):
         def __init__(self):
 
             # Main screen
-            self.screen_background = (0, 0, 0)
-            self.screen_font = (0, 0, 0)
-            self.backdrop = (0, 0, 0)
+            self.screen_background = BLACK
+            self.screen_font = FIFTIES_YELLOW
+            self.screen_caption_font = FIFTIES_TEAL
+            self.backdrop = BLACK
+            self.page_indicator = FIFTIES_ORANGE
 
             # Screens
-            self.background = (0, 0, 0)
-            self.font = (255, 255, 255)
-            self.title = (235, 110, 68)
-            #self.title_background = (235, 110, 68) # replace with 'title'
-            self.title_font = (0, 0, 0)
-            self.outline = (235, 110, 68)
+            self.background = BLACK
+            self.font = WHITE
+            self.title = FIFTIES_ORANGE
+            self.title_font = BLACK
+            self.outline = FIFTIES_ORANGE
 
             # Modal
-            self.modal_background = (0, 0, 0)
-            self.modal_title = (235, 110, 68)
-            self.modal_title_font = (0, 0, 0)
-            self.modal_outline = (235, 110, 68)
+            self.modal_background = BLACK
+            self.modal_title = FIFTIES_ORANGE
+            self.modal_title_font = BLACK
+            self.modal_outline = FIFTIES_ORANGE
+
+            # Yes-No
+            self.yn_title = FIFTIES_ORANGE
+            self.yn_outline = FIFTIES_ORANGE
 
             # Message
-            self.message_background = (0, 0, 0)
-            self.message_title = (141, 205, 193)
-            self.message_title_info = (211, 227, 151)
-            self.message_title_warn = (255, 245, 195)
-            self.message_title_error = (235, 110, 68)
-            self.message_title_font = (0, 0, 0)
-            self.message_outline = (235, 110, 68)
+            self.message_background = BLACK
+            self.message_title = FIFTIES_TEAL
+            self.message_title_info = FIFTIES_GREEN
+            self.message_title_warn = FIFTIES_YELLOW
+            self.message_title_error = FIFTIES_ORANGE
+            self.message_title_font = BLACK
+            self.message_outline = FIFTIES_ORANGE
 
             # Search
-            self.search_title = (255, 245, 195)
-            self.search_font = (0, 255, 0)
+            self.search_title = FIFTIES_YELLOW
+            self.search_font = GREEN
 
             # Stations
-            self.stations_title = (255, 245, 195)
+            self.stations_title = FIFTIES_YELLOW
 
             # Selected
-            self.selected_title = (255, 245, 195)
-            self.selected_font = (0, 255, 0)
+            self.selected_title = FIFTIES_YELLOW
+            self.selected_font = GREEN
 
             # Default widgets
-            self.widget_background = (0, 0, 0)
-            self.widget_font = (255, 245, 195)
-            self.widget_outline = (255, 255, 255)
+            self.widget_background = BLACK
+            self.widget_font = FIFTIES_YELLOW
+            self.widget_outline = WHITE
 
-            # Widgets
-            self.button = (255, 245, 195)
-            self.button_ok = (255, 245, 195)
-            self.button_cancel = (255, 245, 195)
-            self.button_outline = (255, 255, 255)
-            self.button_font = (0, 0, 0)
-            self.button_font_ok = (0, 0, 0)
-            self.button_font_cancel = (0, 0, 0)
-            self.button_title = (235, 110, 68)  # Button in titlebar
-            self.button_title_font = (0, 0, 0)
-            self.button_selected = (141, 205, 193)
-            self.button_selected_font = (0, 0, 0)
+            # Buttons
+            self.button = FIFTIES_YELLOW
+            self.button_ok = FIFTIES_YELLOW
+            self.button_cancel = FIFTIES_YELLOW
+            self.button_yes = FIFTIES_ORANGE
+            self.button_no = FIFTIES_ORANGE
+            self.button_outline = WHITE
+            self.button_font = BLACK
+            self.button_font_ok = BLACK
+            self.button_font_cancel = BLACK
+            self.button_title = FIFTIES_ORANGE  # Button in titlebar
+            self.button_title_font = BLACK
+            self.button_selected = FIFTIES_TEAL
+            self.button_selected_font = BLACK
 
-            self.rect = (124, 120, 106)
-            self.rect_font = (255, 245, 195)
-            self.rect_outline = (255, 255, 255)
+            # Memo
+            self.memo_outline = FIFTIES_CHARCOAL
 
-            self.slider_bottom = (124, 120, 106)
-            self.slider_progress = (211, 227, 151)
-            self.slider_progress2 = (235, 110, 68)
+            # Rectangles
+            self.rect = FIFTIES_CHARCOAL
+            self.rect_font = FIFTIES_YELLOW
+            self.rect_outline = WHITE
 
-            self.label_outline = (124, 120, 106)
+            # Sliders / Progress bars
+            self.slider_bottom = FIFTIES_CHARCOAL
+            self.slider_progress = FIFTIES_GREEN
+            self.slider_progress2 = FIFTIES_ORANGE
 
-            self.item = (0, 0, 0)
-            self.item_font = (255, 245, 195)
-            self.item_outline = (124, 120, 106)
-            self.item_active = (0, 0, 0)
-            self.item_active_font = (235, 110, 68)
-            self.item_selected = (0, 0, 0)
-            self.item_selected_font = (0, 0, 255)
+            # Labels
+            self.label_outline = FIFTIES_CHARCOAL
 
-            self.item_letter_font = (211, 227, 151)
+            # Lists
+            self.item = BLACK
+            self.item_font = FIFTIES_YELLOW
+            self.item_outline = FIFTIES_CHARCOAL
+            self.item_active = FIFTIES_ORANGE
+            self.item_active_font = FIFTIES_ORANGE
+            self.item_selected = BLACK
+            self.item_selected_font = BLUE
+
+            # Letter lists
+            self.item_letter_font = FIFTIES_GREEN
 
     class Icon(object):
         def __init__(self):
