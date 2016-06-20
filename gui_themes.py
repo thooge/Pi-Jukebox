@@ -65,6 +65,7 @@ class Theme(object):
             self.message_title_info = FIFTIES_GREEN
             self.message_title_warn = FIFTIES_YELLOW
             self.message_title_error = FIFTIES_ORANGE
+            self.message_title_question = FIFTIES_ORANGE
             self.message_title_font = BLACK
             self.message_outline = FIFTIES_ORANGE
 
