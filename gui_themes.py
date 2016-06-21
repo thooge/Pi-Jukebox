@@ -136,6 +136,9 @@ class Theme(object):
             self.next = 'next.png'
             self.previous = 'previous.png'
 
+            self.albums = 'albums.png'
+
+
             self.vol = 'vol.png'
             self.vol_down = 'vol_down.png'
             self.vol_mute = 'vol_mute.png'
@@ -186,4 +189,4 @@ class Theme(object):
                 setattr(self.color, color[0], col)
         for icon in parser.items('Icons'):
             if hasattr(self.icon, icon[0]):
-                setattr(self, icon[0], icon[1])
+                setattr(self.icon, icon[0], icon[1])
