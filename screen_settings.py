@@ -268,7 +268,7 @@ class ScreenSystemInfo(ScreenModal):
         self.add_component(LabelText('lbl_database', self.screen, 
                                      button_left, 30, 200, 18,
                                      _("Music database")))
-        self.components['lbl_database'].font_color = self.screen_caption_font
+        self.components['lbl_database'].font_color = theme.color.screen_caption_font
 
         artist_count = _("Artists: {:,}").format(int(info['artists']))
         self.add_component(LabelText('lbl_artist_count', self.screen, 

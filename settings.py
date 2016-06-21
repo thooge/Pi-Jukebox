@@ -20,31 +20,39 @@ VERSION = (1, 1, 0)
 # TODO move this to configuration file
 DEBUG = False # In production set to false
 
+#: The directory where resources like button icons or font files are stored.
+RESOURCES = os.path.dirname(__file__) + '/resources/'
+
+THEMEBASE = config_file.setting_get('Global', 'theme')
+THEME = RESOURCES + 'themes/' + THEMEBASE + '/'
+theme = Theme(THEME)
+
+
 # Default gui dimensions
 # WIP
 
 #BORDER_NAV = 5
 
-FONT_SIZE = 14
-TITLE_HEIGHT = 20
+FONT_SIZE = theme.font_size
+TITLE_HEIGHT = theme.title_height
 SPACE = 2
 
-ICO_WIDTH= 48
-ICO_HEIGHT= 32
+ICO_WIDTH = theme.icon_width
+ICO_HEIGHT = theme.icon_height
 
-SWITCH_WIDTH = 48
-SWITCH_HEIGHT = 32
+SWITCH_WIDTH = theme.switch_width
+SWITCH_HEIGHT = theme.switch_height
 
-LIST_WIDTH = 52
-LIST_INDICATOR_WIDTH = 3
+LIST_WIDTH = theme.list_width
+LIST_INDICATOR_WIDTH = theme.list_indicator_width
 
 # Support for international keyboard layouts
 # Possible values: en, de
 KEYBOARD_LAYOUT = config_file.setting_get('Global', 'keyboard')
 
 KEY_SPACE = 0
-KEY_WIDTH_STD = 32
-KEY_HEIGHT = 32
+KEY_WIDTH_STD = theme.key_width
+KEY_HEIGHT = theme.key_height
 if KEYBOARD_LAYOUT == 'de':
     KEY_LTR_WIDTH_STD = 29
 else:
@@ -91,12 +99,6 @@ if RUN_ON_RASPBERRY_PI:  # If started on Raspberry Pi
 else:
     SCREEN = pygame.display.set_mode(DISPLAY_SIZE)
 
-#: The directory where resources like button icons or font files are stored.
-RESOURCES = os.path.dirname(__file__) + '/resources/'
-
-THEMEBASE = config_file.setting_get('Global', 'theme')
-THEME = RESOURCES + 'themes/' + THEMEBASE + '/'
-theme = Theme(THEME)
 
 
 #: Standard font type

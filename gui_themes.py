@@ -129,17 +129,44 @@ class Theme(object):
             self.item_letter_font = FIFTIES_GREEN
 
     class Icon(object):
-        def __init__(self):
-            self.play = 'play'
-            self.stop = 'stop'
-            self.next = 'next'
-            self.previous = 'previous'
+        def __init__(self):            
+            self.play = 'play.png'
+            self.pause = 'pause.png'
+            self.stop = 'stop.png'
+            self.next = 'next.png'
+            self.previous = 'previous.png'
+
+            self.vol = 'vol.png'
+            self.vol_down = 'vol_down.png'
+            self.vol_mute = 'vol_mute.png'
+            self.vol_mute_active = 'vol_mute_active.png'
+            self.vol_up = 'vol_up.png'
+
+            self.key_backspace = 'backspace.png'
+            self.key_clear = 'clear.png'
+            self.key_enter = 'enter.png'
+            self.key_symbols = 'symbols.png'
+            self.key_letters = 'letters.png'
+            self.key_shift = 'shift.png'
+
+            self.cover_music = 'default_cover_art.png'
+            self.cover_radio = 'radio_cover_art.png'
 
     class Font(object):
         def __init__(self):
             self.default = ''
 
     def __init__(self, themedir = None):
+        self.font_size = 14
+        self.icon_width = 48
+        self.icon_height = 32
+        self.switch_width = 48
+        self.switch_height = 32
+        self.title_height = 20
+        self.list_width = 52
+        self.list_indicator_width = 3
+        self.key_width = 32
+        self.key_height = 32
         self.color = self.Color()
         self.icon = self.Icon()
         self.font = self.Font()
@@ -150,7 +177,13 @@ class Theme(object):
         parser = ConfigParser()
         themefile = os.path.join(themedir, 'theme.ini')
         parser.read(themefile)
+        for globvar in parser.items('Global'):
+            if hasattr(self, globvar[0]):
+                setattr(self, globvar[0], int(globvar[1]))
         for color in parser.items('Colors'):
             if hasattr(self.color, color[0]):
                 col = tuple(int(e.strip()) for e in color[1].split(','))
                 setattr(self.color, color[0], col)
+        for icon in parser.items('Icons'):
+            if hasattr(self.icon, icon[0]):
+                setattr(self, icon[0], icon[1])
