@@ -73,7 +73,7 @@ else:
     DISPLAY_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
 
 #: Switches between development/debugging on your desktop/laptop versus running on your Raspberry Pi
-RUN_ON_RASPBERRY_PI = os.uname()[4][:3] == 'arm'
+RUN_ON_RASPBERRY_PI = (os.name != 'nt' and os.uname()[4][:3] == 'arm')
 
 # Setting up touch screen, set if statement to true on Raspberry Pi
 if RUN_ON_RASPBERRY_PI:
@@ -99,8 +99,6 @@ if RUN_ON_RASPBERRY_PI:  # If started on Raspberry Pi
 else:
     SCREEN = pygame.display.set_mode(DISPLAY_SIZE)
 
-
-
 #: Standard font type
 FONT = pygame.font.Font(RESOURCES + 'DroidSans.ttf', FONT_SIZE)
 
@@ -120,72 +118,3 @@ GESTURE_LONG_PRESS = 5
 GESTURE_DRAG_VERTICAL = 6
 GESTURE_DRAG_HORIZONTAL = 7
 
-""" Used icons """
-# Switch icons
-ICO_SWITCH_ON = THEME + 'switch_on_48x32.png'
-ICO_SWITCH_OFF = THEME + 'switch_off_48x32.png'
-ICO_MODAL_CANCEL = THEME + 'back_22x18.png'
-
-# General icons
-ICO_PLAYER_FILE = THEME + 'playing_file_48x32.png'
-ICO_PLAYER_FILE_ACTIVE = THEME + 'playing_file_active_48x32.png'
-ICO_PLAYER_RADIO = THEME + 'playing_radio_48x32.png'
-ICO_PLAYER_RADIO_ACTIVE = THEME + 'playing_radio_active_48x32.png'
-ICO_PLAYLIST = THEME + 'playlist_48x32.png'
-ICO_PLAYLIST_ACTIVE = THEME + 'playlist_active_48x32.png'
-ICO_LIBRARY = THEME + 'library_48x32.png'
-ICO_LIBRARY_ACTIVE = THEME + 'library_active_48x32.png'
-ICO_DIRECTORY = THEME + 'directory_48x32.png'
-ICO_DIRECTORY_ACTIVE = THEME + 'directory_active_48x32.png'
-ICO_RADIO = THEME + 'radio_48x32.png'
-ICO_RADIO_ACTIVE = THEME + 'radio_active_48x32.png'
-ICO_SETTINGS = THEME + 'settings_48x32.png'
-ICO_SETTINGS_ACTIVE = THEME + 'settings_active_48x32.png'
-ICO_BACK = THEME + 'back_48x32.png'
-
-# Player icons
-ICO_PLAY = THEME + 'play_48x32.png'
-ICO_PAUSE = THEME + 'pause_48x32.png'
-ICO_STOP = THEME + 'stop_48x32.png'
-ICO_NEXT = THEME + 'next_48x32.png'
-ICO_PREVIOUS = THEME + 'prev_48x32.png'
-ICO_VOLUME = THEME + 'vol_48x32.png'
-
-# Volume icons
-ICO_VOLUME_UP = THEME + 'vol_up_48x32.png'
-ICO_VOLUME_DOWN = THEME + 'vol_down_48x32.png'
-ICO_VOLUME_MUTE = THEME + 'vol_mute_48x32.png'
-ICO_VOLUME_MUTE_ACTIVE = THEME + 'vol_mute_active_48x32.png'
-
-# Library icons
-ICO_SEARCH = THEME + 'search_48x32.png'
-ICO_SEARCH_ACTIVE = THEME + 'search_active_48x32.png'
-ICO_SEARCH_ARTIST = THEME + 'artists_48x32.png'
-ICO_SEARCH_ARTIST_ACTIVE = THEME + 'artists_active_48x32.png'
-ICO_SEARCH_ALBUM = THEME + 'albums_48x32.png'
-ICO_SEARCH_ALBUM_ACTIVE = THEME + 'albums_active_48x32.png'
-ICO_SEARCH_SONG = THEME + 'songs_48x32.png'
-ICO_SEARCH_SONG_ACTIVE = THEME + 'songs_active_48x32.png'
-ICO_PLAYLISTS = THEME + 'playlists_48x32.png'
-ICO_PLAYLISTS_ACTIVE = THEME + 'playlists_active_48x32.png'
-
-# Directory icons
-ICO_FOLDER_ROOT = THEME + 'folder_root_48x32.png'
-ICO_FOLDER_UP = THEME + 'folder_up_48x32.png'
-
-# Standard info icons
-ICO_INFO = THEME + 'icon_info.png'
-ICO_WARNING = THEME + 'icon_warning.png'
-ICO_ERROR = THEME + 'icon_error.png'
-ICO_QUESTION = THEME + 'icon_warning.png'
-
-# Radio icons
-ICO_STATION_ADD = THEME + 'station_add_48x32.png'
-COVER_ART_RADIO = THEME + 'radio_cover_art.png'
-
-# Special keyboard icons
-ICO_SHIFT = THEME + 'shift_48x32.png'
-ICO_BACKSPACE = THEME + 'backspace_48x32.png'
-ICO_ENTER = THEME + 'enter_48x32.png'
-ICO_LETTERS = THEME + 'letters_48x32.png'
-ICO_SYMBOLS = THEME + 'symbols_48x32.png'

@@ -320,15 +320,15 @@ class ScreenMessage(ScreenModal):
         ScreenModal.__init__(self, screen_rect, caption)
         if message_type == 'information':
             self.add_component(
-                Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, ICO_INFO))
+                Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, theme.icon.info))
             self.title_color = theme.color.message_title_info
         elif message_type == 'warning':
             self.add_component(
-                Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, ICO_WARNING))
+                Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, theme.icon.warning))
             self.title_color = theme.color.message_title_warn
         elif message_type == 'error':
             self.add_component(
-                Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, ICO_ERROR))
+                Picture('pic_icon', self.screen, self.window_x + 5, self.window_y + 30, 48, 48, theme.icon.error))
             self.title_color = theme.color.message_title_error
         else:
             self.title_color = theme.color.message_title
@@ -368,7 +368,7 @@ class ScreenYesNo(ScreenModal):
         self.outline_shown = True
         self.add_component(Picture('pic_icon', self.screen,
                                    self.window_x + 5, self.window_y + 30, 48, 48,
-                                   ICO_QUESTION))
+                                   theme.icon.question))
         self.title_color = theme.color.yn_title
         width = self.window_width - 58
         height = self.window_height - self.window_y - 32

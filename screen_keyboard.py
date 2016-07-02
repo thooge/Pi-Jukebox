@@ -78,15 +78,15 @@ class KeyboardLetters(KeyboardBase):
         self.add_row_buttons(second_row, second_x, y_row, KEY_LTR_WIDTH_STD, KEY_HEIGHT)
         y_row += y_row_increment
         self.add_row_buttons(third_row, third_x, y_row, KEY_LTR_WIDTH_STD, KEY_HEIGHT)
-        self.add_component(ButtonIcon('btn_shift', screen_rect, ICO_SHIFT, 3, y_row))
-        self.add_component(ButtonIcon('btn_backspace', screen_rect, ICO_BACKSPACE, 271, y_row))
+        self.add_component(ButtonIcon('btn_shift', screen_rect, theme.icon.key_shift, 3, y_row))
+        self.add_component(ButtonIcon('btn_backspace', screen_rect, theme.icon.key_backspace, 271, y_row))
 
         y_row += y_row_increment
         self.add_component(ButtonText('btn_symbol_comma', screen_rect, 50, y_row, 32, 32, ','))
         self.add_component(ButtonText('btn_symbol_space', screen_rect, 82, y_row, 159, 32, ' '))
         self.add_component(ButtonText('btn_symbol_point', screen_rect, 241, y_row, 32, 32, '.'))
-        self.add_component(ButtonIcon('btn_enter', screen_rect, ICO_ENTER, 271, y_row))
-        self.add_component(ButtonIcon('btn_symbols', screen_rect, ICO_SYMBOLS, 4, y_row))
+        self.add_component(ButtonIcon('btn_enter', screen_rect, theme.icon.key_enter, 271, y_row))
+        self.add_component(ButtonIcon('btn_symbols', screen_rect, theme.icon.key_symbols, 4, y_row))
 
     def __letters_shift(self):
         """ Sets button values to lower- or uppercase depending on the shift state. """
@@ -152,11 +152,11 @@ class KeyboardSymbols(KeyboardBase):
         y_row += y_row_increment
         third_row = [':', ';', '.', ',', '?', '!', '\'', '*']
         self.add_row_buttons(third_row, 5, y_row, KEY_WIDTH_STD, KEY_HEIGHT)
-        self.add_component(ButtonIcon('btn_backspace', screen_rect, ICO_BACKSPACE, 271, y_row))
+        self.add_component(ButtonIcon('btn_backspace', screen_rect, theme.icon.key_backspace, 271, y_row))
 
         y_row += y_row_increment
-        self.add_component(ButtonIcon('btn_enter', screen_rect, ICO_ENTER, 271, y_row))
-        self.add_component(ButtonIcon('btn_symbol_letters', screen_rect, ICO_LETTERS, 0, y_row))
+        self.add_component(ButtonIcon('btn_enter', screen_rect, theme.icon.key_enter, 271, y_row))
+        self.add_component(ButtonIcon('btn_symbol_letters', screen_rect, theme.icon.key_letters, 0, y_row))
         self.add_component(ButtonText('btn_symbol_ampersand', screen_rect, 50, y_row, 32, 32, '&'))
         self.add_component(ButtonText('btn_symbol_space', screen_rect, 82, y_row, 159, 32, ' '))
         self.add_component(ButtonText('btn_symbol_at', screen_rect, 241, y_row, 32, 32, '@'))

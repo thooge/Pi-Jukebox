@@ -20,20 +20,20 @@ class LetterBrowser(ItemList):
     """
     def __init__(self, screen_rect):
         if DISPLAY == 'raspberry7':
-            #ItemList.__init__(self, 'list_letters', screen_rect,
-            #    748, 40, 52, 425)
             ItemList.__init__(self, 'list_letters', screen_rect,
-                SCREEN_WIDTH - LIST_WIDTH, 
-                40,
-                LIST_WIDTH, 
-                SCREEN_HEIGHT - 55)
+                SCREEN_WIDTH - theme.list_width - theme.border_right, 
+                theme.icon_height + theme.icon_offset_y,
+                theme.list_width, 
+                SCREEN_HEIGHT - theme.icon_height - theme.icon_offset_y)
         elif DISPLAY == 'adafruit3.5':
             ItemList.__init__(self, 'list_letters', screen_rect,
-                268, 40, 52, 195)
+                SCREEN_WIDTH - theme.list_width - theme.border_right, 
+                theme.icon_height + theme.icon_offset_y,
+                theme.list_width, 
+                SCREEN_HEIGHT - theme.icon_height - theme.icon_offset_y)
         else:
             ItemList.__init__(self, 'list_letters', screen_rect,
                 268, 40, 52, 195)
-        self.background_color = (40, 80, 40)
         self.item_outline_visible = True
         self.outline_visible = False
         self.font_color = theme.color.item_letter_font
@@ -147,15 +147,15 @@ class ScreenLibrary(Screen):
         self.add_component(ScreenNavigation('screen_nav', self.screen, 'btn_library'))
 
         # Library buttons
-        button_offset = 52
-        button_left = 55
+        button_offset = theme.icon_width + theme.icon_offset_x
+        button_left = theme.icon_width + theme.icon_offset_x
         button_top = 5
         buttons = (
-                ('btn_artists', ICO_SEARCH_ARTIST),
-                ('btn_albums', ICO_SEARCH_ALBUM),
-                ('btn_songs', ICO_SEARCH_SONG),
-                ('btn_playlists', ICO_PLAYLISTS),
-                ('btn_search', ICO_SEARCH)
+                ('btn_artists', theme.icon.artists),
+                ('btn_albums', theme.icon.albums),
+                ('btn_songs', theme.icon.songs),
+                ('btn_playlists', theme.icon.playlists),
+                ('btn_search', theme.icon.search)
             )
         for button in buttons:
             self.add_component(ButtonIcon(button[0], self.screen, button[1], button_left, button_top))
@@ -186,25 +186,25 @@ class ScreenLibrary(Screen):
         """
         self.currently_showing = type_showing
         if type_showing == 'artists':
-            self.components['btn_artists'].set_image_file(ICO_SEARCH_ARTIST_ACTIVE)
-            self.components['btn_albums'].set_image_file(ICO_SEARCH_ALBUM)
-            self.components['btn_songs'].set_image_file(ICO_SEARCH_SONG)
-            self.components['btn_playlists'].set_image_file(ICO_PLAYLISTS)
+            self.components['btn_artists'].set_image_file(theme.icon.artists_active)
+            self.components['btn_albums'].set_image_file(theme.icon.albums)
+            self.components['btn_songs'].set_image_file(theme.icon.songs)
+            self.components['btn_playlists'].set_image_file(theme.icon.playlists)
         elif type_showing == 'albums':
-            self.components['btn_artists'].set_image_file(ICO_SEARCH_ARTIST)
-            self.components['btn_albums'].set_image_file(ICO_SEARCH_ALBUM_ACTIVE)
-            self.components['btn_songs'].set_image_file(ICO_SEARCH_SONG)
-            self.components['btn_playlists'].set_image_file(ICO_PLAYLISTS)
+            self.components['btn_artists'].set_image_file(theme.icon.artists)
+            self.components['btn_albums'].set_image_file(theme.icon.albums_active)
+            self.components['btn_songs'].set_image_file(theme.icon.songs)
+            self.components['btn_playlists'].set_image_file(theme.icon.playlists)
         elif type_showing == 'songs':
-            self.components['btn_artists'].set_image_file(ICO_SEARCH_ARTIST)
-            self.components['btn_albums'].set_image_file(ICO_SEARCH_ALBUM)
-            self.components['btn_songs'].set_image_file(ICO_SEARCH_SONG_ACTIVE)
-            self.components['btn_playlists'].set_image_file(ICO_PLAYLISTS)
+            self.components['btn_artists'].set_image_file(theme.icon.artists)
+            self.components['btn_albums'].set_image_file(theme.icon.albums)
+            self.components['btn_songs'].set_image_file(theme.icon.songs_active)
+            self.components['btn_playlists'].set_image_file(theme.icon.playlists)
         elif type_showing == 'playlists':
-            self.components['btn_artists'].set_image_file(ICO_SEARCH_ARTIST)
-            self.components['btn_albums'].set_image_file(ICO_SEARCH_ALBUM)
-            self.components['btn_songs'].set_image_file(ICO_SEARCH_SONG)
-            self.components['btn_playlists'].set_image_file(ICO_PLAYLISTS_ACTIVE)
+            self.components['btn_artists'].set_image_file(theme.icon.artists)
+            self.components['btn_albums'].set_image_file(theme.icon.albums)
+            self.components['btn_songs'].set_image_file(theme.icon.songs)
+            self.components['btn_playlists'].set_image_file(theme.icon.playlists_active)
 
     def letter_list_update(self):
         self.components['list_letters'].list = self.components['list_library'].first_letters_in_result_get()

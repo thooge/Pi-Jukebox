@@ -130,9 +130,9 @@ class ScreenDirectory(Screen):
         button_top = 5
         button_left = 55
         button_offset = 52
-        self.add_component(ButtonIcon('btn_root', self.screen, ICO_FOLDER_ROOT, button_left, button_top))
+        self.add_component(ButtonIcon('btn_root', self.screen, theme.icon.folder_root, button_left, button_top))
         button_left += button_offset
-        self.add_component(ButtonIcon('btn_up', self.screen, ICO_FOLDER_UP, button_left, button_top))
+        self.add_component(ButtonIcon('btn_up', self.screen, theme.icon.folder_up, button_left, button_top))
         # Lists
         self.add_component(DirectoryBrowser(self.screen))
         self.add_component(LetterBrowser(self.screen))

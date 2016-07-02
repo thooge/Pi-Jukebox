@@ -296,7 +296,7 @@ class ScreenSystemInfo(ScreenModal):
         self.add_component(LabelText('lbl_system', self.screen,
                                      button_left, 90, 100, 18,
                                      _("Server")))
-        self.components['lbl_system'].font_color = self.screen_caption_font
+        self.components['lbl_system'].font_color = theme.color.screen_caption_font
 
         self.add_component(LabelText('lbl_host_name', self.screen,
                                      button_left, 108, 1500, 18,

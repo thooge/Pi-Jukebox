@@ -10,12 +10,14 @@ import pygame
 from collections import deque
 import mpd as mpdlib
 from tinytag import TinyTag
+from settings import theme
 
 MPD_TYPE_ARTIST = 'artist'
 MPD_TYPE_ALBUM = 'album'
 MPD_TYPE_SONGS = 'title'
 
-DEFAULT_COVER = 'default_cover_art.png'
+#DEFAULT_COVER = 'default_cover_art.png'
+DEFAULT_COVER = theme.icon.cover_music
 TEMP_PLAYLIST_NAME = '_pi-jukebox_temp'
 
 reload(sys)

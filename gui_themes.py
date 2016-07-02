@@ -129,31 +129,80 @@ class Theme(object):
             self.item_letter_font = FIFTIES_GREEN
 
     class Icon(object):
-        def __init__(self):            
-            self.play = 'play.png'
-            self.pause = 'pause.png'
-            self.stop = 'stop.png'
-            self.next = 'next.png'
-            self.previous = 'previous.png'
+        def __init__(self, themedir):
 
-            self.albums = 'albums.png'
+            # Main menu
+            self.player_file = themedir + '/playing_file.png'
+            self.player_file_active = themedir + '/playing_file_active.png'
+            self.player_radio = themedir + '/playing_radio.png'
+            self.player_radio_active = themedir + '/playing_radio_active.png'
+            self.playlist = themedir + '/playlist.png'
+            self.playlist_active = themedir + '/playlist_active.png'
+            self.library = themedir + '/library.png'
+            self.library_active = themedir + '/library_active.png'
+            self.directory = themedir + '/directory.png'
+            self.directory_active = themedir + '/directory_active.png'
+            self.radio = themedir + '/radio.png'
+            self.radio_active = themedir + '/radio_active.png'
+            self.settings = themedir + '/settings.png'
+            self.settings_active = themedir + '/settings_active.png'
+
+            # Player icons
+            self.play = themedir + '/play.png'
+            self.pause = themedir + '/pause.png'
+            self.stop = themedir + '/stop.png'
+            self.next = themedir + '/next.png'
+            self.previous = themedir + '/previous.png'
+            self.vol = themedir + '/vol.png'
+
+            # Volume icons
+            self.vol_down = themedir + '/vol_down.png'
+            self.vol_mute = themedir + '/vol_mute.png'
+            self.vol_mute_active = themedir + '/vol_mute_active.png'
+            self.vol_up = themedir + '/vol_up.png'
+
+            # Library icons
+            self.albums = themedir + '/albums.png'
+            self.albums_active = themedir + '/albums_active.png'
+            self.artists = themedir + '/artists.png'
+            self.artists_active = themedir + '/artists_active.png'
+            self.songs = themedir + '/songs.png'
+            self.songs_active = themedir + '/songs_active.png'
+            self.playlists = themedir + '/playlists.png'
+            self.playlists_active = themedir + '/playlists_active.png'
+            self.search = themedir + '/search.png'
+
+            # Directory icons
+            self.folder_root = themedir + '/folder_root.png'
+            self.folder_up = themedir + '/folder_up.png'
+
+            # Radio icons
+            self.station_add = themedir + '/station_add.png'
 
 
-            self.vol = 'vol.png'
-            self.vol_down = 'vol_down.png'
-            self.vol_mute = 'vol_mute.png'
-            self.vol_mute_active = 'vol_mute_active.png'
-            self.vol_up = 'vol_up.png'
+            # Keyboard icons
+            self.key_backspace = themedir + '/backspace.png'
+            self.key_clear = themedir + '/clear.png'
+            self.key_enter = themedir + '/enter.png'
+            self.key_symbols = themedir + '/symbols.png'
+            self.key_letters = themedir + '/letters.png'
+            self.key_shift = themedir + '/shift.png'
 
-            self.key_backspace = 'backspace.png'
-            self.key_clear = 'clear.png'
-            self.key_enter = 'enter.png'
-            self.key_symbols = 'symbols.png'
-            self.key_letters = 'letters.png'
-            self.key_shift = 'shift.png'
+            self.cover_music = themedir + '/default_cover_art.png'
+            self.cover_radio = themedir + '/radio_cover_art.png'
 
-            self.cover_music = 'default_cover_art.png'
-            self.cover_radio = 'radio_cover_art.png'
+            # Additional 
+            self.error = themedir + '/icon_error.png'
+            self.info = themedir + '/icon_info.png'
+            self.warning = themedir + '/icon_warning.png'
+            self.question = themedir + '/icon_warning.png'
+
+            self.switch_off = themedir + '/switch_off.png'
+            self.switch_on = themedir + '/switch_on.png'
+
+            self.back = themedir + '/back.png'
+            self.exit = themedir + '/exit.png'
+
 
     class Font(object):
         def __init__(self):
@@ -161,17 +210,24 @@ class Theme(object):
 
     def __init__(self, themedir = None):
         self.font_size = 14
+        self.line_spacing = 2
         self.icon_width = 48
         self.icon_height = 32
+        self.icon_offset_x = 8
+        self.icon_offset_y = 8
         self.switch_width = 48
         self.switch_height = 32
+        self.border_top = 5
+        self.border_bottom = 5
+        self.border_left = 5
+        self.border_right = 5
         self.title_height = 20
         self.list_width = 52
         self.list_indicator_width = 3
         self.key_width = 32
         self.key_height = 32
         self.color = self.Color()
-        self.icon = self.Icon()
+        self.icon = self.Icon(themedir)
         self.font = self.Font()
         if themedir:
             self.load(themedir)
@@ -189,4 +245,5 @@ class Theme(object):
                 setattr(self.color, color[0], col)
         for icon in parser.items('Icons'):
             if hasattr(self.icon, icon[0]):
-                setattr(self.icon, icon[0], icon[1])
+                setattr(self.icon, icon[0], themedir + icon[1])
+        # parser. Fonts fontname

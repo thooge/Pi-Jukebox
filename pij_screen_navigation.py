@@ -15,15 +15,15 @@ class ScreenNavigation(WidgetContainer):
             0, 0, ICO_WIDTH + 5, SCREEN_HEIGHT)
         self.__button_active = button_active
         self.__radio_mode = False
-        button_offset = ICO_HEIGHT + 8
+        button_offset = theme.icon_height + theme.icon_offset_y
         button_top = 5
         buttons = (
-            ('btn_player',  ICO_PLAYER_FILE_ACTIVE),
-            ('btn_playlist', ICO_PLAYLIST),
-            ('btn_library', ICO_LIBRARY),
-            ('btn_directory', ICO_DIRECTORY),
-            ('btn_radio', ICO_RADIO),
-            ('btn_settings', ICO_SETTINGS) 
+            ('btn_player',  theme.icon.player_file_active),
+            ('btn_playlist', theme.icon.playlist),
+            ('btn_library', theme.icon.library),
+            ('btn_directory', theme.icon.directory),
+            ('btn_radio', theme.icon.radio),
+            ('btn_settings', theme.icon.settings) 
         )
         for button in buttons:
             self.add_component(ButtonIcon(button[0], self.screen, button[1], 3, button_top))
@@ -38,39 +38,39 @@ class ScreenNavigation(WidgetContainer):
         self.__radio_mode = radio_mode_bool
         if radio_mode_bool:
             if self.__button_active == 'btn_player':
-                self.components['btn_player'].icon_file_set(ICO_PLAYER_RADIO_ACTIVE)
+                self.components['btn_player'].icon_file_set(theme.icon.player_radio_active)
             else:
-                self.components['btn_player'].icon_file_set(ICO_PLAYER_RADIO)
+                self.components['btn_player'].icon_file_set(theme.icon.player_radio)
         else:
             if self.__button_active == 'btn_player':
-                self.components['btn_player'].icon_file_set(ICO_PLAYER_FILE_ACTIVE)
+                self.components['btn_player'].icon_file_set(theme.icon.player_file_active)
             else:
-                self.components['btn_player'].icon_file_set(ICO_PLAYER_FILE)
+                self.components['btn_player'].icon_file_set(theme.icon.player_file)
         self.draw()
 
     def button_active_set(self, button_active):
         self.__button_active = button_active
         if self.__radio_mode:
-            self.components['btn_player'].icon_file_set(ICO_PLAYER_RADIO)
+            self.components['btn_player'].icon_file_set(theme.icon.padio)
         else:
-            self.components['btn_player'].icon_file_set(ICO_PLAYER_FILE)
-        self.components['btn_playlist'].icon_file_set(ICO_PLAYLIST)
-        self.components['btn_library'].icon_file_set(ICO_LIBRARY)
-        self.components['btn_directory'].icon_file_set(ICO_DIRECTORY)
-        self.components['btn_radio'].icon_file_set(ICO_RADIO)
+            self.components['btn_player'].icon_file_set(theme.icon.player_file)
+        self.components['btn_playlist'].icon_file_set(theme.icon.playlist)
+        self.components['btn_library'].icon_file_set(theme.icon.library)
+        self.components['btn_directory'].icon_file_set(theme.icon.directory)
+        self.components['btn_radio'].icon_file_set(theme.icon.radio)
 
         if button_active == 'btn_player':
             if self.__radio_mode:
-                self.components['btn_player'].icon_file_set(ICO_PLAYER_RADIO_ACTIVE)
+                self.components['btn_player'].icon_file_set(theme.icon.player_radio_active)
             else:
-                self.components['btn_player'].icon_file_set(ICO_PLAYER_FILE_ACTIVE)
+                self.components['btn_player'].icon_file_set(theme.icon.player_file_active)
         elif button_active == 'btn_playlist':
-            self.components['btn_playlist'].icon_file_set(ICO_PLAYLIST_ACTIVE)
+            self.components['btn_playlist'].icon_file_set(theme.icon.playlist_active)
         elif button_active == 'btn_library':
-            self.components['btn_library'].icon_file_set(ICO_LIBRARY_ACTIVE)
+            self.components['btn_library'].icon_file_set(theme.icon.library_active)
         elif button_active == 'btn_directory':
-            self.components['btn_directory'].icon_file_set(ICO_DIRECTORY_ACTIVE)
+            self.components['btn_directory'].icon_file_set(theme.icon.directory_active)
         elif button_active == 'btn_radio':
-            self.components['btn_radio'].icon_file_set(ICO_RADIO_ACTIVE)
+            self.components['btn_radio'].icon_file_set(theme.icon.radio_active)
 
         self.draw()

@@ -75,7 +75,7 @@ class ScreenRadio(Screen):
         # Screen navigation buttons
         self.add_component(ScreenNavigation('screen_nav', self.screen, 'btn_radio'))
         # Radio station buttons
-        self.add_component(ButtonIcon('btn_station_add', self.screen, ICO_STATION_ADD, 55, 5))
+        self.add_component(ButtonIcon('btn_station_add', self.screen, theme.icon.station_add, 55, 5))
         # Lists
         self.add_component(RadioBrowser(self.screen))
 

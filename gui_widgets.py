@@ -200,31 +200,53 @@ class Picture(Widget):
         :param y: The vertical starting position of the picture's rectangle.
         :param width: The width of the picture's rectangle.
         :param height: The height of the picture's rectangle.
+        :param center: If set to True - the picture will be centered in given rectangle
     """
 
-    def __init__(self, tag_name, screen_rect, x, y, width, height, image_file=""):
+    def __init__(self, tag_name, screen_rect, x, y, width, height, image_file="", center=False):
         Widget.__init__(self, tag_name, screen_rect, x, y, width, height)
+        self.__center = center
+        self.x_mod = 0
+        self.y_mod = 0
         self.__image_file = image_file
-        self.__image = pygame.image.load(image_file).convert()
-        self.__image = pygame.transform.scale(self.__image, (self.width, self.height))
+        self.__image = pygame.image.load(image_file).convert_alpha()
+        self.prepare_picture()
 
     def draw(self):
-        # img = Image.open(self.__image_file)
-        #if img.size != (self.width, self.height):
-        #    img_scaled = img.resize((self.width, self.height), Image.ANTIALIAS)
-        #    img_scaled.save(self.__image_file)
-        self.__image = pygame.image.load(self.__image_file).convert()
-        self.__image = pygame.transform.scale(self.__image, (self.width, self.height))
-        SCREEN.blit(self.__image, (self.x_pos, self.y_pos))
+        SCREEN.blit(self.__image, (self.x_pos + self.x_mod, self.y_pos + self.y_mod))
         pygame.display.update(self.rect)
 
     def on_click(self, x, y):
         return self.tag_name
 
-    def picture_set(self, file_name):
+    def picture_set(self, image_file):
         """ Sets the filename of the picture. """
-        self.__image_file = file_name
+        if self.__image_file == image_file:
+            return
+        self.__image_file = image_file
+        self.__image = pygame.image.load(self.__image_file).convert_alpha()
+        self.prepare_picture()
         self.draw()
+
+    def prepare_picture(self):
+        if not self.__image:
+            return
+        if not self.__center:
+            # original behavior - shrinking and/or stretching the image to fit given width/height
+            self.__image = pygame.transform.smoothscale(self.__image, (self.width, self.height))
+            return
+        factor_w = factor_h = 1.0
+        if self.__image.get_width() > self.width:
+            factor_w = float(self.width) / self.__image.get_width()
+        if self.__image.get_height() > self.height:
+            factor_h = float(self.height) / self.__image.get_height()
+        factor = min(factor_w, factor_h)
+        if factor != 1.0:
+            # need to shrink the image
+            self.__image = pygame.transform.smoothscale(self.__image, (int(self.__image.get_width() * factor),
+                                                                       int(self.__image.get_height() * factor)))
+        self.x_mod = int(float(self.width - self.__image.get_width()) / 2)
+        self.y_mod = int(float(self.height - self.__image.get_height()) / 2)
 
 
 class LabelText(Widget):
@@ -489,8 +511,8 @@ class Switch(Widget):
         :param y: The vertical position of the button,
     """
     def __init__(self, tag_name, screen_rect, x, y):
-        self.__icon_on = pygame.image.load(ICO_SWITCH_ON)
-        self.__icon_off = pygame.image.load(ICO_SWITCH_OFF)
+        self.__icon_on = pygame.image.load(theme.icon.switch_on)
+        self.__icon_off = pygame.image.load(theme.icon.switch_off)
         self.width = self.__icon_on.get_width()
         self.height = self.__icon_on.get_height()
         Widget.__init__(self, tag_name, screen_rect, x, y, self.width, self.height)
